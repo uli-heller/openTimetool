@@ -1,0 +1,172 @@
+TODO
+
+1.2
+- add user-dependent settings, like 'startPage', 'language'
+- do round the duration
+- if rounding is on the tasks with "not need a project" dont get rounded durations
+
+other todo's
+- let users ONLY see their data, and the data they are allowed to see!!!
+  depending on their projects, etc.
+- turn off a user for a day when he tries to hack something, like 'You dont have permission ...' see time-class
+- let SimpleTemplate add width and height tags in img
+- translate the text which is in the OO-templates
+- select last used project in Today-Log  
+- translate info-mail from admin/user page!
+- let user stay on the same page when using the "hot keys"
+- if rounding result is the same time, dont show message (it does now because the seconds are different)
+
+projectTree
+- add the accountName to the projectTree.js.tpl-cacheKey, so the asp-version also caches
+  the tree account-dependent, it does it now too, because on timetool.biz every
+  account has a differnt url and PHP_SELF is in the cache key, but we cant be sure
+  that it is always this way!
+- use it for showing the projects on the projects-edit page
+- enable a non-js tree view, somehow :-)
+- when calling getAll/getNode walk through the entire tree and set isAvailable
+  so the isAvailable method in projectTree wont be necessary anymore and this increases
+  speed since we read the tree joined with projectTree2user
+- do cache time end at the closest date a project is closed
+- update all js-treeViews when one is rebuilt, this way we could remove the
+  complicated dependencies caching (this stuff: 3_projectTree*.js.php)
+- ADMIN mode: updating the tree will only be done if something that is relevant for the current
+  user has changed :-( but in admin mode every change should cause an update!!!!
+- throw warnings to admin when there are projects which have no team members
+  since those projects are useless (and the caching doesnt work properly for those :-( )
+- add 'update project tree' button!!! in the tree-view
+  
+- rewrite the projectTree use, switch to Dyn where possible
+  * switch isClosed(), isAvailable(), etc. to Dyn
+- if there is a time booked for today and one for tomorrow, the headline bar is wrong 
+  becuase the duration for the today-task is already  calculated
+- let the admin allow a project manager to add sub projects to his project
+- in the project-drop-downs let user select by typing the first letter too (JS)
+- somehow the reload mechanism doesnt work properly, and if you enter info and after the
+  sumbit you get to the login page again, this sucks a lot too! let a site also tell if
+  post-data shall be reposted after re-login ... somehow ...
+- leave times in chronological order in the export files!!!
+- let the translation not translate project names, etc. ONLY in the messages this still occurs!!!
+  i.e. try it with naming a project 'Start' it will become 'Beginn' in german :-(
+- check if uploaded OO-template really is OO-file, do some more checking in the unzip stuff
+- use I18N to format date, time in all places
+- align the status line always at the bottom of the screen, not of the page!
+- handle wrong db's in ASP version
+- avoid failure logins, limit a 'Gehen' to be within at least i.e. 14 hours
+  i.e. if i booked 'Gehen' yesterday it recognizes the first time and after that maximum 14h a gehen has to be locked
+- filter by number of hours
+- add a file, like: getJs.php?file=/common/js/common.js
+  which parses the JS file first and removes comments, etc. to make it a bit unreadable
+- check if a user is assigned to a project, then he cant be removed at all
+- highlight last saved data sets, esp. in quick log
+- quick-log show the data agin if an error occured when saving
+- add automatic closing of JS-windows when the page has expired, dont use the reload as it is implemented
+  now in the header.tpl, simply use window.close for js-windows!!!
+- read keyboard keys like 'pause' etc. and log those events ...
+- day-log log-mode to log in by giving the hours...
+- extract error messages and put them in an extra file and refer to them only via
+  constants - and show error-codes such as '0003'
+- vacation, overtime
+- sollstunden
+- alow additional links to a project, which can be user defined, such as
+  'Pflichtenheft' - 'http://url...'
+- minor bug showing accessible projects:
+  project1 | project2   project2 i have rights on, but it is expired
+  so it's not shown, but project1 is shown, because we show the entire tree to it
+  but since i have no rights on it anyway hide it!
+- when creating a project optionally inherit team members and managers
+- you can not remove a user from a project if he has already booked times on this project
+- summarize hours, i.e. for export, say i want all hours for this project but summarized over users
+  i am not interested in what userX did and userY i only want the sum of the day/week ...
+- clean up the export
+  - create methods which write data into a file
+  - extract the OO-unzip-stuff
+  - the printView.php is still a bit messy!
+- let user choose images for tasks
+- holidays, let the admin specify the holidays for a year
+  so the overview (that we will show one day) can show the working days, the amount of time worked
+  and the holidays within
+- save specials/holdiays not for days which are holidays
+- add-dialogs - show them only when 'new' button was pushed, they are disturbing always on the top of the page
+  OR/AND intelegently show 'add' dialog only when used quite often i.e. after new install
+  if not used for X times hide the add-dialog and show a 'new' button
+- add optional url to each project, to link companies i.e.
+- export in CSV
+- overview of current tasks of each user, what is the user currently working on, since when
+- remove project - check for all the children if they have times or prices, etc.
+- 'select all' buttons
+- put the 3 most used projects/tasks on top of the select boxes
+- protocolling, history of entries
+- create the project tree structure on the file system in a given dir and create offers
+  and offer-numbers on demand. the offer will be given as uploaded file, where the designated tags
+  for project name, etc. will only have to be replaced and the offer will be saved in the right
+  directory etc...
+  do also create the bills, which is much alike the offer stuff
+- make it easy to copy/move times from one project to another
+
+permissions
+- give users permission to log time for special projects (i.e. user X is only allowed to book on the project Y and no other)
+- give user permission to see projects
+- give permissions to see prices
+- permission to remove times of himself and of other users
+- when installing ask for a user with admin rights, that user can also
+  give other users the right to give rights, but the admin will always have to keep
+  his rights!
+
+
+
+DONE
+v2.1
+- update INSTALL to reflect config-local.php
+- make rounding as discussed
+- add km-log
+- implement default # of hours per user
+- do the translation of the new stuff
+
+- move project manager to member and vice versa
+- project/team.php move the members via JS and change the 'done' button into 'save'
+- encode the OO-text's properly, i dont know how to do that now ... but hey we get it
+  try spanish this gives an error, since 'durac�on' is not encoded :-(
+- CSV export
+- dont let not-admins seeadmin pages, i.e. user
+- css-link is wrong and is ALWAYS redirected, this is unnecessary traffic
+- let project managers add team members
+- project-valid-time: check if a project has times outside the new range
+  and set the project valid time as needed!!!
+- finish L10N to use in Overview-by date
+- prefill date-follow ups in the multi-log, so people dont have to select the date every time
+  it intelligently uses the last date
+- 'kommen' doesnt work when the last project is not available anymore!!!
+- translate JavaScript stuff
+- make nice messages box, where we show the errors and messages as on telefonmarkt
+- give a user admin rights, but if he wants to be admin then he HAS to switch into admin mode!
+- close a project's period, so that a project's data cant be changed before the date when it was closed
+  this is very important for the time after a bill has been written, the data should not be changed anymore
+  otherwise the bill would not correspond to the numbers in the timetool
+- optionally round times when exporting/showing
+  save the settings how to round for each project, all subprojects will use the same
+  rounding if nothing else is given for them
+- add an input mode, which allows it to work only with the keyboard
+  which auto corrects dates from 220802 to 22.08.2002 and the same with times, as i used to have
+  it and let the user enter times fast this way, precondition are the fix project numbers, i think
+  i.e. let the user enter   220802    TAB    1010    TAB    1100    TAB    11#12    <save button>
+  which means               22.08.2002  from:10:10      til:11:00   project:11 task:12
+  - multilog!
+- use project number to identify a project easily (Kostenstelle-like) - can be done in multilog now!
+- save the last time properly, when i log in a time now and have no follow up the
+  duration is wrong - duration is 0 now!
+- multilog
+- time/index.php - on 'save as new' and that fails we dont get to see the data again :-(
+- generate print preview without the need to push the show button first
+- when saving of a time failed because of the projects-validation period
+  and not the project itself, but a parent is not available at this period
+  the message 'valid from ... through ... ' is not shown properly - for now we dont show the period!
+- make it easy to check in a 'urlaub' - holiday
+- make the join-query in the price-class work
+- if folding in projects but a sub projects subproject is unfolded it will be shown anyway
+  check if any parent along the path is hidden, if so hide all the children too
+- add start and enddate for projects
+- add remove buttons for tasks
+- overview - select the current user if noone is selected
+- allow search for comments too
+- use tree to structure the data/projects
+- remove escaped \'

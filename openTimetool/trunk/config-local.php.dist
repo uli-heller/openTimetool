@@ -1,0 +1,37 @@
+<?php
+    /**
+    * This file defines your local settings. You only need to define all the 
+    * config options that are different than defined in the config.php. 
+    * It is included (in the init.php) after the defaults are set so you 
+    * can 'override' any option in here.
+    * This file is included in the distribution as 'config-local.php.dist'.
+    *
+    * @version $Id$
+    */
+
+    /**
+    * The DB DSN, as needed for PEAR::DB.
+    *
+    * @var string the DB connection parameters
+    */
+    $config->dbDSN              = 'mysql://root@localhost/openTimetool';
+    
+    /**
+    * This is the path to html2pdf, this application is needed
+    * when you want to export your timesheets to pdf.
+    * @var string the path to html2pdf
+    */
+    $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
+                        
+    /**
+    * The various authentication parameters. This application can also
+    * use an authentication against an external source, this you can configure here.
+    * Please further down for more info ...
+    * 
+    */
+    $config->auth->method       =   'DB';
+    $config->auth->url          =   $config->dbDSN;
+    $config->auth->digest       =   'md5';
+    $config->auth->savePwd      =   true;    
+
+?>
