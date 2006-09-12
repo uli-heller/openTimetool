@@ -1,0 +1,9 @@
+# robots.txt for http://www.visionp.de/
+User-agent: *
+Disallow: /CVS/
+Disallow: /admin/
+Disallow: /classes/
+Disallow: /common/
+Disallow: /layouts/
+Disallow: /media/
+Disallow: /tmp/

@@ -1,0 +1,94 @@
+1.2
+- Using now the original php4/php5 pear components for DB access
+- Code completely revised for php5 comptibility
+- Deleted code for km-log; too special and not for everybod useful (yet incomplete  though)
+
+1.1
+- extended remote-interface
+- added time->getFiltered
+- show only available users in the filter view
+- show only the times the users are allowed to see, before u could see all times
+  if the user was shown (for a manager)
+- added tree-view selector for projects
+- enhanced project/team member editor, now one can also see all the team members of a project the user is in
+- let project managers add team members
+- bugfix in today log, it was showing other team members current times
+- make the quick log window a bit bigger, for better overview
+- css-link was without the language and was ALWAYS redirected, this was unnecessary traffic
+- optionally, send user a mail, when changing his data or when adding a new user
+- dont let users see admin pages, if he is not admin
+- make the tree work properly in IE
+- CSV export
+- show summary of hours per day in the overview/by date
+- overview by project
+- show count down to reload of page
+- bugfixes #0000074,
+
+1.0.5
+- export in SSL-mode workaround for IE
+
+1.0.4
+- sort the entries chronologically in the exported files
+- preselect last entered entries in today-log
+- use proper http-caching for css, js, speeds up the page by a lot!
+- removing E_ALL warnings
+- moving to Xipe and QueryTool
+- bugfixes in today-log
+
+1.0.3
+- bugfix: edit task-comments in languages other than english
+- dont show 'round' and 'close' values in the project-page-overview if none given
+  bugfix: fixes also the JS-error which occured
+
+1.0.2
+- quite some security bugfixes in user and time-class
+- required field checks esp. in user class
+- download of exported files
+- set button-classes in CSS properly for IE esp.
+- set some fields to required
+
+1.0.1
+- made OOo-export work properly with proper encoding and added proper templates
+- turned of display_errors in OO, which caused problems when a forech got no data to loop
+
+version 0.9.5
+- admin can switch to admin mode and edit all data
+
+version 0.9.4
+- export to PDF, OOo works fine, using the new SimpleTemplate version 1.6.1
+
+version 0.1.3   use with vp-v0.1.2
+- added buttons for tasks that dont need projects, like 'break', 'leaving', etc.
+
+version 0.1.2
+- holiday - show only valid end and start tasks
+- bugfix, dont show current date when editing an old one
+
+version 0.1.1   use with vp-v0.1.1
+- show scrollbars in quick log (now also for IE)
+- unset session data when user is not logged in
+- added holidays
+- moved a lot of stuff into macros and in common.js
+- time/index.php - on 'save as new' and that fails we dont get to see the data again :-(
+- generate print preview without the need to push the show button first
+- when saving of a time failed because of the projects-validation period
+  and not the project itself, but a parent is not available at this period
+  the message 'valid from ... through ... ' is not shown properly - for now we dont show the period!
+- make the join-query in the price-class work
+- added prev-next logic in price, task and user admin
+- fixed IE JS incompatibilities/bugs
+- added language flags
+- first part of the spanish translation
+- price - added validUntil
+- various fixes and enhancements for the error stuff
+- quite some changes in the JS functionality
+- better use of macros
+- checkin the pics with proper names
+
+
+
+version 0.1
+
+this is the first real release, it was created 26.8.02 14:21
+it contains all main features and a basic implementation of the price stuff
+that only works on tasks directly!
