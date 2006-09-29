@@ -14,7 +14,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: Profiler.php,v 1.19 2006/03/01 19:26:09 anant Exp $
+// $Id$
 //
 
 require_once 'PEAR.php';
