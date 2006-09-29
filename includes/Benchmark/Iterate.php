@@ -14,7 +14,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: Iterate.php,v 1.12 2006/02/17 16:29:44 toggg Exp $
+// $Id$
 //
 
 require_once 'Benchmark/Timer.php';

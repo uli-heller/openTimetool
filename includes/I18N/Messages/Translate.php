@@ -16,7 +16,7 @@
 // | Authors: Wolfram Kriesing <wolfram@kriesing.de>                      |
 // +----------------------------------------------------------------------+
 //
-//  $Id: Translate.php 78 2006-09-08 12:40:56Z akejr $
+//  $Id$
 //
 // $Id
 // 1.5.01 : eliminated some php notices AK

@@ -16,7 +16,7 @@
 // | Authors: Naoki Shima <murahachibu@php.net>                           |
 // |                                                                      |
 // +----------------------------------------------------------------------+//
-// $Id: Common.php 78 2006-09-08 12:40:56Z akejr $
+// $Id$
 
 require_once('PEAR.php');
 

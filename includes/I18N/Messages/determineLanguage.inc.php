@@ -16,7 +16,7 @@
 // | Authors: Wolfram Kriesing <wolfram@kriesing.de>                      |
 // +----------------------------------------------------------------------+
 //
-//  $Id: determineLanguage.inc.php 78 2006-09-08 12:40:56Z akejr $
+//  $Id$
 
         // we make it very simple for now,
         // this should be done using a db one day, either one that "learns" or one which is already a huge dictionary

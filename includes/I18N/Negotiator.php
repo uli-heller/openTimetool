@@ -16,7 +16,7 @@
 // | Authors: Naoki Shima <murahachibu@php.net>                           |
 // |                                                                      |
 // +----------------------------------------------------------------------+//
-// $Id: Negotiator.php 78 2006-09-08 12:40:56Z akejr $
+// $Id$
 
 /**
 *
@@ -201,7 +201,7 @@ class I18N_Negotiator{
      * @return: string
      * @access: public
      */
-    function getCharsetMatch($chasets = '')
+    function getCharsetMatch($charsets = '')
     {
         return $this->_getMatch($charsets,$this->_acceptCharset,
                    $this->_defaultCharset);
