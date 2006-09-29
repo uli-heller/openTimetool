@@ -14,7 +14,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: Timer.php,v 1.16 2006/03/01 13:41:39 matthias Exp $
+// $Id$
 //
 
 require_once 'PEAR.php';
