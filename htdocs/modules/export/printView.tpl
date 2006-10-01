@@ -58,8 +58,8 @@
         </table>
 
     <br>
-
-    {if(sizeof($times))}
+	<!-- AK isset instead of sizeof -->
+    {if(isset($times))}
         { $durationSum = 0}
         <table class="outline">
             <tr>
@@ -71,7 +71,7 @@
                     <th>Comment</th>
                 {if( $showCols['task'] )}
                     <th>Task</th>
-                {if( $showCols['duration'] )}
+                {if( isset($showCols['duration']) )}
                     <th>Duration</th>
             </tr>
 
@@ -93,7 +93,7 @@
                         <td align="center">
                             <input type="checkbox" name="cols[task]" checked onChange="this.form.submit()">
                         </td>
-                    {if( $showCols['duration'] )}
+                    {if( isset($showCols['duration']) )}
                         <td align="center">
                             <input type="checkbox" name="cols[duration]" checked onChange="this.form.submit()">
                         </td>
@@ -152,11 +152,11 @@
                             {$aTime['_task_name']}
                         </td>
 
-                    {if($aTime['duration'])}
+                    {if(isset($aTime['duration']))}
                         { $durationSecSum+=$aTime['durationSec']}
-                    {if( $showCols['duration'] )}
+                    {if( isset($showCols['duration']) )}
                         <td valign="top" nowrap align="center" {$class}>
-                            {if($aTime['duration'])}
+                            {if(isset($aTime['duration']))}
                                 {$aTime['duration']} h
                         </td>
                 </tr>

@@ -233,7 +233,7 @@
                             <tr>
                                 <td>Comment</td>
                                 <td>
-                                    <input name="show[comment]" value="{$show['comment']}">
+                                    <input name="show[comment]" value="{@$show['comment']}">
                                 </td>
                             </tr>                            
                     </table>
@@ -256,7 +256,7 @@
                                         </table>
                                     </td>
                                 </tr>
-                                {%project_row($show['projectTree_ids'],'show[projectTree_ids][]')%}
+                                {%project_row(@$show['projectTree_ids'],'show[projectTree_ids][]')%}
                                 <tr>
                                     <td>Task</td>
                                     <!-- set the width, so when selecting a project the table stays as it is -->

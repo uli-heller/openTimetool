@@ -1,4 +1,8 @@
 <!--
+
+	$Id
+
+	#### switch to SVN ####
     $Log: OOoExport.tpl,v $
     Revision 1.9  2002/12/09 13:50:25  wk
     - added some required classes and button

@@ -91,13 +91,15 @@
 
     if (isset($_POST['action_extendedFilter'])) {	// AK : isset to avoid php notice
     	// AK isset to avoid notices
-    	if(isset($session->temp->time)) 
-        	$extendedFilter = $session->temp->time->extendedFilter = !$session->temp->time->extendedFilter;
-        else
-        	$extendedFilter = null;
+    	//if(isset($session->temp->time)) 
+        	$extendedFilter = @$session->temp->time->extendedFilter = !@$session->temp->time->extendedFilter;
+        //else
+        //	$extendedFilter = null;
         if (!$extendedFilter) {
-            unset($_REQUEST['show']['projectTree_ids']);
-            unset($session->temp->time_index);
+            if(isset($_REQUEST['show']['projectTree_ids'])) 
+            	unset($_REQUEST['show']['projectTree_ids']);
+            if(isset($session->temp->time_index))
+            	unset($session->temp->time_index);
         }
     }   
     // AK isset to avoid php notice
