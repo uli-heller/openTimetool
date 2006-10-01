@@ -3,6 +3,9 @@
      * 
      * $Id
      * 
+     * This script is called when on time/index.php the export button is pushed.
+     * It builds the export page displayed in a popup window 
+     * 
      * Some php notices need to be eliminated
      * 
      * ************* switch to svn ********
@@ -61,7 +64,7 @@
                                             ),
                         'OpenOffice.org' => array(
                                                 array(  'type'=>'OpenOffice.org',
-                                                        'file'=>'OOoExport'
+                                                        'file'=>'OOoExport.php'   // AK : added .php ...
                                                     )
                                                 ,array( 'type'=>'Word .doc',
                                                         'todo'=>true)
@@ -75,7 +78,6 @@
     $nextPrev = new vp_Application_HTML_NextPrev($export);
     $nextPrev->setLanguage( $lang );
     $exportedFiles = $nextPrev->getData();
-    
     if( $exportedFiles )
     {
         /* set _type like:  OpenOffice.org - Writer (.sxw) instead of only sxw */
@@ -89,6 +91,11 @@
             $ids[] = $aFile['id'];
         }
 //        $projects = $exported2project->getMultiple( $ids );
+    }
+    
+    if(isset($_REQUEST['exportedID']) && $_REQUEST['exportedID'] == '-1') {
+    	// AK : tried export with nothing to export ...See printView.php
+    	$applError->set('No data for export ...'); 
     }
 
     $layout->setMainLayout('/modules/dialog');
