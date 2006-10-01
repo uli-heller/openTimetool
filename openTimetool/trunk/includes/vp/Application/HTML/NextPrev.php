@@ -38,8 +38,8 @@ class vp_Application_HTML_NextPrev
                             ),
                         'de'  =>
                             array(
-                                'Datens�tze {$this->listStartPlusOne}..{$this->lastRowNumber} von {$this->count} &nbsp; &nbsp;',
-                                ' Datens�tze anzeigen (max.)'
+                                'Datens&auml;tze {$this->listStartPlusOne}..{$this->lastRowNumber} von {$this->count} &nbsp; &nbsp;',
+                                ' Datens&auml;tze anzeigen (max.)'
                             )
                     );
 

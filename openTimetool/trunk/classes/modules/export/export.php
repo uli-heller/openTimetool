@@ -2,7 +2,8 @@
 /**
  *  $Id
  * 
- *  Export functionality called by time/index.php (as include)
+ * Export functionality called by time/index.php (as include)
+ * It is also included in htdocs/modules/export.php : the export page
  * 
  * ********** switch to SVN ********
  *  $Log: export.php,v $
@@ -84,16 +85,16 @@ class modules_export extends modules_common
     function saveFile( $filename , $templateId=0 )
     {
         global $config,$applError;      
-        
+     
         // we handle xls.csv and sxc.csv differently
         $ext = substr($filename,-7);
-        if ($ext!='sxc.csv' && $ext!='xls.csv') {
+        if ($ext!='sxc.csv' && $ext!='xls.csv' && $ext!='odc.csv') {
             $fileinfo = pathinfo($filename);
             $ext = $fileinfo['extension'];
         }
 
         //
-        // copy the file into the exported-directory
+        // copy the file into the exported-directory (tmp/_exportDir)
         //
         // create a unique name, since a user (we user his session-id) simply
         // cant export 2 files at exactly the same time (by using 'time()' in the hash)

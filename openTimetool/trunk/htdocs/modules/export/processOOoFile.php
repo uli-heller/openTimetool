@@ -1,28 +1,36 @@
 <?php
-    //
-    //  $Log: processOOoFile.php,v $
-    //  Revision 1.6  2003/02/17 19:16:36  wk
-    //  - use the session if we have it :-)
-    //  - make new tpl instance
-    //
-    //  Revision 1.5  2003/01/13 18:12:20  wk
-    //  - sort the dates properly
-    //  - use Xipe,
-    //  - set additional tpl-vars
-    //
-    //  Revision 1.4  2002/12/02 20:40:31  wk
-    //  - encode dates and show full dates
-    //
-    //  Revision 1.3  2002/12/02 20:22:00  wk
-    //  - encode data properly and show data properly, bugfix
-    //
-    //  Revision 1.2  2002/11/12 18:00:00  wk
-    //  - prepare varibales properly
-    //
-    //  Revision 1.1  2002/11/11 17:57:15  wk
-    //  - initial commit
-    //
-    //
+    /**
+     * $Id
+     * 
+     * This script runs when called by fopen in OOoExport.php.
+     * It modifies the content.xml of an uncompressed OpenDocument-file
+     * See OOoTemplate for some details
+     * Language compilation is done by this as well
+     * 
+     * **** Switch to SVN *******
+     *  $Log: processOOoFile.php,v $
+     *  Revision 1.6  2003/02/17 19:16:36  wk
+     *  - use the session if we have it :-)
+     *  - make new tpl instance
+     *
+     *  Revision 1.5  2003/01/13 18:12:20  wk
+     *  - sort the dates properly
+     *  - use Xipe,
+     *  - set additional tpl-vars
+     *
+     *  Revision 1.4  2002/12/02 20:40:31  wk
+     *  - encode dates and show full dates
+     *
+     *  Revision 1.3  2002/12/02 20:22:00  wk
+     *  - encode data properly and show data properly, bugfix
+     *
+     *  Revision 1.2  2002/11/12 18:00:00  wk
+     *  - prepare varibales properly
+     *
+     *  Revision 1.1  2002/11/11 17:57:15  wk
+     *  - initial commit
+     *
+    */
 
     function OOencode( $string )
     {
@@ -73,7 +81,6 @@
 
     $times = $time->getDay($show['dateFrom'],$show['dateUntil']);
 // copy end
-
 
 
     $timespanFrom = OOencode($dateTime->formatDate($show['dateFrom']));
@@ -134,6 +141,7 @@
     $tpl->compile($session->temp->OOoExport->xmlFile);
 //print $tpl->getCompiledTemplate();
     include $tpl->getCompiledTemplate();
+
 
     //require_once($config->finalizePage);
 

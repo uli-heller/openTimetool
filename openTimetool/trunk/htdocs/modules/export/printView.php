@@ -4,6 +4,8 @@
     * 
     * Lot of php noctices stuff
     * 
+    * Is called when exporting to pdf or csv ...
+    * 
     * ********** switch to SVN ******	 
     *  $Log: printView.php,v $
     *  Revision 1.7  2003/02/14 15:40:48  wk
@@ -38,6 +40,9 @@
     require_once($config->classPath.'/modules/export/export.php');
 
     $show = $session->temp->time_index;
+
+//print_r($show);echo " = time_index<br>";
+//print_r($_REQUEST);echo " = request<br>";
 
 // copy from time/index.php!!!!
     // set the authenticated user's id if none was chosen in the frontend
@@ -105,6 +110,13 @@
             $numCols++;
 
 
+	if(empty($times)) {
+	    // AK : show the export page again if there is nothing to export  
+    	// Is better than an empty page as before ...
+	    $applError->set('No data for export ...');  // has to be set in index.php ...
+    	header('Location: index.php?exportedID=-1');
+	    die();
+	}  
 
     $exportIt = false;
     if( isset($_REQUEST['action_toHTML']) || isset($_REQUEST['action_toPDF']) )
@@ -118,7 +130,7 @@
     }
 
     if (!isset($_REQUEST['action_toCsvOOo']) && !isset($_REQUEST['action_toCsvXsl'])) {
-        $layout->setMainLayout('/modules/dialog');
+         $layout->setMainLayout('/modules/dialog');
         require_once($config->finalizePage);
     }
 
@@ -126,14 +138,23 @@
     //  PDF and print
     //
     if (isset($_REQUEST['action_toHTML']) || isset($_REQUEST['action_toPDF'])) {
+    
         $content = ob_get_contents();
         $filenamePrefix = $config->exportDir.'/'.md5(time().session_id());
         $filename = $filenamePrefix.'.html';
 
+//print_r($filename);echo " = filename<br>";
+
+
         if( !@is_dir($config->exportDir) ) {
             if(!mkdir($config->exportDir,0777)) {
-                $applError->set('Could not make directory \''.$config->exportDir.'\'!');
-                return false;
+            	// AK : I don't believe that this error would ever come up ...
+            	// Who is displaying the applError in this popup-window ?
+                //$applError->set('Could not make directory \''.$config->exportDir.'\'!');
+                //return false;
+                // AK : we use echo and die
+                echo ('Could not make directory \''.$config->exportDir.'\'!');
+                die();
             }
         }
 
@@ -149,6 +170,17 @@
             $pdfFilename = $filenamePrefix.'.pdf';
             $html2pdfCmd = str_replace( '$1' , $filename , $config->html2pdf );
             $html2pdfCmd = str_replace( '$2' , $pdfFilename , $html2pdfCmd );
+
+			// AK : added another check -> maybe wrong config parameter ...
+			// Just die afterwards. We are in a popup-window and that can be tolerated !
+			$tmpc = explode(' ',$config->html2pdf);
+ 	        if( !@is_file($tmpc[0]) ) {
+ 	        	ob_end_flush();
+                echo ('HTML2PDF-Converter not found : \''.$config->html2pdf.'\'! Check your config.php !');
+	            die();
+	        }
+			
+			// silently delete html-output-buffer
             ob_end_clean();
             exec($html2pdfCmd.' &2>1');              
             
@@ -164,11 +196,10 @@
     //  CSV export
     //
     if (isset($_REQUEST['action_toCsvOOo']) || isset($_REQUEST['action_toCsvXsl'])) {        
-        if (sizeof($times)) {
             if ($_REQUEST['action_toCsvXsl']) {
                 $extension = '.xls.csv';
-            } else {
-                $extension = '.sxc.csv';
+            } else {  
+                $extension = '.odc.csv';   // AK : use the OO2 suffix from now on. 
             }
 
             $filenamePrefix = $config->exportDir.'/'.md5(time().session_id());
@@ -202,7 +233,6 @@
             $id = $export->saveFile($filename);
             header('Location: index.php?exportedId='.$id);
             die();            
-        }
     }
     
     /**

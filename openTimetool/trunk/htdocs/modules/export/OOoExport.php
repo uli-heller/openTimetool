@@ -1,51 +1,58 @@
 <?php
-    //
-    //  $Log: OOoExport.php,v $
-    //  Revision 1.10.2.1  2003/04/02 11:06:34  wk
-    //  - retreive the proper extension from the uploaded file, IE sent mime-type 'application/x-zip-compressed' for sxw files :-( so we use the extension now
-    //
-    //  Revision 1.10  2003/03/04 19:13:39  wk
-    //  - use treeDyn
-    //
-    //  Revision 1.9  2003/02/17 19:16:49  wk
-    //  - use the session if we have it :-)
-    //
-    //  Revision 1.8  2003/01/06 11:32:43  wk
-    //  - updated comment
-    //
-    //  Revision 1.7  2003/01/06 11:26:47  wk
-    //  - check the file reading
-    //
-    //  Revision 1.6  2003/01/06 11:09:00  wk
-    //  - some additional error handling
-    //
-    //  Revision 1.5  2002/11/20 20:09:54  wk
-    //  - let only admins upload templates and show only user's exported files
-    //
-    //  Revision 1.4  2002/11/12 18:00:27  wk
-    //  - forgot to mkdir
-    //
-    //  Revision 1.3  2002/11/12 15:29:30  wk
-    //  - go to index page for download
-    //
-    //  Revision 1.2  2002/11/12 13:10:58  wk
-    //  - show export info
-    //
-    //  Revision 1.1  2002/11/11 17:56:56  wk
-    //  - initial commit
-    //
-    //
+    /**
+     * 
+     * $Id
+     * 
+     * We get here when OpenOffice is selected on export page
+     * 
+     * **** switch to SVN ********
+    *  $Log: OOoExport.php,v $
+    *  Revision 1.10.2.1  2003/04/02 11:06:34  wk
+    *  - retreive the proper extension from the uploaded file, IE sent mime-type 'application/x-zip-compressed' for sxw files :-( so we use the extension now
+    *
+    *  Revision 1.10  2003/03/04 19:13:39  wk
+    *  - use treeDyn
+    *
+    *  Revision 1.9  2003/02/17 19:16:49  wk
+    *  - use the session if we have it :-)
+    *
+    *  Revision 1.8  2003/01/06 11:32:43  wk
+    *  - updated comment
+    *
+    *  Revision 1.7  2003/01/06 11:26:47  wk
+    *  - check the file reading
+    *
+    *  Revision 1.6  2003/01/06 11:09:00  wk
+    *  - some additional error handling
+    *
+    *  Revision 1.5  2002/11/20 20:09:54  wk
+    *  - let only admins upload templates and show only user's exported files
+    *
+    *  Revision 1.4  2002/11/12 18:00:27  wk
+    *  - forgot to mkdir
+    *
+    *  Revision 1.3  2002/11/12 15:29:30  wk
+    *  - go to index page for download
+    *
+    *  Revision 1.2  2002/11/12 13:10:58  wk
+    *  - show export info
+    *
+    *  Revision 1.1  2002/11/11 17:56:56  wk
+    *  - initial commit
+    *
+    */
 
 
     require_once($config->classPath.'/modules/export/export.php');
     require_once($config->classPath.'/modules/OOoTemplate/OOoTemplate.php');
     require_once($config->classPath.'/modules/project/treeDyn.php');
+
                       
     $isAdmin = $user->isAdmin();
 //FIXXME save only templates where the 'save' checkbox was checked, needs to be added in the frontend
-    if( $_POST['saveTemplate'] )
+    if( isset($_POST['saveTemplate']) && $_POST['saveTemplate'] )		// AK : isset
     {
-        if( $_POST['export'] &&
+        if( isset($_POST['export']) &&		// AK : isset
             is_uploaded_file($_FILES['file']['tmp_name']) )
         {
             $_data = array();
@@ -97,19 +104,22 @@
     }
     else
     {
-        if( $_POST['template_id'] )
+    	// AK : if a template is selected, we'll get the ID here'
+        if( isset($_POST['template_id']) )		// AK : isset
             $templateId = $_POST['template_id'];
     }                           
-                 
+
+
     $show = $session->temp->time_index;
-    if( !$show )    // if there are no data for exporting, go back
+    if( empty($show) )    // if there are no data for exporting, go back
     {
+    	// AK : Doesn't work !'	
         header('Location: index.php');
         die();
     }
 
     $projects = array();
-    if( sizeof($show['projectTree_ids']) )
+    if( !empty($show['projectTree_ids']) )   // AK : !empty instead of sizeof
     {          
         foreach( $show['projectTree_ids'] as $aProjectId )
             $projects[] = $projectTreeDyn->getPathAsString($aProjectId);
@@ -119,6 +129,7 @@
         $projects = array('all');
     }
 
+	// AK : get name and mimetype of all templates stored in database !! No blob data though
     $OOoTemplate->preset();
     $OOoTemplate->setOrder('timestamp',true);
     if( $templates = $OOoTemplate->getAll(0,10) )
@@ -128,18 +139,17 @@
             $templates[$key]['_type'] = vp_Util_MimeType::getByExtension($_data['type'],'name').' (.'.$_data['type'].')';
     }
 
-
-
-    if( $templateId || $tmpFilename )
+	// AK : this is only true when a template has been uploaded and/or selected
+    if( isset($templateId) || isset($tmpFilename) )	// AK: isset
     {
 
         if( $templateId ) {
             $extension = $OOoTemplate->get($templateId,'type');
+            // AK : getFilename writes the template from DB to template-tmp-dir and returns the path to it
             $templateFilename = $OOoTemplate->getFilename($templateId);
         } else {
             $templateFilename = $tmpFilename;   
         }
-
         if( $templateFilename )
         {
             // upload the file into a temp-dir
@@ -155,6 +165,8 @@
                 if (!file_exists($file)) {
                     $applError->set('Error copying template file!');
                 } else {
+                	// AK : as an OO-file is in principle a zip-file (see also OOotemplate.php)
+                	// we can unzip it here to get access to the content.xml where we put our data in	
                     exec("cd $dir; unzip $file &2>1");      // change in the directory and unzip the OO-file
                     unlink($file);                          // remove the OO file so it wont be zipped into the new OO file
 
@@ -165,6 +177,8 @@
                     session_write_close();
 //print "<a href='$url'>go</a><br>$url";die();
 
+					// AK : We open the processOOofile.php.result as file !!!
+					$table = '';
                     if( $fp = fopen( $url , 'rb' ) )
                     {
                         while( $string = fread($fp,4096) )
@@ -175,10 +189,19 @@
                         {
                             fwrite($fp,$table);
                             fclose($fp);
-
+                            
+                            // AK : Create new OO document by zipping
                             exec("cd $dir; zip -rm new.zip *;mv new.zip new.$extension; chmod 777 new.$extension"); // zip -r means recursive, -m means delete the packed files
 
+							// copy the file into the exported-directory (tmp/_exportDir)
+							// and write fileinfo to DB
                             $id = $export->saveFile( "$dir/new.$extension" , $templateId );
+                            
+                            // AK : Now we clean up all these unique directories and tmp-files
+                            if($id) {
+                            	@rmdir($dir);
+                            }
+                            
                             header('Location: index.php?exportedId='.$id);
                             die();  // die here, to go to the page where the user shall donwload
                         }

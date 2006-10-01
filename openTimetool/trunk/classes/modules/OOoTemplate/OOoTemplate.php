@@ -1,10 +1,15 @@
 <?php
-//
-//  $Log: OOoTemplate.php,v $
-//  Revision 1.1  2002/11/11 17:55:26  wk
-//  - initial commit
-//
-//
+/**
+ * $Id
+ * 
+ * This class does the OO template handling 
+ * 
+ * *** switch to SVN ****
+*  $Log: OOoTemplate.php,v $
+*  Revision 1.1  2002/11/11 17:55:26  wk
+*  - initial commit
+*
+*/
 
 require_once($config->classPath.'/modules/common.php');
 
@@ -95,7 +100,23 @@ class modules_OOoTemplate extends modules_common
                     return false;
                 }
             }
-                                              
+            
+            /**
+             * AK : just some words about OpenDocument-format :
+             * An odt-file for example is in principle a zip-file with standardized content :
+             * 
+             * mimetype
+             * Pictures\10000000000001E800000118B5A37F3F.png
+             * layout-cache
+             * content.xml
+             * styles.xml
+             * meta.xml
+             * Thumbnails\thumbnail.png
+             * settings.xml
+             * meta-inf\manifest.xml  
+             * 
+             */          
+                                                    
             if( $templateData = $this->get($id,'data') )
             {
                 if( $fp = fopen($filename,'w') )
