@@ -1,16 +1,3 @@
-When you have questions:
-Please do first check the openTimetool-helpdesk system, which you can
-find
-    http://timetool-help.visionp.biz
-there you will find all the questions the users had until now and you can
-comfortably search for answers and also ask the experts.
-
-DEFAULT LOGIN
-After you have installed the application you can log in for the first time
-with 
-    Username    root
-    Password    root
-This person is also admin. And you need the admin to add new users!
 
 REQUIREMENTS
 - running mysql server, apache and php
@@ -55,11 +42,15 @@ INSTALL
 
 and you should be ready to go ...
      
-  
-NOTE: If you have any questions or problems please consult the helpdesk system first!
-    http://timetool-help.visionp.biz
+     
+DEFAULT LOGIN
+After you have installed the application you can log in for the first time
+with 
+    Username    root
+    Password    root
+This person is also admin. And you need the admin to add new users!
+    
     
     
 Have fun with the openTimetool
 
-Yours v:p
