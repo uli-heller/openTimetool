@@ -1,7 +1,9 @@
-1.2
+2.1.1
 - Using now the original php4/php5 pear components for DB access
 - Code completely revised for php5 comptibility
 - Deleted code for km-log; too special and not for everybod useful (yet incomplete  though)
+- Added default template for OpenOffice 2.0; OO 2.0 support 
+- Switch from CVS to Subversion (SVN)
 
 1.1
 - extended remote-interface
