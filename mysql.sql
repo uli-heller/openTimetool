@@ -536,8 +536,8 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (71, 'nach Dat
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (208, 'Authentifizierungs-Modul konnte nicht geladen werden - bitte verst&auml;ndigen Sie ihren Anbieter!', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (253, 'Auth-Modus:', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (229, 'Sind Sie sicher?', '0');
-INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (178, 'Sind Sie sicher, dass Sie diesen Benutzer l&ouml;schen wollen?', '0');
-INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (177, 'Sind Sie sicher, dass Sie diesen Eintrag l&ouml;schen wollen?', '0');
+INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (178, 'Sind Sie sicher, dass Sie diesen Benutzer löschen wollen?', '0');
+INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (177, 'Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (20, 'alle', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (219, 'Der Admin Modus wurde ausgeschaltet, Sie arbeiten nun wieder wie ein Standard-Benutzer!', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (190, 'Admin Modus EIN', '0');
