@@ -45,7 +45,7 @@
 {%include common/macro/table.mcr%}
         
 <form method="post" action="{$_SERVER['PHP_SELF']}">
-    <input type="hidden" name="newData[id]" value="{@$data['id']}">
+    <input type="hidden" name="newData[id]" value="{$data['id']}">
     <table class="outline">
 
         {%table_headline( (isset($data['id'])?'edit':'add').' task' , isset($data['id'])?'edit':'add' )%}
