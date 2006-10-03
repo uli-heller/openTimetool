@@ -38,7 +38,7 @@
 {%include common/macro/table.mcr%}
 
 <font class="warning">ACHTUNG: die Zuordnung der Preise zu den Projekten funktioniert noch nicht!!!
-Bisher werden nur die Preise die direkt NUR einer Tätigkeit zugeordnet sind berechnet!</font>
+Bisher werden nur die Preise die direkt NUR einer T&auml;tigkeit zugeordnet sind berechnet!</font>
 
 <form method="post" name="editForm">
     <input type="hidden" name="newData[id]" value="{$data['id']}">
