@@ -442,8 +442,8 @@ so that's why we do the following, i am not sure if that is standard SQL and abs
     *   @return     mixed   the data returned by either add or update-method
     */
     function save( $data )
-    {
-        if (isset($data[$this->primaryCol]) && $data[$this->primaryCol]) {
+    {  	
+         if (isset($data[$this->primaryCol]) && $data[$this->primaryCol]) {
             return $this->update( $data );                                
         }
         return $this->add( $data );

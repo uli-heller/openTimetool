@@ -73,14 +73,15 @@ class vp_Application_SaveHandler extends HTML_Template_Xipe_Options
         $getDataFromId = null;
         // shall the data be saved as new data?
         // remove the 'id' if the current data set shall be saved as a new one
-        if( @$_REQUEST[$this->getOption('saveAsNewButton')] )
+        if( isset($_REQUEST[$this->getOption('saveAsNewButton')]) && $_REQUEST[$this->getOption('saveAsNewButton')])
         {
             unset($data[$this->getOption('primaryCol')]);
             $_REQUEST[$this->getOption('saveButton')] = true;
         }
         // shall data be saved?
-        if( @$_REQUEST[$this->getOption('saveButton')] )
+        if( isset($_REQUEST[$this->getOption('saveButton')]) && $_REQUEST[$this->getOption('saveButton')] )
         {
+
             // pass the data by reference so if the save method changes the data
             // like it converts a date from 1.1.2001 to the timestamp, we are also returning that
             // this means the save routine has to be carefully written and this has to be known!!!
