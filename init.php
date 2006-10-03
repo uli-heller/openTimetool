@@ -69,7 +69,8 @@
     $config->setFeature('translate',true);
     $config->setLanguages(array('en','de','es'));
 
-
+	// AK : This is something for the next version ! Actually inclomplete stuff !!!!!!!!!!!!!!!!!!
+	$config->setFeature('price',false);
 
 	/**
     *  init the session object here, because we need the session data
