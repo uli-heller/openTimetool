@@ -80,7 +80,7 @@ class modules_time extends modules_common
         global $applError,$util,$user,$userAuth;
         
         $curUserId = $userAuth->getData('id');
-        if (!$data['user_id']) {
+        if (!isset($data['user_id']) || empty($data['user_id'])) {		// AK : was !$data['user_id']
             $data['user_id'] = $curUserId;
         }
         // convert timestamp
