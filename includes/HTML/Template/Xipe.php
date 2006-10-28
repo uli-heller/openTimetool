@@ -1,4 +1,12 @@
 <?php
+
+/**
+* $Id 
+* 
+* AK : Make it runnable on php5 as well -> that clone stuff 
+* 
+*/
+
 //
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
@@ -44,6 +52,17 @@
 *   @package    HTML_Template_Xipe
 *
 */
+
+// AK : let it run on php4 AND on php5 properly
+if (version_compare(phpversion(), '5.0') < 0) {
+	eval('
+		function clone($object) {
+			return $object;
+		}
+	');
+}
+
+
 class HTML_Template_Xipe
 {
 
@@ -270,7 +289,21 @@ class HTML_Template_Xipe
             // use __clone in php5
             // copy the default object with all its properties, yes COPY,
             // this is important we dont want a reference here
-            $this->_objectPool[$objKey] = clone $this->_objectPool['defaultObject'];
+
+			// AK : original coding :
+            //$this->_objectPool[$objKey] = $this->_objectPool['defaultObject'];
+                      
+            /**
+             * AK : doc excerpt from http://www.acko.net/node/54
+             * 
+             * PHP 4 on the other hand will think clone() is a function. 
+             * The obvious next step is to conditionally declare this function 
+             * if PHP4 is running. The only problem there is that the function 
+             * definition will not parse in PHP5 because clone is a special keyword. 
+             * To get around that, we have to use eval() to postpone parsing. 
+             * Here's the finished hack: see at the beginning of this file ... 
+             */         
+            $this->_objectPool[$objKey] = clone($this->_objectPool['defaultObject']);
             $this->_setAllFilters( $objKey );
         }
         $this->_lastUsedObjectKey = $objKey;
