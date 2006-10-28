@@ -1,56 +1,61 @@
 <?php
-//
-//  $Log: user.php,v $
-//  Revision 1.14.2.1  2003/03/11 16:05:08  wk
-//  - dont translate mail yet
-//
-//  Revision 1.14  2003/02/13 16:13:11  wk
-//  - send info mail
-//
-//  Revision 1.13  2003/02/10 15:59:59  wk
-//  - added getAllAvail
-//  - forgot reset in preset
-//  - CS
-//
-//  Revision 1.12  2002/12/09 16:43:46  wk
-//  - bugfix when changing username and password
-//
-//  Revision 1.11  2002/12/05 14:18:32  wk
-//  - check input field values, and digest password if needed
-//
-//  Revision 1.10  2002/12/04 15:49:55  wk
-//  - allow only admins to access and modify user data
-//
-//  Revision 1.9  2002/11/30 13:02:43  wk
-//  - check password if entered
-//
-//  Revision 1.8  2002/11/29 16:54:00  wk
-//  - added preset method
-//  - fix the number of users check
-//
-//  Revision 1.7  2002/11/27 08:03:31  wk
-//  - moved account stuff into account class
-//
-//  Revision 1.6  2002/11/26 15:59:12  wk
-//  - added getAccountData
-//  - check numUsers when adding users
-//
-//  Revision 1.5  2002/11/13 18:59:31  wk
-//  - added all the admin methods
-//
-//  Revision 1.4  2002/10/28 11:18:09  wk
-//  - require class inside method, so we can include this file in the init.php on top
-//
-//  Revision 1.3  2002/10/24 14:09:09  wk
-//  - check the email when saving the data
-//
-//  Revision 1.2  2002/08/29 16:45:04  wk
-//  - allow removing user only if there are no times for this user
-//
-//  Revision 1.1.1.1  2002/07/22 09:37:37  wk
-//
-//
-//
+/**
+ * 
+* $Id
+*
+* 
+* ########### switch to subversion ##########
+*  $Log: user.php,v $
+*  Revision 1.14.2.1  2003/03/11 16:05:08  wk
+*  - dont translate mail yet
+*
+*  Revision 1.14  2003/02/13 16:13:11  wk
+*  - send info mail
+*
+*  Revision 1.13  2003/02/10 15:59:59  wk
+*  - added getAllAvail
+*  - forgot reset in preset
+*  - CS
+*
+*  Revision 1.12  2002/12/09 16:43:46  wk
+*  - bugfix when changing username and password
+*
+*  Revision 1.11  2002/12/05 14:18:32  wk
+*  - check input field values, and digest password if needed
+*
+*  Revision 1.10  2002/12/04 15:49:55  wk
+*  - allow only admins to access and modify user data
+*
+*  Revision 1.9  2002/11/30 13:02:43  wk
+*  - check password if entered
+*
+*  Revision 1.8  2002/11/29 16:54:00  wk
+*  - added preset method
+*  - fix the number of users check
+*
+*  Revision 1.7  2002/11/27 08:03:31  wk
+*  - moved account stuff into account class
+*
+*  Revision 1.6  2002/11/26 15:59:12  wk
+*  - added getAccountData
+*  - check numUsers when adding users
+*
+*  Revision 1.5  2002/11/13 18:59:31  wk
+*  - added all the admin methods
+*
+*  Revision 1.4  2002/10/28 11:18:09  wk
+*  - require class inside method, so we can include this file in the init.php on top
+*
+*  Revision 1.3  2002/10/24 14:09:09  wk
+*  - check the email when saving the data
+*
+*  Revision 1.2  2002/08/29 16:45:04  wk
+*  - allow removing user only if there are no times for this user
+*
+*  Revision 1.1.1.1  2002/07/22 09:37:37  wk
+*
+*
+*/
 
 require_once($config->classPath.'/modules/common.php');
 require_once('vp/Validation/Validation.php');
@@ -66,7 +71,7 @@ require_once('vp/Validation/Validation.php');
 class modules_user extends modules_common
 {
 
-    public $table = TABLE_USER;
+    var $table = TABLE_USER;
 
     function modules_user()
     {
