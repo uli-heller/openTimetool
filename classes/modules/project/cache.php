@@ -53,8 +53,10 @@ class modules_project_cache
             $_tmpCacheDir = "";
             foreach ($cacheDirArray as $aDir) {
                 $_tmpCacheDir = "$_tmpCacheDir/$aDir";
+                // AK : We hide error messages here due to SAFEMODE=ON problems
+                // On Strato I couldn't avoid warnings without that 
                 if (!is_dir($_tmpCacheDir)) {
-                    mkdir($_tmpCacheDir);
+                    @mkdir($_tmpCacheDir);
                 }
             }
             foreach ($userIds as $aUserId) {
