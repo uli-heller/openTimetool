@@ -849,7 +849,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (251, 'repea
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (258, 'all users', 0);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (259, 'project managers', 0);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (260, 'team members', 0);
-INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (262, 'Hello (.*),\r\n\r\n(.*) has registered you for the v:p timetool.\r\nYour access data are:\r\n\r\nusername:   (.*)\r\npassword:   (.*)\r\n(Please change your password right away!)\r\n\r\nYou can login here\r\n    (.*)\r\n\r\nbest regards\r\n\r\n(.*)', 0);
+INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (262, 'Hello (.*),\r\n\r\n(.*) has registered you for openTimetool.\r\nYour access data are:\r\n\r\nusername:   (.*)\r\npassword:   (.*)\r\n(Please change your password right away!)\r\n\r\nYou can login here\r\n    (.*)\r\n\r\nbest regards\r\n\r\n(.*)', 0);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (263, 'Your timetool registration', 0);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (264, 'Time was rounded from (\\d+:\\d+) to (\\d+:\\d+) \\((\\d+) min. rounding\\).', 3);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (265, 'Info e-mail sent to \'(.*)\'.', 1);
