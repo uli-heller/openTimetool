@@ -1,5 +1,10 @@
 TODO
 
+2.1.2
+- fix the spanish diacritical letters and complete the translation strings
+- fix some translation problems
+- get it run completely on savemode servers
+
 1.2
 - add user-dependent settings, like 'startPage', 'language'
 - do round the duration
