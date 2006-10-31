@@ -171,7 +171,7 @@ class modules_user extends modules_common
                     $message =
 "Hello {$data['name']} {$data['surname']},
 
-$adminName has registered you for the v:p timetool.
+$adminName has registered you for the opentimetool.
 Your access data are:
 
 username:   {$data['login']}
