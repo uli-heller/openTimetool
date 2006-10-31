@@ -61,15 +61,20 @@
                 $_title = $dateTime->formatTimeShort($aTime['timestamp']);
                 // AK : I hate php notes ;-) ...
                 //$_title.= $aTime['duration'] ? " ({$aTime['duration']}) " : ' ';
-                if(!isset($aTime['duration'])) $_title.= ' ';
+                if(empty($aTime['duration'])) $_title.= ' ';
                 else $_title.= ' ('.$aTime['duration'].') ';
                 $_title.= $projectTreeDyn->getPathAsString($aTime['projectTree_id']);
                 $_title.= " - {$aTime['_task_name']}";
                 $today[$key]['_title'] = $_title;
             }
+            $ct = sizeof($today) - 1;  // AK : try to get the highest index for current task output
+            $currentTask = @$today[$ct];
         }
-
-        $currentTask = @$today[0];
+        else
+        	$currentTask=null;
+        //print(sizeof($today));echo "<p>";
+        //var_dump($today);die();
+        //$currentTask = @$today[0];
         $noneProjectTasks = $task->getNoneProjectTasks();
     }
 
