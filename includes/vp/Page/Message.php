@@ -149,7 +149,7 @@ class vp_Page_Message extends vp_OptionsDB
         if(sizeof($this->list))
         {
             foreach( $this->list as $aMsg)
-                if( $aMsg['text'] )
+                if( isset($aMsg['text']) )  // AK: php notices
                     return true;
         }
         return false;

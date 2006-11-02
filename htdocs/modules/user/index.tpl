@@ -53,7 +53,7 @@
 <form method="post" action="{$_SERVER['PHP_SELF']}">
     <input type="hidden" name="newData[id]" value="{$data['id']}">
     <table class="outline">
-        {%table_headline( ($data['id']?'edit':'add').' user' , 'user' )%}
+        {%table_headline( (@$data['id']?'edit':'add').' user' , 'user' )%}
 
         {%EditData_input($data,'name',t('first name').' *')%}
         {%EditData_input($data,'surname',t('surname').' *')%}
