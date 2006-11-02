@@ -144,11 +144,11 @@ class modules_user extends modules_common
         }
 
         // if no password is given, remove the password from the $data, so the old password wont be overwritten!
-        if(!isset($data['password'])) {
+        if(empty($data['password']) || !isset($data['password'])) {
             unset( $data['password'] );
         }
 
-        if ($config->auth->savePwd && ($data['password'] || $data['password1'])) {
+        if ($config->auth->savePwd && (isset($data['password']) && isset($data['password1']))) {
             if ($data['password'] != $data['password1']) {
                 $applError->set('The passwords don\'t match!');
                 $ret = false;
@@ -157,42 +157,59 @@ class modules_user extends modules_common
             unset( $data['password'] );
         }
 
-        if (!isset($data['login']) ) {  // we always need a login to be given!!!
+        if ($config->auth->savePwd && (!empty($data['password']) && !empty($data['password1']))) {
+            if ($data['password'] != $data['password1']) {
+                $applError->set('The passwords don\'t match!');
+                $ret = false;
+            }
+        } else {
+            unset( $data['password'] );
+        }
+		
+		if(!isset($data['password'])) $mpwd = '';
+		else							 $mpwd = $data['password'];
+
+        if (!isset($data['login']) || empty($data['login']) ) {  // we always need a login to be given!!!
             $applError->set('Please enter a valid login!');
             $ret = false;
         }
 
+		$canmail=true;
+
         if ($ret) {
             if (isset($data['sendInfoMail'])) {
-                if (!isset($data['email'])) {
+                if (!isset($data['email']) || empty($data['email'])) {
                     $applError->set('You have not given an e-mail to send the info mail to!');
                 } else {
-                    $adminName = $userAuth->getData('name').' '.$userAuth->getData('surname');
-                    $message =
+                	
+                    if($canmail) {
+	                    $adminName = $userAuth->getData('name').' '.$userAuth->getData('surname');
+    	                $message =
 "Hello {$data['name']} {$data['surname']},
 
 $adminName has registered you for the opentimetool.
 Your access data are:
 
 username:   {$data['login']}
-password:   {$data['password']}
+password:   {$mpwd}
 (Please change your password right away!)
 
 You can login here
-    {$config->vApplRoot}{$config->home}
+    {$config->vServerRoot}{$config->home}
 
 best regards
 
 $adminName
 ";
 // FIXXXME translate properly!!!
-//                    $message = $util->translate($message);
-                    $subject = 'Your timetool registration';
-//                    $subject = $util->translate('Your timetool registration');
-                    if (!@mail($data['email'],$subject,$message)) {
-                        $applError->set("Error sending the mail to '{$data['email']}'!");
-                    } else {
-                        $applMessage->set("Info e-mail sent to '{$data['email']}'.");
+//          	        $message = $util->translate($message);
+        	            $subject = 'Your timetool registration';
+//              	    $subject = $util->translate('Your timetool registration');
+                    	if (!mail($data['email'],$subject,$message)) {
+                        	$applError->set("Error sending the mail to '{$data['email']}'!");
+	                    } else {
+    	                    $applMessage->set("Info e-mail sent to '{$data['email']}'.");
+        	            }
                     }
                 }
             }
@@ -236,7 +253,7 @@ $adminName
 
         // all the checks if the password is given twice and correct, etc. are done in the 'save' method
         // so we only need to digest it here
-        if( $config->auth->savePwd && $data['password'] )
+        if( $config->auth->savePwd && !empty($data['password']) )
         {
             $data['password'] = $userAuth->digest( $data['login'] , $data['password'] );
         }
@@ -265,13 +282,13 @@ $adminName
             $ret = false;
         }
 
-        if( !trim($data['surname']) || !trim($data['name']) )
+        if( !trim(@$data['surname']) || !trim(@$data['name']) )
         {
             $applError->set('Please enter the complete name!');
             $ret = false;
         }
 
-        if( !$data['email'] )
+        if( !isset($data['email']) )
         {
             $applError->set('Please enter a valid email-address!');
             $ret = false;
@@ -285,7 +302,7 @@ $adminName
             $ret = false;
         }
               
-        if( !$data['password'] )
+        if( !isset($data['password']) )
         {
             $applError->set('Please enter a password!');
             $ret = false;
