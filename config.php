@@ -69,7 +69,17 @@
     * On OpenSuse 10 I'm currently using that :
     * $config->html2pdf = '/usr/bin/htmldoc --webpage $1 -f $2';
     * 
-    * Better solution would be to use a GPL php-class based on fpdf for that ...
+    * There is a GPL class now in place which does a very rough pdf conversion
+    * Just put a comment before the html2pdf line to activate that feature.
+    * Needs still some parameter tweaking though 
+    * AND you'll need 
+    * '/usr/bin/html2ps'
+    * '/usr/bin/ps2pdf' 
+    * instead that converter below .... 
+    * It's more likely that you have these 2 ;-) ... 
+    * Uncomment the following 2 lines if the pathes are different ,,, 
+    * $config->$html2psPath = '/usr/bin/html2ps';
+    * $config->$ps2pdfPath = '/usr/bin/ps2pdf';
     */
     $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
                         

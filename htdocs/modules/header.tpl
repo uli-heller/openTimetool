@@ -44,10 +44,10 @@
     <meta name="Content-Language" content="de">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="10 days">
-    <meta name="author" content="vision:produktion GmbH">
-    <meta name="publisher" content="vision:produktion GmbH">
-    <meta name="copyright" content="vision:produktion GmbH">
-    <meta name="owner" content="vision:produktion GmbH">
+    <meta name="author" content="vision:produktion & System-worX">
+    <meta name="publisher" content="vision:produktion & System-worX">
+    <meta name="copyright" content="vision:produktion & System-worX">
+    <meta name="owner" content="vision:produktion & System-worX">
     <meta http-equiv="pragma" content="no-cache">
 
 <!-- use getOption here!!! is this not implemented??? -->
@@ -60,5 +60,5 @@
     <link rel="shortcut icon" href="/favicon.ico">
     {%common_getJS('common')%}
 </head>
-<!-- vision produktion, vision:produktion, vision produktion gmbh, vision produktion GmbH, vision:produktion gmbh, vision:produktion GmbH, visionp, v:p, Vision, vision, Produktion, produktion, Beratung, beratung, Design, design, Multimedia, multimedia, Multimediaagentur, multimediaagentur, Internet, internet, Intranet, intranet, Datenbanken, datenbanken, Programmierung, programmierung, PHP, php, Linux, linux, LAMP, lamp, Internet-Anwendungen, Intranet-Anwendungen, Extranet-Anwendungen, Content Management Systeme, CMS, cms, E-commerce, ecommerce, E-Business, ebusiness, Communities, interaktive Kommunikation, digitale Kommunikation -->
+<!-- vision produktion, vision:produktion, vision produktion gmbh, vision produktion GmbH, vision:produktion gmbh, vision:produktion GmbH, visionp, v:p, Vision, vision, Produktion, produktion, Beratung, beratung, Design, design, Multimedia, multimedia, Multimediaagentur, multimediaagentur, Internet, internet, Intranet, intranet, Datenbanken, datenbanken, Programmierung, programmierung, PHP, php, Linux, linux, LAMP, lamp, Internet-Anwendungen, Intranet-Anwendungen, Extranet-Anwendungen, Content Management Systeme, CMS, cms, E-commerce, ecommerce, E-Business, ebusiness, Communities, interaktive Kommunikation, digitale Kommunikation, System-worX, system-worx -->
 <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">

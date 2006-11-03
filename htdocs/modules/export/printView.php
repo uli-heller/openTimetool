@@ -39,6 +39,9 @@
     require_once($config->classPath.'/modules/time/time.php');
     require_once($config->classPath.'/modules/export/export.php');
 
+	// AK : use GPL php class for that job ...
+	require_once($config->applRoot.'/html2pdf/HTML_ToPDF.php');
+
     $show = $session->temp->time_index;
 
 //print_r($show);echo " = time_index<br>";
@@ -168,21 +171,50 @@
             $export->saveFile( $filename , 0 );
         } elseif (isset($_REQUEST['action_toPDF'])) {
             $pdfFilename = $filenamePrefix.'.pdf';
-            $html2pdfCmd = str_replace( '$1' , $filename , $config->html2pdf );
-            $html2pdfCmd = str_replace( '$2' , $pdfFilename , $html2pdfCmd );
+            
+   			$tmpcmd = trim(@$config->html2pdf);
+   			if(!empty($tmpcmd)) {
+ 	           $html2pdfCmd = str_replace( '$1' , $filename , $config->html2pdf );
+    	       $html2pdfCmd = str_replace( '$2' , $pdfFilename , $html2pdfCmd );
+   			}
+			else {
+				$tmpcmd = '';
+			}
 
-			// AK : added another check -> maybe wrong config parameter ...
-			// Just die afterwards. We are in a popup-window and that can be tolerated !
-			$tmpc = explode(' ',$config->html2pdf);
- 	        if( !@is_file($tmpc[0]) ) {
- 	        	ob_end_flush();
-                echo ('HTML2PDF-Converter not found : \''.$config->html2pdf.'\'! Check your config.php !');
-	            die();
-	        }
+			if(!empty($tmpcmd)) {
+				// AK : added another check -> maybe wrong config parameter ...
+				// Just die afterwards. We are in a popup-window and that can be tolerated !
+				$tmpc = explode(' ',$config->html2pdf);
+ 	        	if( !@is_file($tmpc[0]) ) {
+ 	        		ob_end_flush();
+	                echo ('HTML2PDF-Converter not found : \''.$config->html2pdf.'\'! Check your config.php !');
+		            die();
+	    	    }
+			}
 			
 			// silently delete html-output-buffer
             ob_end_clean();
-            exec($html2pdfCmd.' &2>1');              
+            
+            if(empty($tmpcmd)) {
+            	// AK : use the php class for conversion
+				$pdf =& new HTML_ToPDF($filename, $config->vApplRoot, $pdfFilename);
+            	if(isset($config->$html2psPath)) $pdf->setHtml2Ps($config->$html2psPath);
+            	if(isset($config->$ps2pdfPath)) $pdf->setPs2Pdf($config->$ps2pdfPath);            					   
+				// Set headers/footers
+				$pdf->setHeader('color', 'blue');
+				$pdf->setFooter('left', $config->applName);
+				$pdf->setFooter('right', '$D');
+				$result = $pdf->convert();
+
+				// Check if the result was an error
+				if (PEAR::isError($result)) {
+    				die($result->getMessage());
+				}
+            }
+            else {
+            	// AK : we use the external program configured in config.php (original code)
+            	exec($html2pdfCmd.' &2>1');
+            }              
             
             if (is_file($pdfFilename)) {
                 $id = $export->saveFile( $pdfFilename );
