@@ -1,0 +1,1002 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Docs For Class HTML_ToPDF</title>
+	<link rel="stylesheet" type="text/css" id="layout" href="../media/layout.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="../media/style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../media/print.css" media="print">
+</head>
+
+<body>
+<div id="header">
+	<div id="navLinks">
+		[ <a href="../classtrees_HTML_ToPDF.html">Class Tree: HTML_ToPDF</a> ]
+		[ <a href="../elementindex_HTML_ToPDF.html">Index: HTML_ToPDF</a> ]
+		[ <a href="../elementindex.html">All elements</a> ]
+	</div>
+	<div id="packagePosition">
+		<div id="packageTitle2">HTML_ToPDF</div>
+		<div id="packageTitle">HTML_ToPDF</div>
+		<div id="elementPath"> &middot; </div>
+	</div>
+</div>
+
+<div id="nav" class="small">
+	<div id="ric">
+					<p><a href="../ric_README.html">README</a></p>
+			</div>
+	<div id="packages">
+		Packages:
+					<p><a href="../li_HTML_ToPDF.html">HTML_ToPDF</a></p>
+			</div>
+
+				<div id="index">
+			<div id="files">
+								Files:<br>
+								<a href="../HTML_ToPDF/_ToPDF_examples_example1_php.html">		example1.php
+		</a><br>
+			<a href="../HTML_ToPDF/_ToPDF_examples_example2_php.html">		example2.php
+		</a><br>
+			<a href="../HTML_ToPDF/_ToPDF_examples_example3_php.html">		example3.php
+		</a><br>
+			<a href="../HTML_ToPDF/_ToPDF_HTML_ToPDF_php.html">		HTML_ToPDF.php
+		</a><br>
+			<a href="../HTML_ToPDF/_ToPDF_PDFEncryptor_php.html">		PDFEncryptor.php
+		</a><br>
+				</div>
+			<div id="classes">
+				Classes:<br>
+								<a href="../HTML_ToPDF/HTML_ToPDF.html">		HTML_ToPDF
+		</a><br>
+			<a href="../HTML_ToPDF/HTML_ToPDFException.html">		HTML_ToPDFException
+		</a><br>
+			<a href="../HTML_ToPDF/PDFEncryptor.html">		PDFEncryptor
+		</a><br>
+			<a href="../HTML_ToPDF/PDFEncryptorException.html">		PDFEncryptorException
+		</a><br>
+				</div>
+		</div>
+	</div>
+
+<div id="body">
+	    		<h1>Class: HTML_ToPDF</h1>
+	<p style="margin: 0px;">Source Location: /HTML_ToPDF.php</p>
+	
+
+<div class="leftcol">
+	<h3><a href="#class_details">Class Overview</a> <span class="smalllinenumber">[line 40]</span></h3>
+	<div id="classTree"><pre></pre>
+</div>
+	<div class="small">
+	<p>A class to convert a local html file to a pdf file on the fly.</p>
+		<h4>Author(s):</h4>
+	<ul>
+																		<li>Jason Rust &lt;<a href="mailto:jrust@rustyparts.com">jrust@rustyparts.com</a>&gt;</li>
+						</ul>
+	<h4>Version:</h4>
+	<ul>
+													<li>3.3</li>
+											</ul>
+
+	<h4>Copyright:</h4>
+	<ul>
+								<li>The PHP License</li>
+																</li>
+	</div>
+</div>
+
+<div class="middlecol">
+	<h3><a href="#class_vars">Variables</a></h3>
+	<ul class="small">
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$additionalCSS">$additionalCSS</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$debug">$debug</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$defaultDomain">$defaultDomain</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$footers">$footers</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$getUrlPath">$getUrlPath</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$grayScale">$grayScale</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$headers">$headers</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$html2psPath">$html2psPath</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$html2psrc">$html2psrc</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$htmlErrors">$htmlErrors</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$htmlFile">$htmlFile</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$makeAbsoluteImageUrls">$makeAbsoluteImageUrls</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$pageInColor">$pageInColor</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$pdfFile">$pdfFile</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$ps2pdfIncludePath">$ps2pdfIncludePath</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$ps2pdfPath">$ps2pdfPath</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$scaleFactor">$scaleFactor</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$tmpDir">$tmpDir</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$underlineLinks">$underlineLinks</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$useCSS">$useCSS</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#var$_htmlString">$_htmlString</a></li>
+			</ul>
+	<h3><a href="#class_consts">Constants</a></h3>
+	<ul class="small">
+			</ul>
+</div>
+<div class="rightcol">
+	<h3><a href="#class_methods">Methods</a></h3>
+	<ul class="small">
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodaddHtml2PsSettings">addHtml2PsSettings</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodconvert">convert</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodHTML_ToPdf">HTML_ToPdf</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetAdditionalCSS">setAdditionalCSS</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetDebug">setDebug</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetFooter">setFooter</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetGetUrl">setGetUrl</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetGrayScale">setGrayScale</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetHeader">setHeader</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetHtml2Ps">setHtml2Ps</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetMakeAbsoluteImageURLs">setMakeAbsoluteImageURLs</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetPs2Pdf">setPs2Pdf</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetPs2pdfIncludePath">setPs2pdfIncludePath</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetScaleFactor">setScaleFactor</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetTmpDir">setTmpDir</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetUnderlineLinks">setUnderlineLinks</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetUseColor">setUseColor</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#methodsetUseCSS">setUseCSS</a></li>
+				<li><a href="../HTML_ToPDF/HTML_ToPDF.html#method_dumpDebugInfo">_dumpDebugInfo</a></li>
+			</ul>
+</div>
+
+<div id="content">
+<hr>
+	<div class="contents">
+	</div>
+
+	<div class="leftCol">
+	<h2>Inherited Variables</h2>
+		<h2>Inherited Constants</h2>
+		</div>
+
+	<div class="rightCol">
+	<h2>Inherited Methods</h2>
+		</div>
+	<br clear="all">
+	<hr>
+
+	<a name="class_details"></a>
+	<h2>Class Details</h2>
+	<p align="center"><strong>A class to convert a local html file to a pdf file on the fly.
+</strong></p>
+<p>Will take a local or remote html file and convert it to a PDF file.  Note  that you can add encryption or permissions to the PDF file by using the helper  PDFEncryptor class that comes with this package.  See the README and  examples for more information.</p><h4>Tags:</h4>
+<ul>
+	<li><b>copyright</b> - The PHP License</li>
+	<li><b>version</b> - 3.3</li>
+	<li><b>author</b> - Jason Rust &lt;<a href="mailto:jrust@rustyparts.com">jrust@rustyparts.com</a>&gt;</li>
+</ul>
+	<p class="small" style="color: #334B66;">[ <a href="#top">Top</a> ]</p>
+
+	<hr>
+	<a name="class_vars"></a>
+	<h2>Class Variables</h2>
+		<a name="var$additionalCSS"></a>
+	<p></p>
+	<h4>$additionalCSS = <span class="value">&nbsp;''</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 108]</p>
+		<p align="center"><strong>Other styles to use when parsing the page
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$debug"></a>
+	<p></p>
+	<h4>$debug = <span class="value">&nbsp;false</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 65]</p>
+		<p align="center"><strong>Whether or not we are in debug mode
+</strong></p>
+		<p><b>Type:</b> bool</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$defaultDomain"></a>
+	<p></p>
+	<h4>$defaultDomain = <span class="value">&nbsp;''</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 77]</p>
+		<p align="center"><strong>The default domain for relative images
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$footers"></a>
+	<p></p>
+	<h4>$footers = <span class="value">array('center'&nbsp;=&gt;&nbsp;'-&nbsp;$N&nbsp;-')</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 144]</p>
+		<p align="center"><strong>The footer information
+</strong></p>
+		<p><b>Type:</b> array</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$getUrlPath"></a>
+	<p></p>
+	<h4>$getUrlPath = <span class="value">&nbsp;'/usr/bin/curl&nbsp;-i'</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 95]</p>
+		<p align="center"><strong>The path to your get URL program, including options to get headers
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$grayScale"></a>
+	<p></p>
+	<h4>$grayScale = <span class="value">&nbsp;false</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 120]</p>
+		<p align="center"><strong>Show the images be in grayscale?
+</strong></p>
+		<p><b>Type:</b> bool</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$headers"></a>
+	<p></p>
+	<h4>$headers = <span class="value">array('left'&nbsp;=&gt;&nbsp;'$T',&nbsp;'right'&nbsp;=&gt;&nbsp;'$[author]')</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 138]</p>
+		<p align="center"><strong>The header information
+</strong></p>
+		<p><b>Type:</b> array</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$html2psPath"></a>
+	<p></p>
+	<h4>$html2psPath = <span class="value">&nbsp;'/usr/bin/html2ps'</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 83]</p>
+		<p align="center"><strong>The path to the html2ps executable
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$html2psrc"></a>
+	<p></p>
+	<h4>$html2psrc = <span class="value">&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;option&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;titlepage:&nbsp;0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;do&nbsp;not&nbsp;generate&nbsp;a&nbsp;title&nbsp;page&nbsp;*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toc:&nbsp;0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;no&nbsp;table&nbsp;of&nbsp;contents&nbsp;*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colour:&nbsp;%pageInColor%;&nbsp;/*&nbsp;create&nbsp;the&nbsp;page&nbsp;in&nbsp;color&nbsp;*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;underline:&nbsp;%underlineLinks%;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;underline&nbsp;links&nbsp;*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grayscale:&nbsp;%grayScale%;&nbsp;/*&nbsp;Make&nbsp;images&nbsp;grayscale?&nbsp;*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaledoc:&nbsp;%scaleFactor%;&nbsp;/*&nbsp;Scale&nbsp;the&nbsp;document&nbsp;*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;package&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;geturl:&nbsp;%getUrlPath%;&nbsp;/*&nbsp;path&nbsp;to&nbsp;the&nbsp;geturl&nbsp;*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showurl:&nbsp;0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;do&nbsp;not&nbsp;show&nbsp;the&nbsp;url&nbsp;next&nbsp;to&nbsp;links&nbsp;*/'</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 150]</p>
+		<p align="center"><strong>Default html2ps configuration that we use (is parsed before being used, though)
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$htmlErrors"></a>
+	<p></p>
+	<h4>$htmlErrors = <span class="value">&nbsp;false</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 71]</p>
+		<p align="center"><strong>Whether we output html errors.
+</strong></p>
+		<p><b>Type:</b> bool</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$htmlFile"></a>
+	<p></p>
+	<h4>$htmlFile = <span class="value">&nbsp;''</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 47]</p>
+		<p align="center"><strong>The full path to the file we are parsing
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$makeAbsoluteImageUrls"></a>
+	<p></p>
+	<h4>$makeAbsoluteImageUrls = <span class="value">&nbsp;true</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 161]</p>
+		<p align="center"><strong>Whether HTML_ToPDF should replace all relative image paths in the
+</strong></p>
+<p>input HTML document with the default domain or not. Switch this to  false if you want to convert a HTML file which is located locally in the  file system and is not reachable via HTTP but all the images used  in the HTML file are located correctly according to their relative  paths.</p>		<p><b>Type:</b> bool</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$pageInColor"></a>
+	<p></p>
+	<h4>$pageInColor = <span class="value">&nbsp;true</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 114]</p>
+		<p align="center"><strong>Show the page in color?
+</strong></p>
+		<p><b>Type:</b> bool</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$pdfFile"></a>
+	<p></p>
+	<h4>$pdfFile = <span class="value">&nbsp;''</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 53]</p>
+		<p align="center"><strong>The full path to the output file
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$ps2pdfIncludePath"></a>
+	<p></p>
+	<h4>$ps2pdfIncludePath = <span class="value">&nbsp;''</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 168]</p>
+		<p align="center"><strong>Include path for ps2pdf (-I option), for example to specify where  to search for font files etc.
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$ps2pdfPath"></a>
+	<p></p>
+	<h4>$ps2pdfPath = <span class="value">&nbsp;'/usr/bin/ps2pdf'</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 89]</p>
+		<p align="center"><strong>The path to the ps2pdf executable
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$scaleFactor"></a>
+	<p></p>
+	<h4>$scaleFactor = <span class="value">&nbsp;1</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 126]</p>
+		<p align="center"><strong>Scale factore for the page
+</strong></p>
+		<p><b>Type:</b> int</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$tmpDir"></a>
+	<p></p>
+	<h4>$tmpDir = <span class="value">&nbsp;'/tmp'</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 59]</p>
+		<p align="center"><strong>The temporary directory to save intermediate files
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$underlineLinks"></a>
+	<p></p>
+	<h4>$underlineLinks = <span class="value">&nbsp;null</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 132]</p>
+		<p align="center"><strong>Whether to underline links or not
+</strong></p>
+		<p><b>Type:</b> bool</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$useCSS"></a>
+	<p></p>
+	<h4>$useCSS = <span class="value">&nbsp;true</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 102]</p>
+		<p align="center"><strong>Whether or not to try and parse the CSS in the html file and use it in
+</strong></p>
+<p>creating the pdf</p>		<p><b>Type:</b> bool</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="var$_htmlString"></a>
+	<p></p>
+	<h4>$_htmlString = <span class="value">&nbsp;''</span></h4>
+	<div class="indent">
+		<p class="linenumber">[line 174]</p>
+		<p align="center"><strong>We use this to store the html file to a string for manipulation
+</strong></p>
+		<p><b>Type:</b> string</p>
+		<p><b>Overrides:</b> </p>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+
+	<hr>
+	<a name="class_methods"></a>
+	<h2>Class Methods</h2>
+		<a name="methodaddHtml2PsSettings"></a>
+	<p></p>
+	<h3>addHtml2PsSettings</h3>
+	<div class="indent">
+		<p>
+		<code>void addHtml2PsSettings(
+string
+$in_settings)</code>
+		</p>
+	
+		<p class="linenumber">[line 216]</p>
+		<p align="center"><strong>Adds on more html2ps settings to the end of the default set of settings
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_settings</b> 
+		- 
+		The additional settings</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodconvert"></a>
+	<p></p>
+	<h3>convert</h3>
+	<div class="indent">
+		<p>
+		<code>string convert(
+)</code>
+		</p>
+	
+		<p class="linenumber">[line 475]</p>
+		<p align="center"><strong>Convert the html file into a pdf file
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>return</b> - The path to the pdf file</li>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodHTML_ToPdf"></a>
+	<p></p>
+	<h3>HTML_ToPdf</h3>
+	<div class="indent">
+		<p>
+		<code>void HTML_ToPdf(
+string
+$in_htmlFile, string
+$in_domain, [string
+$in_pdfFile = null])</code>
+		</p>
+	
+		<p class="linenumber">[line 190]</p>
+		<p align="center"><strong>Initializes the class
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_htmlFile</b> 
+		- 
+		The full path to the html file to convert</li>
+			<li>
+		<span class="type">string</span>
+		<b>$in_domain</b> 
+		- 
+		The default domain name for images that have a relative path</li>
+			<li>
+		<span class="type">string</span>
+		<b>$in_pdfFile</b> 
+		- 
+		(optional) The full path to the pdf file to output.                If not given then we create a temporary name.</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetAdditionalCSS"></a>
+	<p></p>
+	<h3>setAdditionalCSS</h3>
+	<div class="indent">
+		<p>
+		<code>void setAdditionalCSS(
+string
+$in_css)</code>
+		</p>
+	
+		<p class="linenumber">[line 335]</p>
+		<p align="center"><strong>Set additional CSS to use when parsing the html file
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_css</b> 
+		- 
+		The additional css</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetDebug"></a>
+	<p></p>
+	<h3>setDebug</h3>
+	<div class="indent">
+		<p>
+		<code>void setDebug(
+bool
+$in_debug)</code>
+		</p>
+	
+		<p class="linenumber">[line 231]</p>
+		<p align="center"><strong>Sets the debug variable
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">bool</span>
+		<b>$in_debug</b> 
+		- 
+		Turn debugging on or off?</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetFooter"></a>
+	<p></p>
+	<h3>setFooter</h3>
+	<div class="indent">
+		<p>
+		<code>void setFooter(
+string
+$in_attribute, string
+$in_value)</code>
+		</p>
+	
+		<p class="linenumber">[line 273]</p>
+		<p align="center"><strong>Sets a footer
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_attribute</b> 
+		- 
+		One of the header attributes that html2ps accepts.  Most                common are left, center, right, font-family, font-size, color.</li>
+			<li>
+		<span class="type">string</span>
+		<b>$in_value</b> 
+		- 
+		The attribute value.  Special values that can be set are $T                (document title), $N (page number), $D (current date/time), $U (current                url or filename), $[meta-name] (A meta-tag, such as $[author] to get                author meta tag)</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetGetUrl"></a>
+	<p></p>
+	<h3>setGetUrl</h3>
+	<div class="indent">
+		<p>
+		<code>void setGetUrl(
+string
+$in_getUrl)</code>
+		</p>
+	
+		<p class="linenumber">[line 352]</p>
+		<p align="center"><strong>Sets the get url which is used for retrieving images from the html file  needs to be the full path to the file with options to retrive the headers  as well.
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_getUrl</b> 
+		- 
+		The get url program</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetGrayScale"></a>
+	<p></p>
+	<h3>setGrayScale</h3>
+	<div class="indent">
+		<p>
+		<code>void setGrayScale(
+bool
+$in_grayScale)</code>
+		</p>
+	
+		<p class="linenumber">[line 367]</p>
+		<p align="center"><strong>Sets the gray scale option for images
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">bool</span>
+		<b>$in_grayScale</b> 
+		- 
+		Images should be in grayscale?</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetHeader"></a>
+	<p></p>
+	<h3>setHeader</h3>
+	<div class="indent">
+		<p>
+		<code>void setHeader(
+string
+$in_attribute, string
+$in_value)</code>
+		</p>
+	
+		<p class="linenumber">[line 252]</p>
+		<p align="center"><strong>Sets a header
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_attribute</b> 
+		- 
+		One of the header attributes that html2ps accepts.  Most                common are left, center, right, font-family, font-size, color.</li>
+			<li>
+		<span class="type">string</span>
+		<b>$in_value</b> 
+		- 
+		The attribute value.  Special values that can be set are $T                (document title), $N (page number), $D (current date/time), $U (current                url or filename), $[meta-name] (A meta-tag, such as $[author] to get                author meta tag)</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetHtml2Ps"></a>
+	<p></p>
+	<h3>setHtml2Ps</h3>
+	<div class="indent">
+		<p>
+		<code>void setHtml2Ps(
+string
+$in_html2ps)</code>
+		</p>
+	
+		<p class="linenumber">[line 413]</p>
+		<p align="center"><strong>Sets the path to the html2ps program
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_html2ps</b> 
+		- 
+		The html2ps program</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetMakeAbsoluteImageURLs"></a>
+	<p></p>
+	<h3>setMakeAbsoluteImageURLs</h3>
+	<div class="indent">
+		<p>
+		<code>void setMakeAbsoluteImageURLs(
+mixed
+$in_makeAbsoluteImageURLs, bool
+$in_makeAbsoluteImageUrls)</code>
+		</p>
+	
+		<p class="linenumber">[line 445]</p>
+		<p align="center"><strong>Sets the makeAbsoluteImageUrls variable
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">bool</span>
+		<b>$in_makeAbsoluteImageUrls</b> 
+		- 
+		Replace relative image                                        URLs in the input HTML                                        file with default domain?</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetPs2Pdf"></a>
+	<p></p>
+	<h3>setPs2Pdf</h3>
+	<div class="indent">
+		<p>
+		<code>void setPs2Pdf(
+string
+$in_ps2pdf)</code>
+		</p>
+	
+		<p class="linenumber">[line 428]</p>
+		<p align="center"><strong>Sets the path to the ps2pdf program
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_ps2pdf</b> 
+		- 
+		The ps2pdf program</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetPs2pdfIncludePath"></a>
+	<p></p>
+	<h3>setPs2pdfIncludePath</h3>
+	<div class="indent">
+		<p>
+		<code>void setPs2pdfIncludePath(
+string
+$in_ps2pdfIncludePath)</code>
+		</p>
+	
+		<p class="linenumber">[line 461]</p>
+		<p align="center"><strong>Sets the ps2pdfIncludePath() variable
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_ps2pdfIncludePath</b> 
+		- 
+		The include path for ps2pdf</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetScaleFactor"></a>
+	<p></p>
+	<h3>setScaleFactor</h3>
+	<div class="indent">
+		<p>
+		<code>void setScaleFactor(
+int
+$in_scale)</code>
+		</p>
+	
+		<p class="linenumber">[line 398]</p>
+		<p align="center"><strong>Sets the scale factor for the page.  Less than one makes it smaller,  greater than one enlarges it.
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">int</span>
+		<b>$in_scale</b> 
+		- 
+		Scale factor</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetTmpDir"></a>
+	<p></p>
+	<h3>setTmpDir</h3>
+	<div class="indent">
+		<p>
+		<code>void setTmpDir(
+string
+$in_path)</code>
+		</p>
+	
+		<p class="linenumber">[line 289]</p>
+		<p align="center"><strong>Set the temporary directory path
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_path</b> 
+		- 
+		The full path to the tmp dir</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetUnderlineLinks"></a>
+	<p></p>
+	<h3>setUnderlineLinks</h3>
+	<div class="indent">
+		<p>
+		<code>void setUnderlineLinks(
+bool
+$in_underline)</code>
+		</p>
+	
+		<p class="linenumber">[line 382]</p>
+		<p align="center"><strong>Sets the option to underline links or not
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">bool</span>
+		<b>$in_underline</b> 
+		- 
+		Links should be underlined?</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetUseColor"></a>
+	<p></p>
+	<h3>setUseColor</h3>
+	<div class="indent">
+		<p>
+		<code>void setUseColor(
+bool
+$in_useColor)</code>
+		</p>
+	
+		<p class="linenumber">[line 304]</p>
+		<p align="center"><strong>Set whether to use color or not when creating the page
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">bool</span>
+		<b>$in_useColor</b> 
+		- 
+		Use color?</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodsetUseCSS"></a>
+	<p></p>
+	<h3>setUseCSS</h3>
+	<div class="indent">
+		<p>
+		<code>void setUseCSS(
+bool
+$in_useCSS)</code>
+		</p>
+	
+		<p class="linenumber">[line 320]</p>
+		<p align="center"><strong>Set whether to try and use the CSS in the html page when creating  the pdf file
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">bool</span>
+		<b>$in_useCSS</b> 
+		- 
+		Use CSS found in html file?</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="method_dumpDebugInfo"></a>
+	<p></p>
+	<h3>_dumpDebugInfo</h3>
+	<div class="indent">
+		<p>
+		<code>void _dumpDebugInfo(
+string
+$in_info)</code>
+		</p>
+	
+		<p class="linenumber">[line 839]</p>
+		<p align="center"><strong>If debug is on it dumps the specified debug information to screen.  Uses
+</strong></p>
+<h4>Tags:</h4>
+<ul>
+	<li><b>access</b> - public</li>
+</ul>
+		
+
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$in_info</b> 
+		- 
+		The debug info</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+
+	<hr>
+	<a name="class_methods"></a>
+	<h2>Class Methods</h2>
+	</div>
+	<div id="credit">
+		<hr>
+		Documentation generated on Wed, 24 Nov 2004 13:09:40 -0800 by <a href="http://www.phpdoc.org">phpDocumentor 1.3.0RC3</a>
+	</div>
+</div>
+</body>
+</html>
