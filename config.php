@@ -15,7 +15,7 @@
 	/**
 	 * Don't change ! It's the current version !
 	 */
-    $config->applVersion = '2.1.1-unstable';
+    $config->applVersion = '2.1.1.1';
     $config->applName = 'openTimetool'.$config->applVersion;
     
     /**
@@ -26,11 +26,18 @@
     $config->logourl = 'http://sourceforge.net/projects/opentimetool/';
     
     /**
-    * AK : maxmimum number of users allowed for this in stallation
+    * AK : maxmimum number of users allowed for this installation
     * 
     * @var integer number of allowed users 
     */
     $config->numUsers = 999;
+    
+    /**
+    * AK : session timeout = auto logout
+    * 
+    * @var integer number in seconds
+    */
+    $config->sessionTimeout = 8*60*60;  // expire after 8 hours
   
     /**
     * Where to find the includes. Includes are all the external 
