@@ -269,7 +269,7 @@
     *        user authentication
     */                                                                        
     require_once('Auth/Auth.php');
-    $options = array(   'expire'        =>  5*60*60,    // expire after 5 hours
+    $options = array(  'expire'        =>  $config->sessionTimeout,    // expire after 8 hours (AK)
                         'protectRoot'   =>  $config->applPathPrefix.'/modules',
                         //'protect'       =>  array('/city/myrooms.php','/city/editRoom.php','imail'),
                         'dontProtect'   =>  array('*.css.*','/imprint','/manual','/remote'),
