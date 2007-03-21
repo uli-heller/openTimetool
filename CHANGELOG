@@ -1,5 +1,12 @@
+2.1.1.1
+- Some php notices eliminated
+- phpinfo.php now for diagnostic reasons part of the package
+- auto-logout time can now be configured in config.php (incl. overide of php.ini setting)
+  Well some people don't want to log out which is ok in a small safe environment ..
+- minor bugfixing
+
 2.1.1
-- Using now the original php4/php5 pear components for DB access
+- Using now the latest php4/php5 pear components for DB access (incl. in package)
 - Code completely revised for php5 comptibility
 - Deleted code for km-log; too special and not for everybod useful (yet incomplete  though)
 - Added default template for OpenOffice 2.0; OO 2.0 support 

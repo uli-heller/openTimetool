@@ -35,7 +35,7 @@
     $isAdmin = $user->isAdmin();
     // AK : added @ everywhere to avoid php notices ! if all fails $projectid is unset ...
     $projectId = @$_GET['projectId'] ? @$_GET['projectId'] : @$_POST['projectId'];
-
+	if(!$projectId && isset($_REQUEST['projectId'])) $projectId = $_REQUEST['projectId'];
 
     // do only allow manager and admins here!
     if (!$isAdmin && $projectId && !$projectMember->isManager($projectId)) {

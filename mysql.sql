@@ -393,7 +393,7 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (101, 'Zeit&uu
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (173, 'Zeit(en) gespeichert.', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (47, 'bis', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (39, 'Zeit', '0');
-INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (162, 'Diese Projekt ist an diesem Datum nicht mehr verf&uuml;gbar!', '0');
+INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (162, 'Diese Projekt ist an diesem Datum nicht mehr verf&uuml;gbar oder nur noch mit Adminberechtigungen zu ver&auml;ndern!', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (238, 'Dieses Login ist schon vergeben!', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (207, 'Das ist kein g&uuml;ltiger Zugangsname!', '0');
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES (236, 'Die Passw&ouml;rter stimmen nicht &uuml;berein!', '0');
@@ -775,7 +775,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (158, '(.{0,
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (159, 'You are not a team member of project: \'(.*)\'!', 1);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (160, 'The project is not available anymore, you must not remove the entry!', 0);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (161, 'You can not remove this user, because there are already times logged for him/her!', 0);
-INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (162, 'This project is not available at the date you specified!', 0);
+INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (162, 'This project is not available at the date you specified or not modifyable anymore without admin permissions!', 0);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (163, 'Please enter a valid email-address!', 0);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (164, 'You can not switch to admin-mode!', 0);
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES (165, 'A price for this entry does already exist', 0);

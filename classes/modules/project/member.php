@@ -260,11 +260,11 @@ print_r($managers);
             $removeIds = array();
             foreach ($users as $aUser) {
                 $applError->setOnce("{$aUser['_user_name']} {$aUser['_user_surname']} has already booked times on this project, user can't be removed!");
-                $removeIds[] = $aUser['id'];
+                $removeIds[] = $aUser['id'];  
             }
         }
 
-        if (sizeof($removeIds)) {
+        if ((isset($removeIds)) && sizeof($removeIds)) { // AK : isset added to avoid php notices
             foreach ($ids as $key=>$aId) {
                 if (in_array($aId,$removeIds)) {
                     unset($ids[$key]);
