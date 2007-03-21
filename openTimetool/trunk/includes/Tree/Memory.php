@@ -693,7 +693,9 @@ class Tree_Memory extends Tree_Common
                                         $this->walkReturn[] = $ret;
                                     }
                                     break;
-                    default:        $this->walkReturn.= $ret;
+                                    // AK : added isset and else; just guessing ...
+                    default:       if(isset($this->walkReturn)) $this->walkReturn.= $ret;
+                    				else $this->walkReturn[] = $ret; 
                                     break;
                 }
                 $this->_walk( $walkFunction , $value , $returnType );

@@ -208,7 +208,7 @@
                             <td>under</td>
                             <td>
                                 <select name="tree[move][dest_id]">
-                                    {%treeAsOptions(&$allFolders)%}
+                                    {%treeAsOptions($allFolders)%}
                                 </select>
                             </td>
                         </tr>

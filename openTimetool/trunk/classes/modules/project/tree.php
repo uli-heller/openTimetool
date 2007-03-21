@@ -224,6 +224,7 @@ class modules_project_tree extends Tree_Memory
         // check the valid-period of a project, only bookings within this time are allowed!!!
         foreach( $nodes as $aNode )
         {
+        
             if(
                 (
                     ($aNode['startDate']!=0 && $aNode['endDate']!=0) &&   // if the start and end date are given
@@ -241,6 +242,7 @@ class modules_project_tree extends Tree_Memory
                 )
             )
             {
+       
                 return false;
             }
         }
@@ -252,7 +254,7 @@ class modules_project_tree extends Tree_Memory
 
         // can the current user book on the project, for the given $timeToCompareTo
         // this is the 'X days'-thing, after how many days in a new month a project is closed
-        if ($this->isClosed( $node , $timeToCompareTo )) {
+        if ($this->isClosed( $node , $timeToCompareTo )) {      
             return false;
         }
                                  
@@ -329,6 +331,8 @@ class modules_project_tree extends Tree_Memory
         // this is the last possible date when booking was allowed on entries for the previous month(s)
         $_date = explode('.',Date_Calc::endOfPrevMonth('','','','%d.%m.%Y'));
         $lastPossibleDate = mktime( 23 , 59 , 59 , $_date[1] , $_date[0] , $_date[2] );
+//echo "//lpdbf : ".gmdate("M d Y H:i:s", $lastPossibleDate)." ->numdays=".$numDays."<p>";
+        
         // go thru all the days after the last day of last month to find all weekend days and
         // holidays, which will be added to numDays, since they are no working days
         $x = $numDays;  // so it doesnt influence the loop when we modify $numDays
@@ -348,7 +352,9 @@ class modules_project_tree extends Tree_Memory
 
         // the last date is the last one the loop had found
         $lastPossibleDate = $lastPossibleDate + ($i*24*60*60);
-
+		//echo "//lpd : ".gmdate("M d Y H:i:s", $lastPossibleDate)."<p>";
+		//echo "//now : ".gmdate("M d Y H:i:s", time())."<p>";
+		
         if( $lastPossibleDate < time() )
             return true;
 

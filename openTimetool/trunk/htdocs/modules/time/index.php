@@ -89,6 +89,7 @@
     require_once $config->classPath.'/modules/project/treeDyn.php';
     require_once $config->classPath.'/modules/project/member.php';
 
+
     if (isset($_POST['action_extendedFilter'])) {	// AK : isset to avoid php notice
     	// AK isset to avoid notices
     	//if(isset($session->temp->time)) 
@@ -109,10 +110,12 @@
     	$extendedFilter = null;
     $show = &$session->temp->time_index;
         
-
+//echo "0 data : ";print_r($data);echo"<p>"; 
+//echo "0 NewData : ";print_r($_REQUEST['newData']);echo"<p>"; 
     // those two lines handle the edit functionality
     $pageHandler->setObject($time);
     if (!$pageHandler->save( @$_REQUEST['newData'])) {  // AK : if newData not in REQUEST, save returns an empty object
+//echo "save false";
         $data = $pageHandler->getData();
         // convert the time and date, so the macro can show it properly ... do this better somehow
         // AK : use isset to avoid php notices
@@ -122,7 +125,7 @@
             $data['timestamp'] = mktime($_time[0],$_time[1],0,$_date[1],$_date[0],$_date[2]);
         }
     }
-
+//echo "1 : ";print_r($data);echo"<p>"; 
     // this handles the remove-functionality
     if (isset($_REQUEST['removeId'])) {   // AK : use isset to avoid php notices
         $time->remove($_REQUEST['removeId']);
@@ -138,7 +141,8 @@
         $show['user_id'] = $userAuth->getData('id');
     }
 
-
+//echo "2 : ";print_r($data);echo"<p>"; 
+//print_r($show);echo"<p>";
     if (isset($_REQUEST['action_showToday'])) {  // AK : use isset to avoid php notices
         unset($show['humanDateFrom']);
         unset($show['humanDateUntil']);
@@ -188,6 +192,7 @@
                
     $curUserId = $userAuth->getData('id');
     $isAdmin = $user->isAdmin();
+
 
     // getFiltered uses only some of the data in the show-array, but exactly those we need :-)
     // it takes care of stuff like user_ids, projectTree_ids, etc.

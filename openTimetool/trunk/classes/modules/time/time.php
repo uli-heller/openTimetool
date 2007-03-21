@@ -125,9 +125,11 @@ class modules_time extends modules_common
         // check if the project is available after checking if the user is a member, 
         // that's why this check is behind the one before :-)
 //print 'save: $projectTree->isAvailable( '.$data['projectTree_id'].' , '.$data['timestamp'].' )<br>';
+//echo gmdate("M d Y H:i:s", $data['timestamp']);
+//print_r($data);echo "<p>";
         if (!$projectTree->isAvailable( $data['projectTree_id'] , $data['timestamp'])) {
             /* dont show the period because the project might also be closed for the month where the user wants to log a time for
-               if we want to activate this again then we also have to check the closing date!!!!
+               if we want to activate this again then we also have to check the closing date!!!! 
             $project = $projectTree->getElement($data['projectTree_id']);
             $from = $util->convertTimestamp($project['startDate']);
             $until = $util->convertTimestamp($project['endDate']);
@@ -135,11 +137,12 @@ class modules_time extends modules_common
                 $msg = 'This project is only available '.($from?$from:'...').' through '.($until?$until:'...').'!' ;
             else
             */
-                $msg = 'This project is not available at the date you specified!';
+                $msg = 'This project is not available at the date you specified or not modifyable anymore without admin permissions!';
             $applError->setOnce($msg);
             return false;
         }
-                            
+
+		//echo "// we are after isAvail ...<br>";                            
 
         //
         //  prepare data and save
@@ -151,11 +154,14 @@ class modules_time extends modules_common
         if (isset($data['id'])) {
             $oldData = $this->get($data['id']);
         }
+        
         // if this entry is not the user's own entry, check if he is admin
         // if not he is not allowed to add a new entry
         // AK : eliminated php noctice with @
         if(@$data['id'] && $oldData['user_id']!=$curUserId && !$user->isAdmin()) {
-            $applError->set('You don\'t have the permission to edit this entry!');
+        	
+            $msg = 'You don\'t have the permission to edit this entry!';
+			$applError->setOnce($msg);            
             return false;
         }
         $ret = parent::save($data);

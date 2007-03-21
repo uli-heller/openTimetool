@@ -69,7 +69,7 @@ class vp_Application_SaveHandler extends HTML_Template_Xipe_Options
     function saveHandler( $data )
     {
         //$_REQUEST['newData'] = $this->beforeSave( $_REQUEST['newData'] );
-
+//echo "SAVEHANDLER!!<br>";print_r($data);echo"SH<br>";
         $getDataFromId = null;
         // shall the data be saved as new data?
         // remove the 'id' if the current data set shall be saved as a new one
@@ -96,12 +96,15 @@ class vp_Application_SaveHandler extends HTML_Template_Xipe_Options
                 }
                 else
                     $getDataFromId = $data['id'];
+                //echo "saved = true";
             }
             else    // if saving returned with false, return the given data and tell that saving failed
             {
                 $this->succeeded = false;
                 //$this->_error->set('Error - saving failed.');
-                return $data;
+                //echo "failed";
+                return $this->_object->getEmptyElement();  // AK : Seems that is much better !                								
+                //return $data;
             }
         }
 
@@ -117,7 +120,7 @@ class vp_Application_SaveHandler extends HTML_Template_Xipe_Options
         {
             return $this->_object->getEmptyElement();
         }
-
+//echo "saveHandler Ende ";print_r($curData);echo "<br>";
         return $curData;
     }
 
