@@ -37,7 +37,8 @@
     * 
     * @var integer number in seconds
     */
-    $config->sessionTimeout = 8*60*60;  // expire after 8 hours
+    $config->sessionTimeout = 8*60*60;  // expire after 8 hours -> you need to change session.gc_maxlifetime accordingly
+    ini_set('session.gc_maxlifetime',$config->sessionTimeout);  // overwriting option from php.ini
   
     /**
     * Where to find the includes. Includes are all the external 
