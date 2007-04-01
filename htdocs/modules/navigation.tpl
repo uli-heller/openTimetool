@@ -121,7 +121,7 @@
     the manual link 
     and the pdf download
 -->
-{%macro _manualLink()%}                                                                                                
+{%macro _manualLink()%}
     {global $config}
 
     {%redSquare()%}
