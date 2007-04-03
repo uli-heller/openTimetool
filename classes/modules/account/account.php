@@ -1,47 +1,51 @@
 <?php
-//
-//  $Id
-//
-//  Revision 1.10.2.2  2006/09/06 16:24:42  wk
-//  - retrieve numUsers from config now
-//
-//  Revision 1.10.2.1  2003/03/17 16:24:42  wk
-//  - take care of non ASP versions too
-//
-//  Revision 1.10  2003/01/29 16:21:30  wk
-//  - add prop accountChanged
-//
-//  Revision 1.9  2003/01/29 16:03:56  wk
-//  - if the accountName changes, force to get the data again!
-//
-//  Revision 1.8  2003/01/28 19:21:47  wk
-//  - do new account-name handling
-//  - reset account-values first
-//
-//  Revision 1.7  2003/01/28 15:18:34  wk
-//  - E_ALL stuff
-//
-//  Revision 1.6  2003/01/28 10:53:29  wk
-//  - account name is read from VPCUST
-//  - read tt-version from remote
-//
-//  Revision 1.5  2002/12/06 13:28:35  wk
-//  - default is 10 users
-//
-//  Revision 1.4  2002/11/30 18:36:09  wk
-//  - auto detect the account name by the subdomain
-//
-//  Revision 1.3  2002/11/29 16:52:49  wk
-//  - added setAccountName
-//  - show more debug info
-//
-//  Revision 1.2  2002/11/28 10:29:49  wk
-//  - made it work properly
-//
-//  Revision 1.1  2002/11/27 08:03:12  wk
-//  - initial commit
-//
-//
+/**
+* 	
+* 	Rev 1.11
+* 	$Id
+* 	- Various php-notices elimninated (AK)
+* 
+* 
+*   Revision 1.10.2.2  2006/09/06 16:24:42  wk
+*   - retrieve numUsers from config now
+* 
+*   Revision 1.10.2.1  2003/03/17 16:24:42  wk
+*   - take care of non ASP versions too
+* 
+*   Revision 1.10  2003/01/29 16:21:30  wk
+*   - add prop accountChanged
+* 
+*   Revision 1.9  2003/01/29 16:03:56  wk
+*   - if the accountName changes, force to get the data again!
+* 
+*   Revision 1.8  2003/01/28 19:21:47  wk
+*   - do new account-name handling
+*   - reset account-values first
+* 
+*   Revision 1.7  2003/01/28 15:18:34  wk
+*   - E_ALL stuff
+* 
+*   Revision 1.6  2003/01/28 10:53:29  wk
+*   - account name is read from VPCUST
+*   - read tt-version from remote
+* 
+*   Revision 1.5  2002/12/06 13:28:35  wk
+*   - default is 10 users
+* 
+*   Revision 1.4  2002/11/30 18:36:09  wk
+*   - auto detect the account name by the subdomain
+* 
+*   Revision 1.3  2002/11/29 16:52:49  wk
+*   - added setAccountName
+*   - show more debug info
+* 
+*   Revision 1.2  2002/11/28 10:29:49  wk
+*   - made it work properly
+* 
+*   Revision 1.1  2002/11/27 08:03:12  wk
+*   - initial commit
+* 
+**/
 
 /**
 *
@@ -89,7 +93,8 @@ class modules_account   // extends modules_common
         if(isset($session->accountName)) $oldAccountName = $session->accountName;
         else $session->accountName ='';
 
-        if ($oldAccountName!=$this->getAccountName()) {
+		// AK : eliminate php notice on first start
+        if (!isset($oldAccountName) || $oldAccountName!=$this->getAccountName()) {
             $this->accountChanged = true;
         }         
         // do also honor not asp versions, since they also need account data :-)
