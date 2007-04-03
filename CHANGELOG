@@ -1,3 +1,8 @@
+2.2
+- Some php notices eliminated
+- Invisible non-UTF8-chracters in navigator.tpl eliminated : 
+  caused a translation problem due to a php-5.2.1-bug in preg_replace
+
 2.1.1.1
 - Some php notices eliminated
 - phpinfo.php now for diagnostic reasons part of the package
