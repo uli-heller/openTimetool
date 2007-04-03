@@ -397,14 +397,16 @@
     // $session->temp
     // $session->accountData     read from the timetool_admin application
 
-    if( @$_REQUEST['setLayout'] )
+	// AK: Various php notices eliminated during initial start
+    if( isset($_REQUEST['setLayout']) )
         $session->layout = $_REQUEST['setLayout'];
-    if (!$session->layout && $config->runMode != 'live at v:p') {
+    if (!isset($session->layout) && $config->runMode != 'live at v:p') {
         $session->layout = 'demo';
     }
-    if ($session->layout) {
+    if (isset($session->layout)) {  
         $layout->setLayout($session->layout);
     }
+
 
 
     if( !$config->isLiveMode() ) $processingTimer->setMarker('init.php done');
