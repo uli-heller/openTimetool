@@ -390,6 +390,9 @@ class I18N_Messages_Translate extends Tree_OptionsDB
 
                 $_hashCode = md5($input);  
                 
+                // AK : temporary solution to overcome the translation problem with navigation bar
+                $intmp=$input;
+                
                 $input = preg_replace(  '/('.$begin.')'.$sourceString.'('.$end.')/sU'.$addModifier ,
                                         '$1'.$translated.'$'.($lastSubpattern+$numSubPatterns[0]) ,
                                         $input );
@@ -404,6 +407,12 @@ class I18N_Messages_Translate extends Tree_OptionsDB
                     $input = preg_replace(  '/('.$begin.')'.$htmlSourceString.'('.$end.')/sU'.$addModifier ,
                                             '$1'.$translated.'$'.($lastSubpattern+$numSubPatterns[0]) ,
                                             $input );
+                }
+
+                // AK : temporary solution to overcome the translation problem with navigation bar
+				if(sizeof($input) == 0)
+                {
+	        		$input = $intmp;              
                 }
 
             }
