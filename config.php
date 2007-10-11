@@ -1,21 +1,21 @@
 <?php
 	/**
-    *
-    *  $Id
-    *
-    * Anton Kejr (AK) :	This beast is called anytime by openTimetool/htdocs/.htaccess
-    *						via auto_prepend. Always keep that in mind !!
-    *
+	*
+	*  $Id
+	*
+	* Anton Kejr (AK) :	This beast is called anytime by openTimetool/htdocs/.htaccess
+	*						via auto_prepend. Always keep that in mind !!
+	*
 	*/
 
-	// AK : Just for documentation. That is builtin php stuff 
-	if (!class_exists("stdClass")) $config = new stdClass;
+    // AK : Just for documentation. That is builtin php stuff 
+    if (!class_exists("stdClass")) $config = new stdClass;
 
 
-	/**
+    /**
 	 * Don't change ! It's the current version !
 	 */
-    $config->applVersion = '2.2';
+    $config->applVersion = '2.2.0.1';
     $config->applName = 'openTimetool'.$config->applVersion;
     
     /**
@@ -66,7 +66,7 @@
     * @var string the DB connection parameters
     */
     $config->dbDSN              = 'mysql://<account>:<password>@localhost/openTimetool';
-    
+
     /**
     * This is the path to html2pdf, this application is needed
     * when you want to export your timesheets to pdf.
@@ -90,7 +90,8 @@
     * $config->$ps2pdfPath = '/usr/bin/ps2pdf';
     */
     $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
-                        
+
+
     /**
     * Automatically determined!    AK !!!!!WORKS only yet when not defined. Have to look on ...
     * This is the prefix of the path that leads to this application via a user agent.
@@ -102,16 +103,15 @@
     * 
     * @var string the application path prefix
     */
-//    $config->applPathPrefix     = '/openTimetool';   
-    
-    
+//    $config->applPathPrefix     = '/openTimetool';       
     /**
     * Automatically determined!		AK !!!!! WORKS only when not in yet 
     *
     */
-//    $config->applRoot           = $_SERVER['DOCUMENT_ROOT'].$config->applPathPrefix.'/htdocs';
-    
+//    $config->applRoot           = $_SERVER['DOCUMENT_ROOT'].$config->applPathPrefix.'/htdocs';  
 //    $config->finalizePage       = $_SERVER['DOCUMENT_ROOT'].$config->applPathPrefix.'/htdocs/finalize.php';
+
+
 
     /**
     * If there are additional things that need to be included, 
@@ -124,8 +124,9 @@
 
     /**
     * The various authentication parameters. This application can also
-    * use an authentication against an external source, this you can configure here.
-    * Please further down for more info ...
+    * use an authentication against an external source, but this isn't tested
+    * yet. So we don't include this information by now
+    * Please stay with this one for now :
     * 
     */
     $config->auth->method       =   'DB';
@@ -140,85 +141,9 @@
     * So dont change this here
     */
     $config->runMode = 'live';		// THIS IS THE NORMAL WORKING MODE !
-	//$config->runMode = 'develop';
+    //$config->runMode = 'develop';
 	
 	
-/*                        
-    // on the following lines you will find additional config options, that
-    // can be set for the application, just choose what you need and put it in the
-    // outside the commented part :-)
-    
-    // set the path which included always, like for PEAR, etc.
-    $config->includePath        =   dirname(__FILE__).'/includes_cvs'.':'.$config->includePath;
-
-    // DEFAULT CONFIG
-    $config->dbDSN              =   'mysql://root@localhost/timetool';
-
-    //
-    // ASP CONFIG
-    //
-    // If you want to run this application as an ASP version, which 
-    // means the authentication and control of the number of allowed users and
-    // so on is retreived from an external application, then you would need to 
-    // use one of the following parts to configure this. But this is too proprietary
-    // currently, since you would also need the external application, which v:p
-    // has not released as opensource. For further information please contact
-    // v:p directly.
-    // 
-    $config->dbDSN              =   'mysql://root@localhost/';
-
-    $config->backOffice->host   =   'localhost';
-    $config->backOffice->path   =   '/timetool_admin/htdocs/modules/remote/xmlrpc.php';
-    $config->backOffice->port   =   443;
-
-    $config->backOffice->host   =   'www.timetool.biz';
-    $config->backOffice->path   =   '/admin/modules/remote/xmlrpc.php';
-    $config->backOffice->port   =   443;
-    $config->backOffice->authUser = 'username';
-    $config->backOffice->authPassword = 'password';
-
-
-    $config->dbDSN              =   'mysql://root@localhost/timetool_asp';
-    $config->backOffice->host   =   'ashley.unix.vp';
-    $config->backOffice->path   =   '/timetool_admin/htdocs/modules/remote/xmlrpc.php';
-    $config->backOffice->authUser = '';
-    $config->backOffice->authPassword = '';
-
-    $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
-
-    //
-    // Here you can see different Auth methods.
-    // DB -  is the default mode, which also stores the password in the openTimetool
-    // database, all the others use an external auth method and the password is 
-    // not stored in the timetool DB!
-    // You can determine if the password is stored in the DB by setting the 
-    // options "savePwd" accordingly.
-    //
-    // Those are all just for authentication, the user itself HAS TO BE 
-    // added within the timetool too, only that you dont have to maintain
-    // her credentials in the openTimetool application, just the reference 
-    // to the Auth mode you choose.
-    // For more info on how to form the auth-url see the sf.net/projects/auth package
-    // or simply try it, its not that difficulty :-)
-    //
-    
-    $config->auth->method       =   'IMAP';
-    $config->auth->url          =   'pop3/notls://your.host.com:110';
-    $config->auth->digest       =   'none';
-    $config->auth->savePwd      =   false;
-
-    $config->auth->method       =   'DB';
-    $config->auth->url          =   $config->dbDSN;
-    $config->auth->digest       =   'md5';
-    $config->auth->savePwd      =   true;
-
-    $config->auth->method       =   'IMAP';
-    $config->auth->url          =   'pop3/notls://your.host.com:110';
-    $config->auth->digest       =   'none';
-    $config->auth->savePwd      =   true;
-
-    ini_set('error_reporting',E_ALL);
-*/    
 
 	// you may overwrite the above values in config by own ones ...
     $config_local = dirname(__FILE__).'/config-local.php';
