@@ -30,11 +30,11 @@
     *
     */
    
-    if (@$_REQUEST['resetAccountName']) {
+    if (isset($_REQUEST['resetAccountName'])) {
         $account->setAccountName();      
     }
-
-    if (@$_REQUEST['newData']['accountName']) {
+//var_dump($_REQUEST['newData']['accountName'])
+    if (isset($_REQUEST['newData']['accountName'])) {
         require_once $config->classPath.'/modules/remote/remote.php';
 
         $accountName = $_REQUEST['newData']['accountName'];

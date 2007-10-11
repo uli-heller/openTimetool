@@ -143,7 +143,10 @@ class modules_account   // extends modules_common
     {
         global $config;
 
-        return @$config->backOffice->host && @$config->backOffice->path;
+		// do it more propely, A:K, system worx
+		if(isset($config->backOffice->host) && isset($config->backOffice->path)) return true;
+        //return @$config->backOffice->host && @$config->backOffice->path;
+        return false;
     }
 
     /**

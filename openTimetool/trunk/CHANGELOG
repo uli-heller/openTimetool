@@ -1,3 +1,7 @@
+2.2.0.1
+- stripped the config.pgp : eliminated documentation of not yet tested auth methods
+- eliminated some trailing '@' in if clauses which led to problems on DSL (damend small linux)
+
 2.2
 - Some php notices eliminated
 - Invisible non-UTF8-chracters in navigator.tpl eliminated : 
