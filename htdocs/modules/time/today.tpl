@@ -148,5 +148,5 @@
     {if( !isset($data['id']) )}
         updateTime();
 
-    projectTree.init(true);
+   if (projectTreeLoaded) projectTree.init(true);
 </script>

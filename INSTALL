@@ -12,7 +12,13 @@ INSTALL
    - adjust the htdocs/.htaccess accordingly to your settings
      actually you will only need to adjust the "auto_prepend" option.
      you need to adjust the path to the openTimetool,.
-   - NOTE: in your apache configure the option "AllowOverride All" (i.e. /etc/httpd/httpd.conf) 
+   - NOTE: 
+       * in your apache configure the option "AllowOverride All" (i.e. /etc/httpd/httpd.conf) 
+       * if your apache uses php with the suhosin security extension (aka hardened php) 
+         installed, export to openoffice-templates wont't work unless you deactivate the 
+	 session-encryption: in your php-initfile
+	 (i.e. /etc/php/apache2-php5/ext-active/suhosin.ini) find and set 
+	 "suhosin.session.encrypt = Off"
 3. config-local.php
    - since version 2.1 the application needs to be configured using the config-local.php
      this file doesnt get delivered with the distribution, this has the advantage that 
