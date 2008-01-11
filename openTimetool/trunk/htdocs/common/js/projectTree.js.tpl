@@ -53,6 +53,9 @@
     </options>
 </HTML_Template_Xipe>
 
+/* flag to signal that the projecttree-info has been generated and loaded */
+var projectTreeLoaded = false;
+
 /**
 *   the constructor of the projectTree object
 *   @author     Wolfram Kriesing <wk@visionp.de>
@@ -396,3 +399,6 @@ if (typeof(events)=='undefined') {
         +"\r\n"+'<script src="{{$config->applPathPrefix}}/common/js/libs/js/classes/object/events.js"></script>'
         );
 }
+
+/* info has been written and loaded, the pages can init it */
+projectTreeLoaded = true;
