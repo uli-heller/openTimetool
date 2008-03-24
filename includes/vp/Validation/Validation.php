@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 *
 *   $Log: Validation.php,v $
@@ -42,7 +42,7 @@
 *   @package    vp_Validation
 *   @version    2002/05/03
 *   @access     public
-*   @author     Nadja Küsters <nk@vision.de>
+*   @author     Nadja Kï¿½sters <nk@vision.de>
 */
 
 
@@ -55,7 +55,7 @@ class vp_Validation
     *
     *   @version    2002/05/03
     *   @access     public
-    *   @author     Nadja Küsters <nk@visionp.de>
+    *   @author     Nadja Kï¿½sters <nk@visionp.de>
     *   @param      string    string to check
     *   @return     boolean   true on success, or false if it could not be set
     */
@@ -74,7 +74,7 @@ class vp_Validation
     *
     *   @version    2002/05/03
     *   @access     public
-    *   @author     Nadja Küsters <nk@visionp.de>
+    *   @author     Nadja Kï¿½sters <nk@visionp.de>
     *   @param      string      string to check
     *   @param      boolean     if true a value has to be given
     *   @return     boolean     true on success, or false if it could not be set
@@ -100,7 +100,7 @@ class vp_Validation
     *
     *   @version    2002/05/03
     *   @access     public
-    *   @author     Nadja Küsters <nk@visionp.de>
+    *   @author     Nadja Kï¿½sters <nk@visionp.de>
     *   @param      string    string to check
     *   @param      string    length of the string
     *   @return     boolean   true on success, or false if the length is wrong
@@ -123,7 +123,7 @@ class vp_Validation
     *
     *   @version    2002/05/03
     *   @access     public
-    *   @author     Nadja Küsters <nk@visionp.de>
+    *   @author     Nadja Kï¿½sters <nk@visionp.de>
     *   @param      string    string to check
     *   @param      string    length of the string
     *   @return     boolean   true on success, or false if the length is wrong
@@ -146,7 +146,7 @@ class vp_Validation
     *
     *   @version    2002/05/03
     *   @access     public
-    *   @author     Nadja Küsters <nk@visionp.de>
+    *   @author     Nadja Kï¿½sters <nk@visionp.de>
     *   @param      string    string to check
     *   @param      string    length of the string
     *   @return     boolean   true on success, else false
@@ -170,7 +170,7 @@ class vp_Validation
     *
     *   @version    2002/05/03
     *   @access     public
-    *   @author     Nadja Küsters <nk@visionp.de>
+    *   @author     Nadja Kï¿½sters <nk@visionp.de>
     *   @param      string    string to check
     *   @param      string    regular expression
     *   @return     boolean   true on success, else false
@@ -196,7 +196,7 @@ class vp_Validation
     *
     *   @version    2002/05/03
     *   @access     public
-    *   @author     Nadja Küsters <nk@visionp.de>
+    *   @author     Nadja Kï¿½sters <nk@visionp.de>
     *   @param      string    string to check
     *   @return     boolean   true on success, else false
     */
@@ -221,7 +221,7 @@ class vp_Validation
     *
     *   @version    2002/05/06
     *   @access     public
-    *   @author     Nadja Küsters <nk@visionp.de>
+    *   @author     Nadja Kï¿½sters <nk@visionp.de>
     *   @param      string    string to check
     *   @return     boolean   true on success, else false
     */
