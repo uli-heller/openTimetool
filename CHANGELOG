@@ -1,3 +1,8 @@
+2.2.0.2
+- added a readme for suhosin patch
+- added a if in htdocs to inform about possible suhosin problems
+- some minor bugfixes (some <? substituded by <?php).
+
 2.2.0.1
 - stripped the config.pgp : eliminated documentation of not yet tested auth methods
 - eliminated some trailing '@' in if clauses which led to problems on DSL (damend small linux)

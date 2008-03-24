@@ -339,7 +339,7 @@ but this works:
 // i wanted this filter so i dont always have to write { $x=7}, the space is what i need now, so it doesnt get an 'echo' inserted
 
         return preg_replace('/\{\$([a-zA-Z0-9_]*|'.
-                            '[a-zA-Z0-9_]*->[a-zA-Z0-9_]*\(.*)\}/',"<?=\$$1 ?>",$input);
+                            '[a-zA-Z0-9_]*->[a-zA-Z0-9_]*\(.*)\}/',"<?php echo \$$1 ?>",$input);
     }
 
     /**
@@ -354,7 +354,7 @@ but this works:
     */
     function applyHtmlEntites($input)
     {
-        return preg_replace( '/(<\?php=|<\?=)\$(.*)\?>/sU' , '<? echo htmlentities($$2)?>' , $input );   //"
+        return preg_replace( '/(<\?php=|<\?=)\$(.*)\?>/sU' , '<?php echo htmlentities($$2)?>' , $input );   //"
     }
 
     /**
