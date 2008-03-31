@@ -1,8 +1,13 @@
-2.2.0.2
-- added a readme for suhosin patch
-- added a if in htdocs to inform about possible suhosin problems
+2.2.0.3
+- added a readme for suhosin patch (aka hardened php)
+- added an "if" in htdocs to inform about possible suhosin problems
 - some minor bugfixes (some <? substituded by <?php).
 
+2.2.0.2
+- Javascript bugfix implemented (loading Project trees)
+- Update install: New info how OOo-export will work by using php and
+  the suhosin security extension (aka hardened php) is added 
+  
 2.2.0.1
 - stripped the config.pgp : eliminated documentation of not yet tested auth methods
 - eliminated some trailing '@' in if clauses which led to problems on DSL (damend small linux)
