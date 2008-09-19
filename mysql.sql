@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 19. September 2008 um 14:46
+-- Erstellungszeit: 19. September 2008 um 15:04
 -- Server Version: 5.0.45
 -- PHP-Version: 5.2.6
 
@@ -226,8 +226,7 @@ CREATE TABLE IF NOT EXISTS `projectTree` (
 
 INSERT INTO `projectTree` (`id`, `name`, `l`, `r`, `parent`, `comment`, `startDate`, `endDate`, `roundTo`, `fixedPrice`, `close`, `maxDuration`) VALUES
 (1, 'Root', 1, 8, 0, '', NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'My project', 2, 7, 1, '', 0, 0, NULL, NULL, NULL, NULL),
-(15, 'ProjektNeu', 3, 4, 4, '', 1221775200, 0, NULL, NULL, NULL, NULL);
+(4, 'My project', 2, 7, 1, '', 0, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -249,8 +248,7 @@ CREATE TABLE IF NOT EXISTS `projectTree2user` (
 --
 
 INSERT INTO `projectTree2user` (`id`, `projectTree_id`, `user_id`, `isManager`) VALUES
-(1, 4, 1, 1),
-(23, 15, 1, 1);
+(1, 4, 1, 1);
 
 -- --------------------------------------------------------
 
