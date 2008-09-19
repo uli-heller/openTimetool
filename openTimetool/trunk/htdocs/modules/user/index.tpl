@@ -1,4 +1,9 @@
 <!--
+	$Id
+	
+	Revision 1.15 ak
+	- password reset checkbox
+
     $Log: index.tpl,v $
     Revision 1.14  2003/02/13 16:19:20  wk
     - send info mail field
@@ -61,9 +66,20 @@
         {%EditData_input($data,'login',t('login').' *')%}
 
         {if($config->auth->savePwd)}
-            {%EditData_password('password',t('password').' *')%}
-            {%EditData_password('password1',t('repeat password').' *')%}
+            {%EditData_password('password',t('password').' ')%}
+            {%EditData_password('password1',t('repeat password').' ')%}
 
+		<tr>
+			<td colspan="2">
+				If you check the subsequent option, the user gets a new random password and will be notified by mail.
+			</td>
+		</tr>
+        <tr>
+            <td>reset password</td>
+            <td>
+                <input type="checkbox" name="newData[ResetPassword]" value="1"/>
+            </td>
+        </tr>
         <tr>
             <td>is admin</td>
             <td>

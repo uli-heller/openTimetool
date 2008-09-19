@@ -114,6 +114,12 @@
             </tr>
 
             <tr>
+                <th>
+                    <input type="checkbox" name="InheritTeam" value="1"/> Inherit team from parent project '{$parentProject}'
+                </th>                
+           </tr>
+
+            <tr>
                 <td colspan="3" align="center">
                     <input type="Submit" name="action_save" value="Save" class="button" onClick="selectRelevant()"/>
                     <input type="button" value="Cancel" onClick="window.location='{$_SERVER['PHP_SELF']}'" class="button"/>
