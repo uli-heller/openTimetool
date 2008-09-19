@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 13. September 2008 um 18:14
+-- Erstellungszeit: 19. September 2008 um 14:46
 -- Server Version: 5.0.45
 -- PHP-Version: 5.2.6
 
@@ -225,8 +225,9 @@ CREATE TABLE IF NOT EXISTS `projectTree` (
 --
 
 INSERT INTO `projectTree` (`id`, `name`, `l`, `r`, `parent`, `comment`, `startDate`, `endDate`, `roundTo`, `fixedPrice`, `close`, `maxDuration`) VALUES
-(1, 'Root', 1, 6, 0, '', NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'My project', 2, 5, 1, '', 0, 0, NULL, NULL, NULL, NULL);
+(1, 'Root', 1, 8, 0, '', NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'My project', 2, 7, 1, '', 0, 0, NULL, NULL, NULL, NULL),
+(15, 'ProjektNeu', 3, 4, 4, '', 1221775200, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -248,7 +249,8 @@ CREATE TABLE IF NOT EXISTS `projectTree2user` (
 --
 
 INSERT INTO `projectTree2user` (`id`, `projectTree_id`, `user_id`, `isManager`) VALUES
-(1, 4, 1, 1);
+(1, 4, 1, 1),
+(23, 15, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -259,14 +261,14 @@ INSERT INTO `projectTree2user` (`id`, `projectTree_id`, `user_id`, `isManager`) 
 CREATE TABLE IF NOT EXISTS `projectTree2user_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Daten für Tabelle `projectTree2user_seq`
 --
 
 INSERT INTO `projectTree2user_seq` (`id`) VALUES
-(22);
+(23);
 
 -- --------------------------------------------------------
 
@@ -277,14 +279,14 @@ INSERT INTO `projectTree2user_seq` (`id`) VALUES
 CREATE TABLE IF NOT EXISTS `projectTree_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Daten für Tabelle `projectTree_seq`
 --
 
 INSERT INTO `projectTree_seq` (`id`) VALUES
-(14);
+(15);
 
 -- --------------------------------------------------------
 
@@ -622,8 +624,8 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (286, 'Password r&uuml;cksetzen', '0'),
 (287, 'Team aus ''$1'' &uuml;bernehmen', '0'),
 (290, 'Benutzer', '0'),
-(291, 'Neues Passwort', '0'),
-(292, 'Passwort &auml;ndern', '0');
+(291, 'Passwort', '0'),
+(292, '&auml;ndern', '0');
 
 -- --------------------------------------------------------
 
@@ -900,8 +902,8 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (286, 'reset password', 0),
 (287, 'Inherit team from parent project ''(.*)''', 1),
 (290, 'User', 0),
-(291, 'New Password', 0),
-(292, 'Change Password', 0);
+(291, 'Password', 0),
+(292, 'change', 0);
 
 -- --------------------------------------------------------
 
