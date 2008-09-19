@@ -15,10 +15,12 @@ INSTALL
    - NOTE: 
        * in your apache configure the option "AllowOverride All" (i.e. /etc/httpd/httpd.conf) 
        * if your apache uses php with the suhosin security extension (aka hardened php) 
-         installed, export to openoffice-templates wont't work unless you deactivate the 
-	 session-encryption: in your php-initfile
-	 (i.e. /etc/php/apache2-php5/ext-active/suhosin.ini) find and set 
-	 "suhosin.session.encrypt = Off"
+         installed, export to openoffice-templates wont't work unless you deactivate the session-encryption: in your php-initfile
+         (i.e. /etc/php/apache2-php5/ext-active/suhosin.ini) find and set "suhosin.session.encrypt = Off"
+         But as there are principle problems with suhosin, please read the according README as
+         well!!
+       * if you run on a server with safemode=on, there are even more problems. Check the  
+         according readme.
 3. config-local.php
    - since version 2.1 the application needs to be configured using the config-local.php
      this file doesnt get delivered with the distribution, this has the advantage that 

@@ -55,7 +55,7 @@
     $config->availableLanguages = array(
                                 'en'=>  array('language'=>'english','flag'=>'uk')
                                 ,'de'=>  array('language'=>'deutsch','flag'=>'germany')
-                                ,'es'=>  array('language'=>'espa&ntilde;ol','flag'=>'spain')
+                                //,'es'=>  array('language'=>'espa&ntilde;ol','flag'=>'spain')
                                 //,'fr'=>  array('language'=>'french','flag'=>'france')
                                 );
 
@@ -430,6 +430,7 @@
                     
                     ,'modules/user/adminMode'   =>  array('pageHeader'=>'Admin mode')
                     ,'modules/user/login'       =>  array('pageHeader'=>'Login')
+                    ,'modules/user/password'    =>  array('pageHeader'=>'Change Password')
                     ,'modules/user'             =>  array('pageHeader'=>'users')
 
                     ,'modules/imprint/index'    =>  array('pageHeader'=>'Thanks')

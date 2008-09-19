@@ -1,3 +1,12 @@
+2.2.1
+- eliminated spanish language by now as we don't have a native speaker anymore
+- Password reset : Admin can reset the password of a user. The user gets a random new one
+  sent by mail.
+- User may change now his password after successfull login
+- Team inheritance from parent project by checkbox in team edit form
+- Upgrade-readme and language files as seperate sql-files for import
+   
+
 2.2.0.3
 - added a readme for suhosin patch (aka hardened php)
 - added an "if" in htdocs to inform about possible suhosin problems

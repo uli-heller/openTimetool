@@ -1,0 +1,27 @@
+Some notes concerning upgrade of an old version of openTimetool
+
+Upgrade is a simple process :
+
+1) save your current config.php
+2) save your current htdocs/.htaccess
+3) overwrite all files with the new ones
+4) merge your saved config.php & .htaccess to the new one currently overwritten
+5) use phpMyAdmin to import the 2 language files translate_de.sql and translate_en.sql
+
+After these steps you should have the new version up and running
+
+
+
+############## German version ##############
+
+Upgrade ist ein einfacher Prozess :
+
+1) Sicherung von config.php
+2) Sicherung von htdocs/.htaccess
+3) Überschreiben aller Dateien durch die Dateien der neuen Version
+4) Übernahme der loaklen Einstellungen aus den gesicherten Dateien 
+   config.php & .htaccess in die gerade neue installierten Dateien
+5) Import der Sprachdateien translate_de.sql und translate_en.sql mittels
+   phpMyAdmin
+   
+Danach sollte das System in der neuen Version laufen.

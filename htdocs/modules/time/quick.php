@@ -75,7 +75,7 @@
     $lastTimes = $time->getAll(0,5);
 //print_r($lastTimes);
 
-    $lastTime = $lastTimes[0];
+    $lastTime = @$lastTimes[0];
     $isAdmin = $user->isAdmin();
     $projectTreeJsFile = 'projectTree'.($isAdmin?'Admin':'');
 

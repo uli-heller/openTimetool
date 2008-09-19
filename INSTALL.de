@@ -15,14 +15,18 @@ INSTALLATION
     setzen Sie in Ihrer php-Initdatei (z.B. 
     /etc/php/apache2-php5/ext-active/suhosin.ini) die Zeile
     "suhosin.session.encrypt = Off"
+    Bitte auch das Suhosin.README beachten, da es prinzipiell Probleme mit diesem
+    Patch gibt !!!
+    Desweiteren gibt es Einschränkungen bei Safemode=On. Siehe README dafür.
 - Passen Sie die config.php ebenfalls entsprechend an, alle zu ändernden Werte
   sind in dieser Datei (config.php) beschrieben.
 - Erstellen Sie für jede Sprache die Sie in openTimetool verwenden wollen einen 
   "symbolic link" auf das htdocs-Verzeichnis, auch für englisch!
-  Sie müssen einen "symbolic link" auf das htdocs-Verzeichnis mit der jeweils 
-  benötigten Sprache anlegen (am besten machen Sie das gleich für alle Sprachen).
+  Sie müssen im Verzeichnis "htdocs" einen "symbolic link" auf das htdocs-Verzeichnis 
+  mit der jeweils benötigten Sprache anlegen (am besten machen Sie das gleich für alle 
+  Sprachen).
   Vorgehensweise:
-    cd /in/ihr/openTimetool
+    cd </in/ihr/openTimetool>/htdocs
     ln -s . de (symbolic link für deutsch)
     ln -s . en (symbolic link für englisch)
     ln -s . es (symbolic link für spanisch)
