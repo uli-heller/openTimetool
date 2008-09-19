@@ -40,12 +40,14 @@
     {
         $data = $pageHandler->getData();
     }
+
         
     $user->preset();
     $user->setWhere();
     $nextPrev = new vp_Application_HTML_NextPrev($user);
     $nextPrev->setLanguage( $lang );
     $users = $nextPrev->getData();
+
 
     require_once($config->finalizePage);
 

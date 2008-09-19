@@ -1,6 +1,10 @@
 <?php
     //
     //  $Log: navigation.php,v $
+    //
+    //  Revision 1.29 $id 
+    //  - added passord chaneg navigation
+    //
     //  Revision 1.28.2.1  2003/03/17 16:23:53  wk
     //  - some bugfixes in the navi, it was showing project/team also for non-manager
     //
@@ -76,7 +80,7 @@
     //
     //  Revision 1.5  2002/08/14 16:19:33  wk
     //  - removed old navi-stuff
-    //  - added menu item 'prices'
+    //  - added Info e-mail sent tomenu item 'prices'
     //
     //  Revision 1.4  2002/07/25 11:56:15  wk
     //  - added graphMode to url
@@ -213,6 +217,15 @@
                     'children'=>array(
                         array(  'name'  =>  'Login',
                                 'url'   =>  '/index.php'
+                            )
+                        )
+                ),
+
+            array(  'name'  =>  'Password',
+                    'condition'=>   $isLoggedIn && !$account->isAspVersion() ,
+                    'children'=>array(
+                        array(  'name'  =>  'change',
+                                'url'   =>  '/modules/user/password.php'
                             )
                         )
                 ),

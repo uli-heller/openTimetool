@@ -42,16 +42,68 @@
         require_once 'HTTP/Header.php';
         HTTP_Header::redirect();
     }
+	
 
 	// AK : use isset instead of just checking if true ...
     if (isset($_POST['action_save'])) {
-        if ($projectMember->updateSpecial(@$_POST['members'],@$_POST['managers'],@$projectId)) {
-            unset($projectId);
-        }
+    	/**
+    	 * If team inheritance is selected, we'll retrieve the members from parent project 
+    	 * and add them here. 
+    	 */
+    	if (isset($_REQUEST['InheritTeam'])) {
+			$parentId = $projectTreeDyn->getParentId($projectId);
+
+        	$user->reset();
+	        // select only what we really need
+    	    $user->setSelect('id,name,surname');
+        	$user->addSelect(TABLE_PROJECTTREE2USER.'.id');
+	        $user->addSelect(TABLE_PROJECTTREE2USER.'.isManager as isManager');
+    	    $user->addSelect(TABLE_PROJECTTREE2USER.'.projectTree_id as projectTree_id');      
+        	$user->setLeftJoin(TABLE_PROJECTTREE2USER,'user_id='.TABLE_USER.'.id AND projectTree_id='.$parentId );
+	        $users = $user->getAll();
+	        // debug :
+			//$applError->set(print_r($users,true).'<br>');	        
+	        $managers = array();
+    	    $members = array();
+        	foreach ($users as $key=>$aUser) {
+            	if ($aUser['isManager']) {
+                	$managers[] = $aUser['id'];
+	                unset($users[$key]);
+    	        } elseif( $aUser['projectTree_id'] == $parentId ) {
+        	        $members[] = $aUser['id'];
+            	    unset($users[$key]);
+	            }
+    	    }
+    	    // debug
+			//$applError->set(print_r($managers,true).'<br>');
+			//$applError->set(print_r($members,true).'<br>');
+
+
+        	if ($projectMember->updateSpecial(@$members,@$managers,@$projectId)) {
+            	unset($projectId);
+        	}    		
+		// EOF team inheritance
+		}  else  {  
+			  	
+        	if ($projectMember->updateSpecial(@$_POST['members'],@$_POST['managers'],@$projectId)) {
+            	unset($projectId);
+        	}
+    	}
     }
 
     if (isset($projectId)) {
         $curProject = $projectTreeDyn->getPathAsString( $projectId );
+
+		/**
+		 * SX : Get the parent project
+		 */
+		//$parentId = $projectTreeDyn->getParentId($projectId);
+		$tmpsplit = explode(' | ',$curProject);
+		if(!is_array($tmpsplit) || count($tmpsplit)==1) {
+			$parentProject = $curProject;
+		} else {
+			$parentProject = $tmpsplit[count($tmpsplit)-2];
+		}
 
         $user->reset();
         // select only what we really need

@@ -366,7 +366,7 @@ print_r($managers);
                	$manages[$aMember['projectTree_id']] = $aMember;
         }
 
-        if( $projectId == null && sizeof($manages) )
+        if( $projectId == null && isset($manages) )   // AK : isset due to notice
             return true;
         if( $projectId && isset($manages[$projectId]) )  // AK : isset due to notice
             return true;
