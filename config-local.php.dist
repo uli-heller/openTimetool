@@ -5,6 +5,7 @@
     * It is included (in the init.php) after the defaults are set so you 
     * can 'override' any option in here.
     * This file is included in the distribution as 'config-local.php.dist'.
+    * Just rename it to 'config-local.php' to activate it.
     *
     * @version $Id$
     */
@@ -14,7 +15,7 @@
     *
     * @var string the DB connection parameters
     */
-    $config->dbDSN              = 'mysql://root@localhost/openTimetool';
+    $config->dbDSN              = 'mysql://<account>:<password>@localhost/openTimetool';
     
     /**
     * This is the path to html2pdf, this application is needed
