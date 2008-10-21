@@ -228,36 +228,41 @@
     //  CSV export
     //
     if (isset($_REQUEST['action_toCsvOOo']) || isset($_REQUEST['action_toCsvXsl'])) {        
-            if ($_REQUEST['action_toCsvXsl']) {
+            if (isset($_REQUEST['action_toCsvXsl'])) {
                 $extension = '.xls.csv';
             } else {  
-                $extension = '.odc.csv';   // AK : use the OO2 suffix from now on. 
+                $extension = '.ods.csv';   // AK : use the OO2 suffix from now on. 
             }
 
             $filenamePrefix = $config->exportDir.'/'.md5(time().session_id());
             $filename = $filenamePrefix.$extension;
-            
+
+			$seperator = trim($config->seperator);
+			if(empty($seperator)) $seperator = ';'; 
+ //print_r($times);           
             ob_start();
             $keys = array();
             foreach ($times[0] as $key=>$x) {
-                if ($key=keyValue($key)) {
-                    $keys[] = $key;
+                if ($key=keyValue($key)) {                	
+                	// sx : well I think I'll never understand that encoding stuff completely :-( ......
+                	$tmp = html_entity_decode($key,ENT_NOQUOTES, 'ISO8859-1');  // we have html encoded strings in the german language file
+                    $keys[] = iconv(iconv_get_encoding('input_encoding'),'ISO-8859-1',$tmp);;  // we have html encoded strings in the german language file
                 }
             }
-            print implode(',',$keys)."\r\n";
-            
+            print implode($seperator,$keys)."\r\n";
+
             foreach ($times as $aTime) {
                 $data = array();
                 foreach ($aTime as $key=>$oneEntry) {
                     if (($oneEntry=keyValue($key,$oneEntry))!==false) {
-                        $data[] = $oneEntry;
+                        	$data[] = $oneEntry;                   	
                     }
                 }
-                print implode(',',$data)."\r\n";
+                print implode($seperator,$data)."\r\n";
             }
             $content = ob_get_contents();        
-            ob_end_clean();   
-            
+            ob_end_clean();            
+//die();            
             if ($fp = fopen( $filename , 'w' )) {
                 fwrite( $fp , $content );
                 fclose( $fp );
@@ -274,17 +279,21 @@
     */
     function keyValue($key,$val=null)
     {
-        global $projectTreeDyn,$dateTime;
+        global $projectTreeDyn,$dateTime,$time,$config;
     
         $mapkeys = array(   '_projectTree_id'   =>  'project'
                             ,'_user_name'       =>  'name'
                             ,'_user_surname'    =>  'surname'
                             ,'_task_name'       =>  'task'
-                            ,'timestamp'        =>  'time'
+                            ,'timestamp'        =>  '"date";"time"'  // SX :very tricky 4 spliting in 2 columns
+                            ,'durationSec'        =>  'duration'  //SX : we are now using durationSec instead if duration -> better 4 calculation in Excel
                         );
         $dropKeys = array(  '_projectTree_','_user_','_task_','_canEdit','id',
-                            'user_id','projectTree_id','task_id','durationSec'
-                        );                        
+                            'user_id','projectTree_id','task_id','duration'  //SX : see remark above
+                        );              
+                        
+		$seperator = trim($config->seperator);
+		if(empty($seperator)) $seperator = ';';                                   
         
         if (isset($mapkeys[$key]) && $mapkeys[$key]===false) {
             return false;
@@ -304,8 +313,15 @@
                     $ret = $projectTreeDyn->getPathAsString($val);     
                     break;
                 case 'timestamp':
-                    $ret = $dateTime->format($val);     
+                	// sx: we split the date-time-string in 2 columns now ...
+					$ret = array();                	
+                    //$ret = $dateTime->format($val);
+                    $ret[] = $dateTime->formatDate($val);     
+                    $ret[] = $dateTime->formatTime($val);                              
                     break;
+                case 'durationSec':
+                	$ret = $time->_calcDuration($val,'decimal');  // sx: using durationSec now -> get the decimal calculation as hours
+                	break;
             }
         } else {
             if (isset($mapkeys[$key])) {
@@ -314,13 +330,33 @@
                 $ret = $key;
             }
             $ret = t($ret); // translate the headline
+            return $ret;
         }
-        // remove line feeds, by spaces
-        $ret = str_replace("\r\n"," ",$ret);
-        // replace " by double ""
-        $ret = str_replace('"','""',$ret);
-        $ret = "\"$ret\"";
+        
+        if(is_array($ret)) {
+        	$rets = '';
+        	foreach($ret as $r) {
+        		if(!empty($rets)) $rets .= $seperator;
+        		$rets .= _cleanfield($r);
+        	}
+        	$ret = $rets;
+        } else {
+        	$ret = _cleanfield($ret);
+        }
+        
         return $ret;
     }
+    
+function _cleanfield($ret,$simple=false) {
+       // remove line feeds, by spaces
+        $ret = str_replace("\r\n"," ",$ret);
+        // replace " by double ""
+        if(!$simple) {
+        	$ret = str_replace('"','""',$ret);
+        	$ret = "\"$ret\"";
+        }
+        
+        return $ret;
+}    
 
 ?>

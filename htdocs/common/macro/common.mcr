@@ -97,6 +97,26 @@
     onBlur="autoCorrectDate('{$formName}','{$name}' , {$setTodayIfEmpty?'true':'false'} )">
     {$T_after}
 
+
+<!--
+    show an input field with the given and the calendar popup for mobile access
+    we don't need the calendar there as usually no jscript is working
+    so this one is much simpler ......
+
+    @param  string  the input value name
+    @param  string  the current value
+    @param  string  the name of the form in which the input field will be used
+-->
+{%macro common_dateInput_mobile( $name , $value=0 , $formName='editForm' , $setTodayIfEmpty=false )%}
+    {global $util}
+
+    <input  name="{$name}"
+    value="{echo $value?date('d.m.Y',$util->makeTimestamp($value)):''}"
+    size="10"
+    onBlur="autoCorrectDate('{$formName}','{$name}' , {$setTodayIfEmpty?'true':'false'} )">
+
+
+
 <!--
     show an input field for entering a time
 
@@ -150,6 +170,21 @@
         <td>comment</td>
         <td>
             <textarea name="{$name}" cols="50" rows="5">{$currentComment}</textarea>
+        </td>
+    </tr>
+
+
+<!--
+    shows a table row with a textarea for a comment for mobile devices
+
+    @param  string  a value to preset the textarea
+    @param  string  the name used for the textarea
+-->
+{%macro common_commentRowMobile($currentComment='',$name='newData[comment]')%}
+    <tr>
+        <td>comment
+        <br>
+            <textarea name="{$name}" cols="25" rows="5">{$currentComment}</textarea>
         </td>
     </tr>
 

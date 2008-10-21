@@ -36,6 +36,13 @@
         HTTP_Header::redirect($config->home);
     } else {
         unset($session->temp);      // remove all the temporary session data, mostly user specific, like the filter-settings for the overview page
+        /*
+         * SX : not very nice, but when we call this mobile time page, we use a login-page without
+         * any decorations. Just the pure 2 input fields. That is suitable and great for mobile access
+         */
+   		if((basename($userAuth->getRequestedUrl()) == 'mobile.php')) {
+    		$layout->setMainLayout('/modules/dialog');   // to get the page with all that stuff around
+    	}          
     }
 
     $showLogin = ($account->isAspVersion() && $session->account->isActive)||!$account->isAspVersion()?true:false;
