@@ -50,7 +50,7 @@
     
     // AK : the only use I found up to now is '$config->isLiveMode()' which simply returns true
     //		if the runmode set in config.php is in that array !?!?! 
-    $config->setOption('liveModes',array('live','develop-live','live at home','anton.kejr@tiscali.de'));
+    $config->setOption('liveModes',array('live','develop-live','live at home','anton.kejr@system-worx.de'));
 
     $config->availableLanguages = array(
                                 'en'=>  array('language'=>'english','flag'=>'uk')
@@ -87,7 +87,7 @@
     }
 
     // save the current language in the session
-    if (!$_SESSION['lang']) {
+    if (!isset($_SESSION['lang'])) {
         session_register('lang');
     } else {   // since the class is read from the session it is not automatically made global
         $lang = &$_SESSION['lang'];
@@ -113,6 +113,7 @@
     $applError      = new vp_Page_Error(null,$options);
     $applMessage    = new vp_Page_Message();
 
+
 	/**
     * prepare the account, the constructor does that automatically
     */ 
@@ -131,6 +132,20 @@
         $config->tablePrefix = @$session->account->data['tablePrefix'] ? @$session->account->data['tablePrefix'] : '';
         $config->dbDSN .= @$session->account->data['dbName'] ? @$session->account->data['dbName'] : '_fallback';
     }
+
+	/**
+	 * SX : mobile extension
+	 * If called with mobile_log in URL we redirect to htdocs/<language>/modules/time/mobile.php 
+	 */
+	$pos = stripos($_SERVER['PHP_SELF'], 'mobile_login');
+
+	// if $pos === true : we got it and redirect 
+	if ($pos === true) {
+		//print_r($config->applRoot.'/modules/time/mobil.php'); die();
+    	HTTP_Header::redirect($config->applRoot.'/modules/time/mobile.php',false);
+	}
+
+
 
     /**
     *        DB-table defines
@@ -267,7 +282,7 @@
 */
     /**
     *        user authentication
-    */                                                                        
+    */                                                                  
     require_once('Auth/Auth.php');
     $options = array(  'expire'        =>  $config->sessionTimeout,    // expire after 8 hours (AK)
                         'protectRoot'   =>  $config->applPathPrefix.'/modules',
@@ -393,6 +408,7 @@
     //$appTimer->setMarker('end of config.php');
 
 
+
     // what kind of data do exist in the session:
     // $session->temp
     // $session->accountData     read from the timetool_admin application
@@ -400,7 +416,8 @@
 	// AK: Various php notices eliminated during initial start
     if( isset($_REQUEST['setLayout']) )
         $session->layout = $_REQUEST['setLayout'];
-    if (!isset($session->layout) && $config->runMode != 'live at v:p') {
+    if (!isset($session->layout) && $config->runMode != 'live at v:p') {  
+    	// well that live at v:p makes the window red; we'll never use that ;-)
         $session->layout = 'demo';
     }
     if (isset($session->layout)) {  
@@ -415,6 +432,7 @@
                     'modules/time/summary'      =>  array('pageHeader'=>'Summary')
                     ,'modules/time/multi'       =>  array('pageHeader'=>'Multi-Log','manualChapter'=>'log_multiLog')
                     ,'modules/time/quick'       =>  array('pageHeader'=>'Quick-Log','manualChapter'=>'log_quickLog')
+                    ,'modules/time/mobile'       =>  array('pageHeader'=>'Mobile-Log','manualChapter'=>'log_mobileLog')                    
                     ,'modules/time/holiday'     =>  array('pageHeader'=>'Period-Log','manualChapter'=>'log_periodLog')
                     ,'modules/time/today'       =>  array('pageHeader'=>'Today-Log','manualChapter'=>'log_todayLog')
                     ,'modules/time/index'       =>  array('pageHeader'=>'time overview and filter','manualChapter'=>'analyze')

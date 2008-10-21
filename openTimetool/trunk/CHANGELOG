@@ -1,3 +1,16 @@
+2.2.2
+- added feature for mobile access
+  Call openTimetool with http://<server>/<ott-installdir>/mobile_login
+  You'll get then a login form and afterwards a simplified variant of quick-log 
+  without any window decorations and without JavaScript except for the button
+  to manually reset the time field. So this button only will work on browsers
+  of mobile devices who can handle that click event by JavaScript.  
+  See also new Readme : mobile_access
+- csv-export : field seperator can now be set in config.php. default = ';'
+  date and time splitted in 2 columns
+  duration column now in decimal notation (i.e. 1,5 instead of 1:30)
+  comment column now as last one behind duration
+
 2.2.1
 - eliminated spanish language by now as we don't have a native speaker anymore
 - Password reset : Admin can reset the password of a user. The user gets a random new one

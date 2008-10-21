@@ -52,3 +52,21 @@
         </td>
     </tr>
 
+
+<!--
+    shows a table row with a drop down box to select a task
+    Only one column as we use it in mobile log only
+
+    @param  array   the result of $task->getAll()
+    @param  int     the id of the selected task
+    @param  string  the name used for the select box
+-->
+{%macro task_row_mobile(&$allTasks,$selectedTask=0,$name='newData[task_id]')%}
+    <tr>
+        <td>Task
+        <br>
+            <select name="{$name}">
+                {%task_asOptions($allTasks,$selectedTask)%}
+            </select>
+        </td>
+    </tr>

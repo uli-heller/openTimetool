@@ -15,7 +15,7 @@
     /**
 	 * Don't change ! It's the current version !
 	 */
-    $config->applVersion = '2.2.1';
+    $config->applVersion = '2.2.2';
     $config->applName = 'openTimetool'.$config->applVersion;
     
     /**
@@ -91,7 +91,12 @@
     */
     $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
 
-
+	/**
+	 * Seperator 4 csv-Export 
+	 */
+	$config->seperator = ';';
+	
+	
     /**
     * Automatically determined!    AK !!!!!WORKS only yet when not defined. Have to look on ...
     * This is the prefix of the path that leads to this application via a user agent.

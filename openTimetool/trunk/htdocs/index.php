@@ -31,9 +31,9 @@
     */
  
     if(!isset($account) || !isset($config)) {
-	print_r("Something terribly went wrong with auto_prepend. Maybe Suhosin ? See README ...");
-	//require("/srv/www/system-worx.de/pm/openTimetool/config.php");
-	die();
+		print_r("Something terribly went wrong with auto_prepend. Maybe Suhosin ? See README ...");
+		//require("/srv/www/system-worx.de/pm/openTimetool/config.php");
+		die();
     }
    
     if (isset($_REQUEST['resetAccountName'])) {

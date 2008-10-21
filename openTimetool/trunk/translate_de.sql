@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 19. September 2008 um 10:16
+-- Erstellungszeit: 21. Oktober 2008 um 09:59
 -- Server Version: 5.0.45
 -- PHP-Version: 5.2.6
 
@@ -19,13 +19,12 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Tabellenstruktur für Tabelle `translate_de`
 --
 
-DROP TABLE IF EXISTS `translate_de`;
 CREATE TABLE IF NOT EXISTS `translate_de` (
   `id` int(11) NOT NULL auto_increment,
   `string` mediumtext NOT NULL,
   `convertHtml` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=293 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=294 ;
 
 --
 -- Daten für Tabelle `translate_de`
@@ -268,4 +267,5 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (287, 'Team aus ''$1'' &uuml;bernehmen', '0'),
 (290, 'Benutzer', '0'),
 (291, 'Passwort', '0'),
-(292, '&auml;ndern', '0');
+(292, '&auml;ndern', '0'),
+(293, 'Datum, Uhrzeit', '0');
