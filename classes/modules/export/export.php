@@ -86,9 +86,9 @@ class modules_export extends modules_common
     {
         global $config,$applError;      
      
-        // we handle xls.csv and sxc.csv differently
+        // we handle xls.csv and ods.csv differently
         $ext = substr($filename,-7);
-        if ($ext!='sxc.csv' && $ext!='xls.csv' && $ext!='odc.csv') {
+        if ($ext!='sxc.csv' && $ext!='xls.csv' && $ext!='ods.csv') {
             $fileinfo = pathinfo($filename);
             $ext = $fileinfo['extension'];
         }
