@@ -133,19 +133,6 @@
         $config->dbDSN .= @$session->account->data['dbName'] ? @$session->account->data['dbName'] : '_fallback';
     }
 
-	/**
-	 * SX : mobile extension
-	 * If called with mobile_log in URL we redirect to htdocs/<language>/modules/time/mobile.php 
-	 */
-	$pos = stripos($_SERVER['PHP_SELF'], 'mobile_login');
-
-	// if $pos === true : we got it and redirect 
-	if ($pos === true) {
-		//print_r($config->applRoot.'/modules/time/mobil.php'); die();
-    	HTTP_Header::redirect($config->applRoot.'/modules/time/mobile.php',false);
-	}
-
-
 
     /**
     *        DB-table defines
