@@ -113,6 +113,7 @@
     <input  name="{$name}"
     value="{echo $value?date('d.m.Y',$util->makeTimestamp($value)):''}"
     size="10"
+    onClick="popUpCalendar(this,{$formName}['{$name}'],'dd.mm.yyyy')"    
     onBlur="autoCorrectDate('{$formName}','{$name}' , {$setTodayIfEmpty?'true':'false'} )">
 
 
