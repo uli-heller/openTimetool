@@ -239,6 +239,8 @@
 
 			$seperator = trim($config->seperator);
 			if(empty($seperator)) $seperator = ';'; 
+			
+			$checkKey = 'duration';  // is this key is missing we have leave or break and don't show the dureationsec !!! 
  //print_r($times);           
             ob_start();
             $keys = array();
@@ -253,8 +255,10 @@
 
             foreach ($times as $aTime) {
                 $data = array();
+                if(!isset($aTime[$checkKey])) $showduration = false;
+                else $showduration = true;
                 foreach ($aTime as $key=>$oneEntry) {
-                    if (($oneEntry=keyValue($key,$oneEntry))!==false) {
+                    if (($oneEntry=keyValue($key,$oneEntry,$showduration))!==false) {
                         	$data[] = $oneEntry;                   	
                     }
                 }
@@ -277,7 +281,7 @@
     *   if the key shall have a different name it renames it here, if the value
     *   shalll be changed too, it does that here too
     */
-    function keyValue($key,$val=null)
+    function keyValue($key,$val=null,$showduration = true)
     {
         global $projectTreeDyn,$dateTime,$time,$config;
     
@@ -290,7 +294,9 @@
                         );
         $dropKeys = array(  '_projectTree_','_user_','_task_','_canEdit','id',
                             'user_id','projectTree_id','task_id','duration'  //SX : see remark above
-                        );              
+                        );  
+                        
+                                            
                         
 		$seperator = trim($config->seperator);
 		if(empty($seperator)) $seperator = ';';                                   
@@ -320,7 +326,10 @@
                     $ret[] = $dateTime->formatTime($val);                              
                     break;
                 case 'durationSec':
-                	$ret = $time->_calcDuration($val,'decimal');  // sx: using durationSec now -> get the decimal calculation as hours
+                	if($showduration)
+                		$ret = $time->_calcDuration($val,'decimal');  // sx: using durationSec now -> get the decimal calculation as hours
+                	else 
+                		$ret = '';
                 	break;
             }
         } else {

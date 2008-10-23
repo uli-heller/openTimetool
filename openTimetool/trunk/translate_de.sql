@@ -53,7 +53,7 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (173, 'Zeit(en) gespeichert.', '0'),
 (47, 'bis', '0'),
 (39, 'Zeit', '0'),
-(162, 'Diese Projekt ist an diesem Datum nicht mehr verf&uuml;gbar oder nur noch mit Adminberechtigungen zu ver&auml;ndern!', '0'),
+(162, 'Dieses Projekt ist an diesem Datum nicht mehr verf&uuml;gbar oder nur noch mit Adminberechtigungen zu ver&auml;ndern!', '0'),
 (238, 'Dieses Login ist schon vergeben!', '0'),
 (207, 'Das ist kein g&uuml;ltiger Zugangsname!', '0'),
 (236, 'Die Passw&ouml;rter stimmen nicht &uuml;berein!', '0'),
