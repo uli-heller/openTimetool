@@ -741,10 +741,10 @@ class Auth_common extends PEAR
             return $this->_session;
         }
         // AK : Added check if given value is in array 
-		  if(in_array($string,$this->_session))
+	     if (isset($this->_session[$string]))
 	        return $this->_session[$string];
 	     else
-	     	  return $this->_session;
+	        return $this->_session;
     }
 
     /**
