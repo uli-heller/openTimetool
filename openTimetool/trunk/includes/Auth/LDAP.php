@@ -60,6 +60,7 @@
 
 require_once("Auth/common.php");
 require_once("PEAR.php");
+require_once("DB.php");
 
 
 /**
@@ -78,6 +79,13 @@ class Auth_LDAP extends Auth_common
     */
     var $conn_id;
 
+    var $_dsn = array(
+                    'basedn'=>      false
+                    ,'userattr'=>   'uid'
+                    ,'scope'=>      'sub'
+                    ,'filter'=>     '(objectClass=*)'
+                    );
+
     /**
     *
     *   create LDAP authentication driver for the given RFC 2255 URL
@@ -89,7 +97,7 @@ class Auth_LDAP extends Auth_common
     *   @author Ronny Moreas <ronny.moreas@mech.kuleuven.ac.be>
     *   @param  string  $domain
     */
-    function Auth_LDAP( $url )
+    function xxx_Auth_LDAP( $url )
     {
         $this->Auth_common();
         // set defaults
@@ -120,6 +128,18 @@ class Auth_LDAP extends Auth_common
                 return new PEAR_Error('LDAP extension could not be found or loaded!');
         }
 
+        if ($parsed = Auth::parseDSN($url)) {
+            $this->_dsn = array_merge($this->_dsn,$parsed);
+            $this->_dsn['basedn'] = $this->_dsn['database'];
+        }
+
+        if (Auth::isError($this->_connect())) {
+            return new PEAR_Error('Connect failed!');
+        }
+
+        return parent::setup($this->_dsn);
+
+/*
         if ( ($parsed = Auth_LDAP::parseURL($url)) == false ) {
             return new Pear_Error("LDAP URL format is incorrect!", 41, PEAR_ERROR_DIE);
         }
@@ -140,6 +160,7 @@ class Auth_LDAP extends Auth_common
          }        
 
         return parent::setup( $this->dbh->dsn );
+*/
     }
 
     /**
@@ -177,7 +198,7 @@ class Auth_LDAP extends Auth_common
     *   @access public
     *   @author Ronny Moreas <ronny.moreas@mech.kuleuven.ac.be>
     */
-    function parseURL( $url ) {
+    function xxx_parseURL( $url ) {
 
       // Get defaults    
       $parsed = array (
@@ -268,6 +289,7 @@ class Auth_LDAP extends Auth_common
     */
     function _connect( )
     {
+/*
          if (($this->conn_id = @ldap_connect($this->options['host'], $this->options['port'])) == false) {
             if ( $this->options['host2'] != "" ) {
                // try to connect to backup server instead
@@ -282,6 +304,16 @@ class Auth_LDAP extends Auth_common
          if ((@ldap_bind($this->conn_id)) == false) {
             return new PEAR_Error("Error binding anonymously to LDAP.", 41, PEAR_ERROR_DIE);
          }
+*/
+
+        $this->conn_id = @ldap_connect($this->_dsn['hostspec'], $this->_dsn['port']);
+        if (!$this->conn_id) {
+            return new PEAR_Error('Error connecting to LDAP.', 41, PEAR_ERROR_DIE);
+        }
+        // bind anonymously for searching
+        if ((@ldap_bind($this->conn_id)) == false) {
+            return new PEAR_Error('Error binding anonymously to LDAP.', 41, PEAR_ERROR_DIE);
+        }
     }
 
 
@@ -296,47 +328,73 @@ class Auth_LDAP extends Auth_common
     */
     function _login( $username , $password )
     {
-      // search
-      if ($this->options['scope'] == 'sub') {
-         $result_id = @ldap_search($this->conn_id, $this->options['basedn']
-                      , "(& ".$this->options['filter']." (".$this->options['userattr']."=".$username."))");
-      } else {
-         // scope is one
-         $result_id = @ldap_list($this->conn_id, $this->options['basedn']
-                      , "(& ".$this->options['filter']." (".$this->options['userattr']."=".$username."))");
-      }
-      if (!$result_id) {
-         return new PEAR_Error("Error searching LDAP.", 41, PEAR_ERROR_DIE);
-      }
+        $filter = "(& {$this->_dsn['filter']} ({$this->_dsn['userattr']}=$username))";
+        // search
+        if ($this->_dsn['scope'] == 'sub') {
+            $result_id = @ldap_search($this->conn_id, $this->_dsn['basedn'], $filter);
+        } else {
+            // scope is one
+            $result_id = @ldap_list($this->conn_id, $this->_dsn['basedn'], $filter);
+        }
+        if (!$result_id) {
+            return new PEAR_Error("Error searching LDAP.", 41, PEAR_ERROR_DIE);
+        }
 
-      // did we get just one entry?
-      if (ldap_count_entries($this->conn_id, $result_id) == 1) {
+        // did we get just one entry?
+        if (ldap_count_entries($this->conn_id, $result_id) == 1) {
 
-         // then get the user dn
-         $entry_id = ldap_first_entry($this->conn_id, $result_id);
-         $user_dn = ldap_get_dn($this->conn_id, $entry_id);
+            // then get the user dn
+            $entry_id = ldap_first_entry($this->conn_id, $result_id);
+            $user_dn  = ldap_get_dn($this->conn_id, $entry_id);
 
-         // and try binding as this user with the supplied password
-         if (@ldap_bind($this->conn_id, $user_dn, $password)) {
-            // auth successful, fetch all data
-            if ($this->options['scope'] == 'sub') {
-               $result_id = @ldap_search($this->conn_id, $this->options['basedn']
-                      , "(& ".$this->options['filter']." (".$this->options['userattr']."=".$username."))");
+            // and try binding as this user with the supplied password
+            if (@ldap_bind($this->conn_id, $user_dn, $password)) {
+                // auth successful, fetch all data
+                if ($this->_dsn['scope'] == 'sub') {
+                    $result_id = @ldap_search($this->conn_id, $this->_dsn['basedn'], $filter);
+                } else {
+                    // scope is one
+                    $result_id = @ldap_list($this->conn_id, $this->_dsn['basedn'], $filter);
+                }
+                if (($entry_id = @ldap_first_entry($this->conn_id, $result_id)) == false) {
+                    return new PEAR_Error("Error reading user data.", 41, PEAR_ERROR_DIE);
+                }
+                $info = @ldap_get_attributes($this->conn_id, $entry_id);
+                foreach ($info as $k=>$v) {
+                    // remove those strange results that it returns, which only contains
+                    // i.e. [1]=>'sn' ... i dont need this
+                    if (!is_string($k)) {
+                        unset($info[$k]);
+                        continue;
+                    }
+                    // remove the 'count' index, since it is useless
+                    unset($info[$k]['count']);
+                    // if the array contains just one element set it directly, we
+                    // dont need an array in this case
+                    if (sizeof($info[$k]) == 1) {
+                        $info[$k] = $v[0];
+                    }
+                }
+                $info['username'] = $username;
+                $info['password'] = $password;
+
+global $db;
+$query = sprintf("SELECT * FROM %s WHERE %s=%s", TABLE_USER, 'login', $db->quote($username));
+if (DB::isError($res = $db->getRow($query))) {
+    return $this->raiseError(AUTH_ERROR_DB_READ_FAILED, null, null, null, DB::errorMessage($res));
+}
+unset($res['password']);
+if (sizeof($res)) return $res;
+return AUTH_FAILED;
+
+                return $info;
             } else {
-               // scope is one
-               $result_id = @ldap_list($this->conn_id, $this->options['basedn']
-                      , "(& ".$this->options['filter']." (".$this->options['userattr']."=".$username."))");
+                // wrong password
+                return AUTH_FAILED;
             }
-            if ( ($entry_id = @ldap_first_entry($this->conn_id, $result_id)) == false ) {
-               return new PEAR_Error("Error reading user data.", 41, PEAR_ERROR_DIE);
-            }
-            $info = @ldap_get_Attributes($this->conn_id,$entry_id);
-            $info['username'] = $username;
-            $info['password'] = $password;
-            return $info;
-         }
-      }
-      return AUTH_FAILED;
-   }
+        }
+        // user does not exists
+        return -98;
+    }
 }
 ?>

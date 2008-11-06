@@ -1,3 +1,14 @@
+2.2.3 (to come)
+- authentication against LDAP 
+  added configuration in config.php
+  updated file: /includes/auth/common.php 
+  updated file: /includes/auth/LDAP.php 
+- todo
+  if auth-> method -> 'LDAP' 
+   hide password fields in /htdocs/modules/user/index.php 
+   and the link "password change" in /htdocs/modules/navigation.php 
+  (more details in mantis: #196)
+
 2.2.2
 - added feature for mobile access
   Call openTimetool with http://<server>/<ott-installdir>/mobile_login
