@@ -8,13 +8,23 @@
 	*
 	*/
 
+    /** Try this if openTimetool dont work and you are using a reverse proxy and SSL ... */
+    #if (isset($_SERVER["HTTP_X_FORWARDED_HOST"]))
+	  # $_SERVER["HTTP_HOST"] = $_SERVER["HTTP_X_FORWARDED_HOST"];
+    #if (isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+	  # $_SERVER["REMOTE_ADDR"] = $_SERVER["REMOTE_HOST"] = $_SERVER["HTTP_X_FORWARDED_FOR"];
+    #if (isset($_SERVER["HTTP_X_FORWARDED_SERVER"]))
+	  # $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_X_FORWARDED_SERVER"];
+    #//$_SERVER["HTTP_HOST"] = $_SERVER["SERVER_NAME"];
+    #$_SERVER["HTTPS"] = 'on';
+    #$_SERVER["SERVER_PORT"] = 443;
+
     // AK : Just for documentation. That is builtin php stuff 
     if (!class_exists("stdClass")) $config = new stdClass;
 
-
     /**
-	 * Don't change ! It's the current version !
-	 */
+	  * Don't change ! It's the current version !
+	  */
     $config->applVersion = '2.2.2';
     $config->applName = 'openTimetool'.$config->applVersion;
     
@@ -44,7 +54,7 @@
     * Where to find the includes. Includes are all the external 
     * classes and libraries, such as PEAR-packages etc.
     * 
-	* @var string the include path 
+	  * @var string the include path 
     */
     $config->includePath = dirname(__FILE__).'/includes';
    
@@ -55,7 +65,7 @@
     // this message comes up because we store our session-vars in the global space :-(
     ini_set('session.bug_compat_warn',0);
     // set it to 0 when you have a productive system
-    ini_set('display_errors',1);
+    ini_set('display_errors',0);
     ini_set('magic_quotes_gpc',0);
     ini_set('max_execution_time',1000);
  
@@ -65,7 +75,7 @@
     *
     * @var string the DB connection parameters
     */
-    $config->dbDSN              = 'mysql://<account>:<password>@localhost/openTimetool';
+    $config->dbDSN = 'mysql://<USERNAME>:<PASSWORD>@localhost/opentimetool';
 
     /**
     * This is the path to html2pdf, this application is needed
@@ -91,10 +101,10 @@
     */
     $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
 
-	/**
-	 * Seperator 4 csv-Export 
-	 */
-	$config->seperator = ';';
+  	/**
+	   * Seperator 4 csv-Export 
+	   */
+	  $config->seperator = ';';
 	
 	
     /**
@@ -129,15 +139,25 @@
 
     /**
     * The various authentication parameters. This application can also
-    * use an authentication against an external source, but this isn't tested
-    * yet. So we don't include this information by now
-    * Please stay with this one for now :
-    * 
+    * use an authentication against different external sources. 
+    * The following authentication methods are tested
+    *    
+    * Authentication against openTimetool DB - standard 
     */
     $config->auth->method       =   'DB';
     $config->auth->url          =   $config->dbDSN;
     $config->auth->digest       =   'md5';
     $config->auth->savePwd      =   true;    
+
+    /** 
+    * Authentication against LDAP 
+    * In this release the following userdata must be saved in openTimetool (admin mode -> users):
+    * given name, surname, username. The username in openTimetool have to be the same as in your LDAP!    
+    */
+    #$config->auth->method       =   'LDAP';
+    #$config->auth->url          =   'ldap://<your_ldap.host.com>/<your_basedn>';
+    #$config->auth->digest       =   'md5';
+    #$config->auth->savePwd      =   true;  // dont remove! functionality without this parameter is not tested! 
 
     /** 
     * actually you can have different run modes, which allow you to configure the 
