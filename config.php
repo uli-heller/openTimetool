@@ -1,6 +1,6 @@
 <?php
 	/**
-	*
+	*	
 	*  $Id
 	*
 	* Anton Kejr (AK) :	This beast is called anytime by openTimetool/htdocs/.htaccess
@@ -25,7 +25,7 @@
     /**
 	  * Don't change ! It's the current version !
 	  */
-    $config->applVersion = '2.2.2';
+    $config->applVersion = '2.2.3';
     $config->applName = 'openTimetool'.$config->applVersion;
     
     /**
@@ -147,7 +147,7 @@
     $config->auth->method       =   'DB';
     $config->auth->url          =   $config->dbDSN;
     $config->auth->digest       =   'md5';
-    $config->auth->savePwd      =   true;    
+    $config->auth->savePwd      =   true;    // password fields shown
 
     /** 
     * Authentication against LDAP 
@@ -157,7 +157,7 @@
     #$config->auth->method       =   'LDAP';
     #$config->auth->url          =   'ldap://<your_ldap.host.com>/<your_basedn>';
     #$config->auth->digest       =   'md5';
-    #$config->auth->savePwd      =   true;  // dont remove! functionality without this parameter is not tested! 
+    #$config->auth->savePwd      =   false;  // password fields hidden
 
     /** 
     * actually you can have different run modes, which allow you to configure the 
