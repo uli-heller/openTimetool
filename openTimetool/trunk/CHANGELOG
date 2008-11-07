@@ -1,13 +1,7 @@
-2.2.3 (to come)
-- authentication against LDAP 
-  added configuration in config.php
-  updated file: /includes/auth/common.php 
-  updated file: /includes/auth/LDAP.php 
-- todo
-  if auth-> method -> 'LDAP' 
-   hide password fields in /htdocs/modules/user/index.php 
-   and the link "password change" in /htdocs/modules/navigation.php 
-  (more details in mantis: #196)
+2.2.3
+- authentication against LDAP implemented, configurable in config.php
+  password fields and reset password function will now automatically hidden if authentication against LDAP is used
+  also the "change password" link in the navigation 
 
 2.2.2
 - added feature for mobile access

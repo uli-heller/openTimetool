@@ -230,7 +230,6 @@
                         )
                 ),
 
-
             array(  'name'  =>  'Help',
                     'children'=>array(
                         array(  'macro'  =>  '_manualLink'

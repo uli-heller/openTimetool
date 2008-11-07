@@ -65,38 +65,40 @@
         {%EditData_input($data,'email',t('email').' *')%}
         {%EditData_input($data,'login',t('login').' *')%}
 
-        {if($config->auth->savePwd)}
+        {if($config->auth->savePwd)}     /* hide password fields and reset by using authentication against LDAP */
             {%EditData_password('password',t('password').' ')%}
             {%EditData_password('password1',t('repeat password').' ')%}
-
-		<tr>
-			<td colspan="2">
-				If you check the subsequent option, the user gets a new random password and will be notified by mail.
-			</td>
-		</tr>
-        <tr>
-            <td>reset password</td>
-            <td>
+            
+            <tr>
+			        <td colspan="2">
+				        If you check the subsequent option, the user gets a new random password and will be notified by mail.
+			        </td>
+		        </tr>
+            <tr>
+              <td>reset password</td>
+              <td>
                 <input type="checkbox" name="newData[ResetPassword]" value="1"/>
-            </td>
+              </td>
+            </tr>
+            
+        <tr>
+          <td>is admin</td>
+          <td>
+            <select name="newData[isAdmin]">
+              {%Form_yesNoOptions($data['isAdmin'])%}
+            </select>
+          </td>
         </tr>
         <tr>
-            <td>is admin</td>
-            <td>
-                <select name="newData[isAdmin]">
-                    {%Form_yesNoOptions($data['isAdmin'])%}
-                </select>
-            </td>
+          <td>    
+            {%common_help('infoMail')%}
+            send info mail
+          </td>
+          <td>
+            <input type="checkbox" name="newData[sendInfoMail]" value="1"/>
+          </td>
         </tr>
-        <tr>
-            <td>    
-                {%common_help('infoMail')%}
-                send info mail
-            </td>
-            <td>
-                <input type="checkbox" name="newData[sendInfoMail]" value="1"/>
-            </td>
-        </tr>
+        
         {%EditData_saveButton(false)%}
 
     </table>
