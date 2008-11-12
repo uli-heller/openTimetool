@@ -216,7 +216,7 @@
                         </tr>
 
                         {if( $extendedFilter )}
-                            {if( $isManager )}
+                            {if( $isManager || $isAdmin )} /* 20081112, jv: display all user also for admins */
                                 <tr>
                                     <td>User</td>
                                     <td>

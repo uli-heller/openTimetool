@@ -2,6 +2,7 @@
 - authentication against LDAP implemented, configurable in config.php
   password fields and reset password function will now automatically hidden if authentication against LDAP is used
   also the "change password" link in the navigation 
+- overview by date, extended filter: display all user also for admins
 
 2.2.2
 - added feature for mobile access
