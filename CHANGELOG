@@ -1,3 +1,9 @@
+2.2.4
+- users may now be deleted completely with all booked times and project memberships
+- projects can now be deleted with all subprojects, all team memberships and all booked times
+  Both features are really necessary for house keeping of an oTt installation over times
+  Well, finally we have them :-) 
+
 2.2.3
 - authentication against LDAP implemented, configurable in config.php
   password fields and reset password function will now automatically hidden if authentication against LDAP is used

@@ -1,5 +1,9 @@
 <!--
     $Id
+    
+    Revisione 1.27 2009/22/01 AK
+    - added remove button
+    
     Revision 1.26.2.3  2006/08/31 16:26:17  AK
     - php notice eliminations
 
@@ -336,7 +340,7 @@
 
     {foreach( $allVisibleFolders as $aFolder )}
         { $class = $projectTree->isAvailable($aFolder,time())?'':' class="disabled"'}
-        <tr>
+        <tr id="removeId{$aFolder['id']}">
             <td valign="top" nowrap {$class}>
                 {%project_showNode($aFolder)%}
             </td>
@@ -397,6 +401,9 @@
 
             <td valign="center" {$class}>
                 {%common_editButton($_SERVER['PHP_SELF'].'?id='.$aFolder['id'])%}
+            </td>
+            <td  valign="center" {$class}>
+                {%common_removeAndConfirmButton($_SERVER['PHP_SELF'].'?removeId='.$aFolder['id'] , t('Are you sure you want to delete this project, all his sub projects and all logged times ?') )%}
             </td>
 
         </tr>

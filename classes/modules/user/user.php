@@ -3,6 +3,9 @@
  * 
  * $Id
  *
+ * Revision 1.15 2009/1/29 AK
+ * - User may now be deleted with all times and all project memberships
+ *
  * 
  * ########### switch to subversion ##########
  *  $Log: user.php,v $
@@ -89,7 +92,7 @@ class modules_user extends modules_common
 	 *
 	 */
 	function remove( $id )
-		{
+	{
 		global $config,$applError,$time;
 		
 		if (!$this->isAdmin()) {
@@ -103,12 +106,48 @@ class modules_user extends modules_common
 		// instances that are not prepared at that point .. kinda messy
 		$time = new modules_common(TABLE_TIME); // we can not require the class time here because it requires many others, see comment above
 		$time->setWhere('user_id='.$id);
+		//print_r($time);
 		if ($time->getCount()) {
-			$applError->setOnce('You can not remove this user, because there are already times logged for him/her!');
-			return false;
+			// AK, system worx : retrieve all logged times for that user and delete them !
+			$result = $time->GetAll();	
+			//print_r($result);echo "<br>";
+			foreach($result as $data) {
+				//echo "delete ".print_r($data,true).'<br>';
+				$time->remove($data);
+			}			
+			unset($time);
+			// read again number of users
+			$time = new modules_common(TABLE_TIME); 
+			$time->setWhere('user_id='.$id);		
+			if ($time->getCount()) {
+				// something has gone wrong ...	
+				$applError->setOnce('You can not remove this user, because there are still times logged for him/her!');
+				return false;
+			}
 		}
+		
+		
+		// AK, system worx : retrieve all projects this user is assigned to and delete the assignement
+		// do that only if we aren't this user and he isn't root : TODO
+		$team = new modules_common(TABLE_PROJECTTREE2USER); 
+		$team->setWhere('user_id='.$id);
+		$result = $team->GetAll();	
+		//print_r($result);echo "<br>";
+		$p = array();
+		foreach($result as $data) {
+			//echo "delete ".print_r($data,true).'<br>';
+			$team->remove($data);
+			$p[] = $data['projectTree_id'];
+		}			
+			
+
+// ToDo : I need to find a way to make the cache invalid for forced rebuilding AKK, system worx 
+			
+		//require_once $config->classPath.'/modules/project/cache.php';
+       	//modules_project_cache::setModifiedByProject($p);
+		
 		return parent::remove($id);
-		}
+	}
 	
 	/**
 	 *
