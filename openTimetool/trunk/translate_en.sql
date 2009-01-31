@@ -1,22 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.0
+-- version 2.11.9.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 21. Oktober 2008 um 10:00
--- Server Version: 5.0.45
--- PHP-Version: 5.2.6
+-- Generation Time: Jan 31, 2009 at 05:09 PM
+-- Server version: 5.0.45
+-- PHP Version: 5.2.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Datenbank: `opentimetool`
+-- Database: `opentimetool`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translate_en`
+-- Table structure for table `translate_en`
 --
 
 CREATE TABLE IF NOT EXISTS `translate_en` (
@@ -24,10 +24,10 @@ CREATE TABLE IF NOT EXISTS `translate_en` (
   `string` mediumtext NOT NULL,
   `numSubPattern` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=294 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=295 ;
 
 --
--- Daten für Tabelle `translate_en`
+-- Dumping data for table `translate_en`
 --
 
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
@@ -50,7 +50,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (17, 'Logout', 0),
 (18, 'Overview', 0),
 (19, 'now!', 0),
-(20, 'all', 0),
+(20, 'all ', 0),
 (21, 'needs project?', 0),
 (22, 'calculate time?', 0),
 (23, 'HTML-color', 0),
@@ -168,7 +168,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (158, '(.{0,30}) (.{0,30}) is not a team member of project: ''(.*)''!', 3),
 (159, 'You are not a team member of project: ''(.*)''!', 1),
 (160, 'The project is not available anymore, you must not remove the entry!', 0),
-(161, 'You can not remove this user, because there are already times logged for him/her!', 0),
+(161, 'You can not remove this user, because there are still times logged for him/her!', 0),
 (162, 'This project is not available at the date you specified or not modifyable anymore without admin permissions!', 0),
 (163, 'Please enter a valid email-address!', 0),
 (164, 'You can not switch to admin-mode!', 0),
@@ -272,4 +272,5 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (290, 'User', 0),
 (291, 'Password', 0),
 (292, 'change', 0),
-(293, 'date, time', 0);
+(293, 'date, time', 0),
+(294, 'Are you sure you want to delete this project, all his sub projects and all logged times ?', 0);
