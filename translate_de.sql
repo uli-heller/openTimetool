@@ -1,22 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.0
+-- version 2.11.9.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 21. Oktober 2008 um 09:59
--- Server Version: 5.0.45
--- PHP-Version: 5.2.6
+-- Generation Time: Jan 31, 2009 at 05:08 PM
+-- Server version: 5.0.45
+-- PHP Version: 5.2.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Datenbank: `opentimetool`
+-- Database: `opentimetool`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translate_de`
+-- Table structure for table `translate_de`
 --
 
 CREATE TABLE IF NOT EXISTS `translate_de` (
@@ -24,10 +24,10 @@ CREATE TABLE IF NOT EXISTS `translate_de` (
   `string` mediumtext NOT NULL,
   `convertHtml` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=294 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=295 ;
 
 --
--- Daten für Tabelle `translate_de`
+-- Dumping data for table `translate_de`
 --
 
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
@@ -226,7 +226,7 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (214, 'Sie sind kein Team-Mitglied eines Projektes, bitte verst&auml;ndigen Sie ihren Administrator!', '0'),
 (159, 'Sie sind kein Team-Mitglied im Projekt: ''$1''!', '0'),
 (235, 'Sie haben keine Berechtigung Benutzer zu &auml;ndern!', '0'),
-(161, 'Dieser Benutzer kann nicht gel&ouml;scht werden, es sind schon Zeiten f&uuml;r ihn/sie gebucht!', '0'),
+(161, 'Dieser Benutzer kann nicht gel&ouml;scht werden, da nicht alle Zeiten f&uuml;r ihn/sie gel&ouml;scht werden konnten!', '0'),
 (164, 'Sie k&ouml;nnen nicht in den Administrator-Modus schalten!', '0'),
 (232, 'Sie haben keine Berechtigung diesen Eintrag zu &auml;ndern!', '0'),
 (234, 'Sie haben keine Berechtigung diesen Eintrag zu l&ouml;schen!', '0'),
@@ -268,4 +268,5 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (290, 'Benutzer', '0'),
 (291, 'Passwort', '0'),
 (292, '&auml;ndern', '0'),
-(293, 'Datum, Uhrzeit', '0');
+(293, 'Datum, Uhrzeit', '0'),
+(294, 'Sind Sie sicher, dass Sie dieses Projekt, alle Unterprojekte und alle gebuchten Zeiten löschen wollen ?', '0');

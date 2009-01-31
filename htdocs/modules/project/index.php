@@ -45,6 +45,8 @@
         }
     }
     
+   
+    
     // AK added @ due to notices; if param is empty, function returns null
     // AK : very strange ! This class got never instantiated but tries to use $this inside !?!?!
     // AK : That can't work ! At least not on php5 !!
@@ -52,14 +54,32 @@
     // AK we instantiate now and put it global
     if(!isset($vp_Application_HTML_Tree))
     	$vp_Application_HTML_Tree = new vp_Application_HTML_Tree;
-    $vp_Application_HTML_Tree->handle(@$_REQUEST['tree'],$projectTree); 
+    	
+    // AK : we can now delete projects projects with all booked times
+    if (isset($_REQUEST['removeId'])) {
+    	// with this new call I delete all times and project memberships for the given project (and subprojects).
+        $projectTree->RemoveProject($_REQUEST['removeId']);
+        // now we use that html tree to trigger the remove action for the project tree and datarecords.
+        // have to build the required input array manually as it doesn't come from form
+        $newdata['remove']['id'] = $_REQUEST['removeId'];
+        $newdata['action']['remove'] ='remove';
+        $projectTree->setRemoveRecursively(true);  // we also delete subprojects
+    } else {
+    	$newdata = @$_REQUEST['tree'];
+    }   	
+ 
+    //print_r($newdata);   
+    $vp_Application_HTML_Tree->handle($newdata,$projectTree);
+  
     // AK end
     $allFolders = $projectTree->getAll();
+    //print_r($allFolders);
 
     if (isset($_REQUEST['id'])) {
         $editFolder = $projectTree->getElement($_REQUEST['id']);
     }
 
+ 
 //    $allFolders = $projectTree->getAll();
     $allVisibleFolders = $projectTree->getAllVisible();
 

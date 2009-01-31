@@ -485,6 +485,74 @@ class modules_project_tree extends Tree_Memory
         return $newId;
     }
         
+	/**
+	 * remove a project completely with all booked times
+	 * 
+	 * Ak, system worx : we really need something like that to cleanup database from old projects !
+	 */        
+    function RemoveProject($dataID)
+    {
+    	global $userAuth,$user;
+    	global $projectTree;
+        $userId = $userAuth->getData('id'); 
+        $orderBy = 'name';
+        
+        
+        // Note : We don't remove the root of everything !!!
+        if ($user->isAdmin() && $dataID != $this->getFirstRootId()) {
+			$subprojects = $this->getAllChildren($dataID);
+			
+			$pIDs2remove = array();
+			if(!empty($subprojects)) {
+				foreach($subprojects as $child) {
+					$pIDs2remove[] = $child['id'];
+				}
+			}
+            
+            // $pIDs2remove is an arry of all children id's down the tree below our project
+            // we want to remove and whose ID we got in $data
+            // we have to remove all of them and the booked times for them as well
+            // The project $data has to be removed as last step similarly as well 
+            
+            $pIDs2remove[] = $dataID;   // append our project 2 delete
+            
+            // we delete all booked times now
+            foreach($pIDs2remove as $id) {
+				$time = new modules_common(TABLE_TIME); // we can not require the class time here because it requires many others, see comment above
+				$time->setWhere('projectTree_id='.$id);
+				//print_r($time);
+				if ($time->getCount()) {
+					// AK, system worx : retrieve all logged times for that project and delete them !
+					$result = $time->GetAll();	
+					//print_r($result);echo "<br>";
+					foreach($result as $data) {
+						//echo "delete times ".print_r($data,true).'<br>';
+						$time->remove($data);
+					}		            
+				}
+           		//echo "Removed times for project ".print_r($id,true).'<br>';
+           		unset($time);
+           		
+           		// now delete the assignements of users to all these projects
+           		
+           		$team = new modules_common(TABLE_PROJECTTREE2USER); 
+				$team->setWhere('projectTree_id='.$id);
+				$result = $team->GetAll();	
+				//print_r($result);echo "<br>";
+				foreach($result as $data) {
+					//echo "delete teams ".print_r($data,true).'<br>';
+					$team->remove($data);
+				}		
+           		//echo "Removed teams for project ".print_r($id,true).'<br>';
+           		unset($team);
+ 
+            	// The projects itselfs will be deleted in htdocs/moduls/projects/index.php = the calling script
+            }	
+        	return true;	
+        }
+        return false;
+    }
+
 }
 
 ?>
