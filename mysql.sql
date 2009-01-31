@@ -1,22 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.0
+-- version 2.11.9.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 19. September 2008 um 15:04
--- Server Version: 5.0.45
--- PHP-Version: 5.2.6
+-- Generation Time: Jan 31, 2009 at 05:31 PM
+-- Server version: 5.0.45
+-- PHP Version: 5.2.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Datenbank: `opentimetool`
+-- Database: `opentimetool`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `errorLog`
+-- Table structure for table `errorLog`
 --
 
 CREATE TABLE IF NOT EXISTS `errorLog` (
@@ -32,14 +32,14 @@ CREATE TABLE IF NOT EXISTS `errorLog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `errorLog`
+-- Dumping data for table `errorLog`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `exported`
+-- Table structure for table `exported`
 --
 
 CREATE TABLE IF NOT EXISTS `exported` (
@@ -53,14 +53,14 @@ CREATE TABLE IF NOT EXISTS `exported` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `exported`
+-- Dumping data for table `exported`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `exported2project`
+-- Table structure for table `exported2project`
 --
 
 CREATE TABLE IF NOT EXISTS `exported2project` (
@@ -70,32 +70,32 @@ CREATE TABLE IF NOT EXISTS `exported2project` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `exported2project`
+-- Dumping data for table `exported2project`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `exported_seq`
+-- Table structure for table `exported_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `exported_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
--- Daten für Tabelle `exported_seq`
+-- Dumping data for table `exported_seq`
 --
 
 INSERT INTO `exported_seq` (`id`) VALUES
-(12);
+(11);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `kmLog`
+-- Table structure for table `kmLog`
 --
 
 CREATE TABLE IF NOT EXISTS `kmLog` (
@@ -108,14 +108,14 @@ CREATE TABLE IF NOT EXISTS `kmLog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `kmLog`
+-- Dumping data for table `kmLog`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `kmLog_seq`
+-- Table structure for table `kmLog_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `kmLog_seq` (
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `kmLog_seq` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
--- Daten für Tabelle `kmLog_seq`
+-- Dumping data for table `kmLog_seq`
 --
 
 INSERT INTO `kmLog_seq` (`id`) VALUES
@@ -133,7 +133,7 @@ INSERT INTO `kmLog_seq` (`id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `OOoTemplate`
+-- Table structure for table `OOoTemplate`
 --
 
 CREATE TABLE IF NOT EXISTS `OOoTemplate` (
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `OOoTemplate` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `OOoTemplate`
+-- Dumping data for table `OOoTemplate`
 --
 
 INSERT INTO `OOoTemplate` (`id`, `data`, `name`, `timestamp`, `type`) VALUES
@@ -157,7 +157,7 @@ INSERT INTO `OOoTemplate` (`id`, `data`, `name`, `timestamp`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `OOoTemplate_seq`
+-- Table structure for table `OOoTemplate_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `OOoTemplate_seq` (
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `OOoTemplate_seq` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=136 ;
 
 --
--- Daten für Tabelle `OOoTemplate_seq`
+-- Dumping data for table `OOoTemplate_seq`
 --
 
 INSERT INTO `OOoTemplate_seq` (`id`) VALUES
@@ -175,7 +175,7 @@ INSERT INTO `OOoTemplate_seq` (`id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `price`
+-- Table structure for table `price`
 --
 
 CREATE TABLE IF NOT EXISTS `price` (
@@ -194,14 +194,14 @@ CREATE TABLE IF NOT EXISTS `price` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `price`
+-- Dumping data for table `price`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `projectTree`
+-- Table structure for table `projectTree`
 --
 
 CREATE TABLE IF NOT EXISTS `projectTree` (
@@ -221,17 +221,17 @@ CREATE TABLE IF NOT EXISTS `projectTree` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `projectTree`
+-- Dumping data for table `projectTree`
 --
 
 INSERT INTO `projectTree` (`id`, `name`, `l`, `r`, `parent`, `comment`, `startDate`, `endDate`, `roundTo`, `fixedPrice`, `close`, `maxDuration`) VALUES
-(1, 'Root', 1, 8, 0, '', NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'My project', 2, 7, 1, '', 0, 0, NULL, NULL, NULL, NULL);
+(1, 'Root', 1, 50, 0, '', NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'My project', 8, 49, 1, '', 0, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `projectTree2user`
+-- Table structure for table `projectTree2user`
 --
 
 CREATE TABLE IF NOT EXISTS `projectTree2user` (
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `projectTree2user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `projectTree2user`
+-- Dumping data for table `projectTree2user`
 --
 
 INSERT INTO `projectTree2user` (`id`, `projectTree_id`, `user_id`, `isManager`) VALUES
@@ -253,43 +253,43 @@ INSERT INTO `projectTree2user` (`id`, `projectTree_id`, `user_id`, `isManager`) 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `projectTree2user_seq`
+-- Table structure for table `projectTree2user_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `projectTree2user_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
--- Daten für Tabelle `projectTree2user_seq`
+-- Dumping data for table `projectTree2user_seq`
 --
 
 INSERT INTO `projectTree2user_seq` (`id`) VALUES
-(23);
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `projectTree_seq`
---
-
-CREATE TABLE IF NOT EXISTS `projectTree_seq` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
-
---
--- Daten für Tabelle `projectTree_seq`
---
-
-INSERT INTO `projectTree_seq` (`id`) VALUES
 (15);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `task`
+-- Table structure for table `projectTree_seq`
+--
+
+CREATE TABLE IF NOT EXISTS `projectTree_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+
+--
+-- Dumping data for table `projectTree_seq`
+--
+
+INSERT INTO `projectTree_seq` (`id`) VALUES
+(48);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `task`
 --
 
 CREATE TABLE IF NOT EXISTS `task` (
@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `task` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `task`
+-- Dumping data for table `task`
 --
 
 INSERT INTO `task` (`id`, `name`, `comment`, `needsProject`, `calcTime`, `color`) VALUES
@@ -314,7 +314,7 @@ INSERT INTO `task` (`id`, `name`, `comment`, `needsProject`, `calcTime`, `color`
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `task_seq`
+-- Table structure for table `task_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `task_seq` (
@@ -323,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `task_seq` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Daten für Tabelle `task_seq`
+-- Dumping data for table `task_seq`
 --
 
 INSERT INTO `task_seq` (`id`) VALUES
@@ -332,7 +332,7 @@ INSERT INTO `task_seq` (`id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `time`
+-- Table structure for table `time`
 --
 
 CREATE TABLE IF NOT EXISTS `time` (
@@ -347,32 +347,32 @@ CREATE TABLE IF NOT EXISTS `time` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `time`
+-- Dumping data for table `time`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `time_seq`
+-- Table structure for table `time_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `time_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
 
 --
--- Daten für Tabelle `time_seq`
+-- Dumping data for table `time_seq`
 --
 
 INSERT INTO `time_seq` (`id`) VALUES
-(23);
+(61);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translate_de`
+-- Table structure for table `translate_de`
 --
 
 CREATE TABLE IF NOT EXISTS `translate_de` (
@@ -380,10 +380,10 @@ CREATE TABLE IF NOT EXISTS `translate_de` (
   `string` mediumtext NOT NULL,
   `convertHtml` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=293 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=295 ;
 
 --
--- Daten für Tabelle `translate_de`
+-- Dumping data for table `translate_de`
 --
 
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
@@ -409,7 +409,7 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (173, 'Zeit(en) gespeichert.', '0'),
 (47, 'bis', '0'),
 (39, 'Zeit', '0'),
-(162, 'Diese Projekt ist an diesem Datum nicht mehr verf&uuml;gbar oder nur noch mit Adminberechtigungen zu ver&auml;ndern!', '0'),
+(162, 'Dieses Projekt ist an diesem Datum nicht mehr verf&uuml;gbar oder nur noch mit Adminberechtigungen zu ver&auml;ndern!', '0'),
 (238, 'Dieses Login ist schon vergeben!', '0'),
 (207, 'Das ist kein g&uuml;ltiger Zugangsname!', '0'),
 (236, 'Die Passw&ouml;rter stimmen nicht &uuml;berein!', '0'),
@@ -582,7 +582,7 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (214, 'Sie sind kein Team-Mitglied eines Projektes, bitte verst&auml;ndigen Sie ihren Administrator!', '0'),
 (159, 'Sie sind kein Team-Mitglied im Projekt: ''$1''!', '0'),
 (235, 'Sie haben keine Berechtigung Benutzer zu &auml;ndern!', '0'),
-(161, 'Dieser Benutzer kann nicht gel&ouml;scht werden, es sind schon Zeiten f&uuml;r ihn/sie gebucht!', '0'),
+(161, 'Dieser Benutzer kann nicht gel&ouml;scht werden, da nicht alle Zeiten f&uuml;r ihn/sie gel&ouml;scht werden konnten!', '0'),
 (164, 'Sie k&ouml;nnen nicht in den Administrator-Modus schalten!', '0'),
 (232, 'Sie haben keine Berechtigung diesen Eintrag zu &auml;ndern!', '0'),
 (234, 'Sie haben keine Berechtigung diesen Eintrag zu l&ouml;schen!', '0'),
@@ -623,12 +623,14 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (287, 'Team aus ''$1'' &uuml;bernehmen', '0'),
 (290, 'Benutzer', '0'),
 (291, 'Passwort', '0'),
-(292, '&auml;ndern', '0');
+(292, '&auml;ndern', '0'),
+(293, 'Datum, Uhrzeit', '0'),
+(294, 'Sind Sie sicher, dass Sie dieses Projekt, alle Unterprojekte und alle gebuchten Zeiten löschen wollen ?', '0');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translate_de_seq`
+-- Table structure for table `translate_de_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `translate_de_seq` (
@@ -637,7 +639,7 @@ CREATE TABLE IF NOT EXISTS `translate_de_seq` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Daten für Tabelle `translate_de_seq`
+-- Dumping data for table `translate_de_seq`
 --
 
 INSERT INTO `translate_de_seq` (`id`) VALUES
@@ -646,7 +648,7 @@ INSERT INTO `translate_de_seq` (`id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translate_en`
+-- Table structure for table `translate_en`
 --
 
 CREATE TABLE IF NOT EXISTS `translate_en` (
@@ -654,10 +656,10 @@ CREATE TABLE IF NOT EXISTS `translate_en` (
   `string` mediumtext NOT NULL,
   `numSubPattern` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=293 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=295 ;
 
 --
--- Daten für Tabelle `translate_en`
+-- Dumping data for table `translate_en`
 --
 
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
@@ -680,7 +682,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (17, 'Logout', 0),
 (18, 'Overview', 0),
 (19, 'now!', 0),
-(20, 'all', 0),
+(20, 'all ', 0),
 (21, 'needs project?', 0),
 (22, 'calculate time?', 0),
 (23, 'HTML-color', 0),
@@ -798,7 +800,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (158, '(.{0,30}) (.{0,30}) is not a team member of project: ''(.*)''!', 3),
 (159, 'You are not a team member of project: ''(.*)''!', 1),
 (160, 'The project is not available anymore, you must not remove the entry!', 0),
-(161, 'You can not remove this user, because there are already times logged for him/her!', 0),
+(161, 'You can not remove this user, because there are still times logged for him/her!', 0),
 (162, 'This project is not available at the date you specified or not modifyable anymore without admin permissions!', 0),
 (163, 'Please enter a valid email-address!', 0),
 (164, 'You can not switch to admin-mode!', 0),
@@ -901,12 +903,14 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (287, 'Inherit team from parent project ''(.*)''', 1),
 (290, 'User', 0),
 (291, 'Password', 0),
-(292, 'change', 0);
+(292, 'change', 0),
+(293, 'date, time', 0),
+(294, 'Are you sure you want to delete this project, all his sub projects and all logged times ?', 0);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translate_en_seq`
+-- Table structure for table `translate_en_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `translate_en_seq` (
@@ -915,7 +919,7 @@ CREATE TABLE IF NOT EXISTS `translate_en_seq` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=283 ;
 
 --
--- Daten für Tabelle `translate_en_seq`
+-- Dumping data for table `translate_en_seq`
 --
 
 INSERT INTO `translate_en_seq` (`id`) VALUES
@@ -924,7 +928,7 @@ INSERT INTO `translate_en_seq` (`id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translate_es`
+-- Table structure for table `translate_es`
 --
 
 CREATE TABLE IF NOT EXISTS `translate_es` (
@@ -935,7 +939,7 @@ CREATE TABLE IF NOT EXISTS `translate_es` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=230 ;
 
 --
--- Daten für Tabelle `translate_es`
+-- Dumping data for table `translate_es`
 --
 
 INSERT INTO `translate_es` (`id`, `string`, `convertHtml`) VALUES
@@ -1085,7 +1089,7 @@ INSERT INTO `translate_es` (`id`, `string`, `convertHtml`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translate_fr`
+-- Table structure for table `translate_fr`
 --
 
 CREATE TABLE IF NOT EXISTS `translate_fr` (
@@ -1096,14 +1100,14 @@ CREATE TABLE IF NOT EXISTS `translate_fr` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
--- Daten für Tabelle `translate_fr`
+-- Dumping data for table `translate_fr`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -1119,7 +1123,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `login`, `name`, `surname`, `email`, `isAdmin`, `password`, `hoursPerDay`) VALUES
@@ -1128,17 +1132,17 @@ INSERT INTO `user` (`id`, `login`, `name`, `surname`, `email`, `isAdmin`, `passw
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_seq`
+-- Table structure for table `user_seq`
 --
 
 CREATE TABLE IF NOT EXISTS `user_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
--- Daten für Tabelle `user_seq`
+-- Dumping data for table `user_seq`
 --
 
 INSERT INTO `user_seq` (`id`) VALUES
-(7);
+(22);
