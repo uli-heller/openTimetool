@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 31, 2009 at 05:31 PM
+-- Generation Time: Feb 02, 2009 at 02:27 PM
 -- Server version: 5.0.45
 -- PHP Version: 5.2.8
 
@@ -277,14 +277,14 @@ INSERT INTO `projectTree2user_seq` (`id`) VALUES
 CREATE TABLE IF NOT EXISTS `projectTree_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
 
 --
 -- Dumping data for table `projectTree_seq`
 --
 
 INSERT INTO `projectTree_seq` (`id`) VALUES
-(48);
+(49);
 
 -- --------------------------------------------------------
 
@@ -552,7 +552,7 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (208, 'Authentifizierungs-Modul konnte nicht geladen werden - bitte verst&auml;ndigen Sie ihren Anbieter!', '0'),
 (253, 'Auth-Modus:', '0'),
 (229, 'Sind Sie sicher?', '0'),
-(178, 'Sind Sie sicher, dass Sie diesen Benutzer löschen wollen?', '0'),
+(178, 'Sind Sie sicher, dass Sie diesen Benutzer löschen wollen?\\n\\nAchtung! Alle Daten dieses Benutzers werden unwiderruflich gelöscht!', '0'),
 (177, 'Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?', '0'),
 (20, 'alle', '0'),
 (219, 'Der Admin Modus wurde ausgeschaltet, Sie arbeiten nun wieder wie ein Standard-Benutzer!', '0'),
@@ -625,7 +625,7 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (291, 'Passwort', '0'),
 (292, '&auml;ndern', '0'),
 (293, 'Datum, Uhrzeit', '0'),
-(294, 'Sind Sie sicher, dass Sie dieses Projekt, alle Unterprojekte und alle gebuchten Zeiten löschen wollen ?', '0');
+(294, 'Sind Sie sicher, dass Sie dieses Projekt, all Unterprojekte und all gebuchten Zeiten löschen wollen ?\\n\\nAchtung! Sämtliche Informationen dieser Projekte werden unwiderruflich gelöscht!', '1');
 
 -- --------------------------------------------------------
 
@@ -817,7 +817,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (175, 'start task', 0),
 (176, 'end task', 0),
 (177, 'Are you sure to delete this entry?', 0),
-(178, 'Are you sure you want to delete this user?', 0),
+(178, 'Are you sure you want to delete this user?\\n\\nAttention! All data of this user will be irrevocably deleted!', 0),
 (179, 'Help', 0),
 (189, 'logged in as User', 0),
 (194, 'source', 0),
@@ -905,7 +905,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (291, 'Password', 0),
 (292, 'change', 0),
 (293, 'date, time', 0),
-(294, 'Are you sure you want to delete this project, all his sub projects and all logged times ?', 0);
+(294, 'Are you sure you want to delete this project, all its sub projects and all  logged times ?\\n\\nAttention! All data of these projects will be irrevocably deleted!', 0);
 
 -- --------------------------------------------------------
 
@@ -1138,11 +1138,11 @@ INSERT INTO `user` (`id`, `login`, `name`, `surname`, `email`, `isAdmin`, `passw
 CREATE TABLE IF NOT EXISTS `user_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `user_seq`
 --
 
 INSERT INTO `user_seq` (`id`) VALUES
-(22);
+(23);
