@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 31, 2009 at 05:09 PM
+-- Generation Time: Feb 02, 2009 at 02:27 PM
 -- Server version: 5.0.45
 -- PHP Version: 5.2.8
 
@@ -185,7 +185,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (175, 'start task', 0),
 (176, 'end task', 0),
 (177, 'Are you sure to delete this entry?', 0),
-(178, 'Are you sure you want to delete this user?', 0),
+(178, 'Are you sure you want to delete this user?\\n\\nAttention! All data of this user will be irrevocably deleted!', 0),
 (179, 'Help', 0),
 (189, 'logged in as User', 0),
 (194, 'source', 0),
@@ -273,4 +273,4 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (291, 'Password', 0),
 (292, 'change', 0),
 (293, 'date, time', 0),
-(294, 'Are you sure you want to delete this project, all his sub projects and all logged times ?', 0);
+(294, 'Are you sure you want to delete this project, all its sub projects and all  logged times ?\\n\\nAttention! All data of these projects will be irrevocably deleted!', 0);
