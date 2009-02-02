@@ -133,7 +133,7 @@
                 {%common_editButton($_SERVER['PHP_SELF'].'?id='.$aUser['id'])%}
             </td>
             <td>
-                {%common_removeAndConfirmButton( $_SERVER['PHP_SELF'].'?removeId='.$aUser['id'] , t('Are you sure you want to delete this user?') )%}
+                {%common_removeAndConfirmButton( $_SERVER['PHP_SELF'].'?removeId='.$aUser['id'] , t('Are you sure you want to delete this user?\n\nAttention! All data of this user will be irrevocably deleted!') )%}
             </td>
         </tr>
 
