@@ -47,6 +47,8 @@
     require_once($config->classPath.'/modules/OOoTemplate/OOoTemplate.php');
     require_once($config->classPath.'/modules/project/treeDyn.php');
 
+
+
                       
     $isAdmin = $user->isAdmin();
 //FIXXME save only templates where the 'save' checkbox was checked, needs to be added in the frontend
@@ -143,7 +145,7 @@
     if( isset($templateId) || isset($tmpFilename) )	// AK: isset
     {
 
-        if( $templateId ) {
+        if( isset($templateId) ) {
             $extension = $OOoTemplate->get($templateId,'type');
             // AK : getFilename writes the template from DB to template-tmp-dir and returns the path to it
             $templateFilename = $OOoTemplate->getFilename($templateId);
@@ -171,15 +173,56 @@
                     unlink($file);                          // remove the OO file so it wont be zipped into the new OO file
 
                     // put the data in the content.xml file
-                    $url = $config->vApplRoot.'/modules/export/processOOoFile.php?';
-                    $url.= '&'.urlencode(session_name()).'='.urlencode(session_id());
+                    
+                    // include language or you'll run in troubles as config.php thinks you changed the language
+                    // as we have to implement an own small session handling (see below) this would lead to
+                    // a redirect to login-page until we reach the redirection limit  
+                    $url = $config->vApplRoot.'/'.$_SESSION[lang].'/modules/export/processOOoFile.php?';
+                    //$url.= SID;                    
+                    $url.= 'template=yes&'.urlencode(session_name()).'='.urlencode(session_id());
                     $session->temp->OOoExport->xmlFile = $dir.'/content.xml';
-                    session_write_close();
+                    //var_dump($_SESSION);
+                    
+                                     
+                   // that should write the session to disk an end it.
+                   // in theory and in previous php version the subsequent fopen call
+                   // worked and had this session in init.php ... But currently !?!?!?! 
+                   // calling fopen now creates a new empty session, regardless what I'm doing ...
+                   // => a redirect to login-page until we reach the redirection limit
+                   session_write_close();
+                   
+                   /**
+                   * well now we do our own session handling to overcome that problem; see init.php !
+                   */
+                   $sessenc = session_encode();
+                   $tmpsessfile = $config->applRoot.'/tmp/OOExport/'.session_id();
+                   if( $fp = fopen( $tmpsessfile , 'wb' ) ){
+                   		fwrite($fp,$sessenc);
+                        fclose($fp);
+                   } else 
+                   		die('Can\'t create temporary session file: '.$tmpsessfile);
+
+                   //var_dump($_SESSION);
+    			   
 //print "<a href='$url'>go</a><br>$url";die();
 
+    				$options = array( 'http' => array(
+        						'user_agent'    => 'ott',    // who am i
+        						'max_redirects' => 20,          // stop after 10 redirects
+        						'timeout'       => 120,         // timeout on response
+    					) );
+    				$context = stream_context_create( $options );
+
+					//stream_context_get_default(array("http" => $options));
+					//var_dump(stream_context_get_options(stream_context_get_default()));
+					//var_dump(file_get_contents( $url, false, $context ));
+
+					//var_dump($url);die();
+
 					// AK : We open the processOOofile.php.result as file !!!
-					$table = '';
-                    if( $fp = fopen( $url , 'rb' ) )
+					$table = '';	
+                    //if( $fp = fopen( $url , 'rb',false, $context ) )
+                    if( $fp = fopen( $url , 'rb' ) )                    
                     {
                         while( $string = fread($fp,4096) )
                             $table .= $string;
