@@ -72,23 +72,63 @@
 	// AK : This is something for the next version ! Actually inclomplete stuff !!!!!!!!!!!!!!!!!!
 	$config->setFeature('price',false);
 
-	/**
+    /**
     *  init the session object here, because we need the session data
     */
-    session_name('sid'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->applName));
-    session_start();
+    $sessionname = 'sid'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->applName);
+    session_name($sessionname);
+    //if(!empty($_REQUEST[$sessionname])) session_id($_REQUEST[$sessionname]);
+
+    if (!$config->isLiveMode()) {
+ 		include_once $config->applRoot.'/logging.php';
+		$logging->_logme('init','before session_start');            
+		//	$logging->_logme('init Session: ',print_r($_SESSION,true));            
+		//$logging->_logme('init sname: ',print_r($sessionname,true));            
+		//$logging->_logme('init GetSID: ',print_r($_REQUEST[$sessionname],true));            
+		//$logging->_logme('init current page: ',print_r($_SERVER['PHP_SELF'],true));            
+		//$logging->_logme('init REQUEST: ',print_r($_REQUEST,true));            
+    }
+
+
+    $res = session_start();
+
 
     // this object is to store individual session variables in an extra namespace
+    // NOTE : these register functions are deprecated in the meanwhile
+    // we soon change them to simple isset($_SESSION['session']) ...
     if (!session_is_registered('session')) {
         $session = new stdClass;    // standard PHP-class constructor
         session_register('session');
+		if(!empty($_REQUEST['template']) && $_REQUEST['template']=='yes') {
+			// check to see if we come from fopen and export and try to read the session data from file ...
+			// see htdocs/moduls/OOExport.php
+			// we overcome with this the php problem that at one point in time the session has been 
+			// created new and empty when called by fopen...
+	        $tmpsessfile = $config->applRoot.'/tmp/OOExport/'.$_REQUEST[$sessionname];
+    	    if( $fp = fopen( $tmpsessfile , 'rb' ) ){
+        	   	$sessdata = fread($fp, filesize($tmpsessfile));
+            	fclose($fp);
+				session_decode($sessdata);
+				unlink($tmpsessfile);
+				$session = &$_SESSION['session'];
+        	} 
+		}
     } else {    // since the class is read from the session it is not automatically made global
         $session = &$_SESSION['session'];
     }
 
+
+    if (!$config->isLiveMode()) {
+		$logging->_logme('init','after session_start');            
+		//$logging->_logme('init Session: ',print_r($_SESSION,true));            
+		//$logging->_logme('init (new)SID: ',print_r(session_id(),true));            
+    }
+
+
     // save the current language in the session
     if (!isset($_SESSION['lang'])) {
-        session_register('lang');
+        //session_register('lang');
+		$_SESSION['lang'] = $lang;
     } else {   // since the class is read from the session it is not automatically made global
         $lang = &$_SESSION['lang'];
     }
@@ -274,7 +314,7 @@
     $options = array(  'expire'        =>  $config->sessionTimeout,    // expire after 8 hours (AK)
                         'protectRoot'   =>  $config->applPathPrefix.'/modules',
                         //'protect'       =>  array('/city/myrooms.php','/city/editRoom.php','imail'),
-                        'dontProtect'   =>  array('*.css.*','/imprint','/manual','/remote'),
+                        'dontProtect'   =>  array('*.css.*','/imprint','/manual','/remote'),  
                         'loginPage'     =>  'user/login.php',
                         'errorPage'     =>  'user/login.php?loginFailed=true', //AK : deleted leading /
                         'defaultPage'   =>  'user/login.php',  					 //AK : deleted leading /
