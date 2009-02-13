@@ -352,9 +352,14 @@ class Auth_common extends PEAR
                                         // for the options to prevent Notice 'array to string conversion' (with E_ALL)
                                         // since there is an array in the options array
                                         $this->_optionsHash.$dsninfo['phptype'] );
+//$this->_log('Auth/common : ',print_r($_SESSION,true),'SESSION',__LINE__);
+//$this->_log('Auth/common : ',print_r($this->sessionArrayName,true),'SESSION-array_name',__LINE__);
 
 		  //AK Check if session already existing ...
-        if(!isset($_SESSION)) session_start();                            // we will need the session anyway
+        if(!isset($_SESSION)) {
+		    session_name('sid'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->applName));
+		    session_start();
+        }
         $this->_session = &$_SESSION[$this->sessionArrayName];
 
         // set this reference to the globals, so the session vars can be referenced
@@ -601,6 +606,9 @@ class Auth_common extends PEAR
                 }
                 $this->_log('auth has expired'.$url,'autoAuth',__LINE__);
             }
+
+			//$this->_log('this='.print_r($this->_session,true),'autoAuth',__LINE__);
+			
 
             if (!$this->isLoggedIn()) {
                 $this->_log('isLoggedIn() is false, requestedUrl='.$requestedUrl,'autoAuth',__LINE__);

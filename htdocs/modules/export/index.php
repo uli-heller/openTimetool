@@ -92,7 +92,7 @@
         }
 //        $projects = $exported2project->getMultiple( $ids );
     }
-    
+   
     if(isset($_REQUEST['exportedID']) && $_REQUEST['exportedID'] == '-1') {
     	// AK : tried export with nothing to export ...See printView.php
     	$applError->set('No data for export ...'); 

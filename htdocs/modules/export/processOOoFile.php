@@ -125,8 +125,8 @@
         }
         $users[$key]['days'] = $newDays;
     }
-
-//print_r($users);
+//echo "Times:".print_r($times,true).'<p>';
+//echo "Users:".print_r($users,true).'<p>';
 
 /*
         if( !$users[$aTime['user_id']] )
@@ -142,7 +142,7 @@
 //print $tpl->getCompiledTemplate();
     include $tpl->getCompiledTemplate();
 
-
+	// don't activate. Will be written into content.xml ...
     //require_once($config->finalizePage);
 
 ?>
