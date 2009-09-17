@@ -7,6 +7,8 @@
      * See OOoTemplate for some details
      * Language compilation is done by this as well
      * 
+     * Revision 1.7 2009/09/17	Bugfix by hisec AT (HS)
+     * 
      * **** Switch to SVN *******
      *  $Log: processOOoFile.php,v $
      *  Revision 1.6  2003/02/17 19:16:36  wk
@@ -34,7 +36,7 @@
 
     function OOencode( $string )
     {
-        return utf8_encode(htmlspecialchars($string));
+        return utf8_encode(str_replace("\n", "<text:line-break />", htmlspecialchars($string)));   // HS
     }
 
 //FIXXXXXME go thru all fields properly and OOencode them, put OOencode in PEAR or in $util, or in HTML/Template/Xipe
@@ -92,6 +94,8 @@
     $users = array();
     foreach( $times as $aTime )
     {               
+//        if( $aTime['_task_calcTime'] )  // only if there is a time for this task, add it to the sum ('Gehen' has no time)
+//        {
         $curUserId = $aTime['user_id'];
         if( !$users[$curUserId] )               // if this user has not been found yet, set his username
         {
@@ -104,7 +108,9 @@
 
         $aTime['task'] = OOencode($aTime['_task_name']);
         $users[$curUserId]['days'][] = $aTime;
-        $sum += $aTime['durationSec'];
+        if( $aTime['_task_calcTime'] )  // only if there is a time for this task, add it to the sum ('Gehen' has no time) by HS
+            $sum += $aTime['durationSec'];
+//        }
     }
     $sum = $time->_calcDuration( $sum , 'decimal' );
 
