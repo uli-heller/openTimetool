@@ -177,7 +177,7 @@
                     // include language or you'll run in troubles as config.php thinks you changed the language
                     // as we have to implement an own small session handling (see below) this would lead to
                     // a redirect to login-page until we reach the redirection limit  
-                    $url = $config->vApplRoot.'/'.$_SESSION[lang].'/modules/export/processOOoFile.php?';
+                    $url = $config->vApplRoot.'/'.$_SESSION['lang'].'/modules/export/processOOoFile.php?';
                     //$url.= SID;                    
                     $url.= 'template=yes&'.urlencode(session_name()).'='.urlencode(session_id());
                     $session->temp->OOoExport->xmlFile = $dir.'/content.xml';
