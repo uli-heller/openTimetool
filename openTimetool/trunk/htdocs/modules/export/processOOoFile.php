@@ -143,7 +143,8 @@
      * with sums for each project and each user 
      */
     $projects = array();
-    $dbg = true;
+    // you can switch on debugging here. Output is written to a file on server
+    $dbg = false;
    	if($dbg) {
 		$f = fopen($config->applRoot.'/tmp/ooexport.txt','wb');
 	}  
@@ -200,9 +201,9 @@
     	        $dayIndex = date('dmY',$aTime['timestamp']);
     	        
     	        // calc day sum
-		//		if( $aTime['_task_calcTime'] ) { // only if there is a time for this task, add it to the sum ('Gehen' has no time) by HS
-        //   			$newDays[$dayIndex]['sum'] += $aTime['durationSec'];
-		//		}
+				if( $aTime['_task_calcTime'] ) { // only if there is a time for this task, add it to the sum ('Gehen' has no time) by HS
+           			$newDays[$dayIndex]['sum'] += $aTime['durationSec'];
+				}
     	        
         	    $newDays[$dayIndex]['times'][] = $aTime;
 
@@ -213,12 +214,12 @@
             	
 	        }
 			if($dbg) {
-				fwrite($f,"newDays:".print_r($newDays,true));
+				//fwrite($f,"newDays:".print_r($newDays,true));
 			}	        
 	        // transform the sum from sec to dec hours 4 all newDays
-    	    //foreach($newDays as $key=>$newTimeswithSum) {
-    	    	//$newDays[$key]['sum'] = $time->_calcDuration( $newDays[$key]['sum'] , 'decimal' );
-    	    //}
+    	    foreach($newDays as $dkey=>$newTimeswithSum) {
+    	    	$newDays[$dkey]['sum'] = $time->_calcDuration( $newDays[$dkey]['sum'] , 'decimal' );
+    	    }
 	        	
     	    $pusers[$key]['days'] = $newDays;
     	    
@@ -238,8 +239,8 @@
     }
         
 	if($dbg) {
-		//fwrite($f,"Times:".print_r($times,true));
-		//fwrite($f,"Users:".print_r($users,true));
+		fwrite($f,"Times:".print_r($times,true));
+		fwrite($f,"Users:".print_r($users,true));
 		fwrite($f,"Projects:".print_r($projects,true));
 		fclose($f);
 	}

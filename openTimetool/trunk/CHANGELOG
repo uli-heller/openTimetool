@@ -1,6 +1,9 @@
-2.2.5 (in work)
-- bugfix by a customer : sum in export to OO-template was wrong 
-
+2.2.5 
+- bugfix by a customer : sum in export to OO-template was wrong
+- enhancement to OOTemplate-based export: now project related reports are possible
+- in folder docs you'll find now a subfolder with
+  a) 2 templates for project based OO-Export
+  b) a brief description of the data available for OO-Export-Templating (in en and de)	  
 
 2.2.4
 - users may now be deleted completely with all booked times and project memberships
