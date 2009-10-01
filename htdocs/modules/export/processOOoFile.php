@@ -113,6 +113,10 @@
 
         $aTime['task'] = OOencode($aTime['_task_name']);
         $users[$curUserId]['days'][] = $aTime;
+   		if( $aTime['_task_calcTime'] ) { // only if there is a time for this task, add it to the sum ('Gehen' has no time) by HS
+            $users[$curUserId]['sum'] += $aTime['durationSec'];
+        }
+       
         if( $aTime['_task_calcTime'] )  // only if there is a time for this task, add it to the sum ('Gehen' has no time) by HS
             $sum += $aTime['durationSec'];
 //        }
@@ -128,6 +132,12 @@
             $aTime['comment'] = OOencode($aTime['comment']);
 
             $dayIndex = date('dmY',$aTime['timestamp']);
+            
+    	    // calc day sum
+			if( $aTime['_task_calcTime'] ) { // only if there is a time for this task, add it to the sum ('Gehen' has no time) by HS
+           		$newDays[$dayIndex]['sum'] += $aTime['durationSec'];
+			}            
+            
             $newDays[$dayIndex]['times'][] = $aTime;
 
             $newDays[$dayIndex]['date'] = OOencode($dateTime->formatDate($aTime['timestamp']));
@@ -135,7 +145,13 @@
             $newDays[$dayIndex]['dateLong'] = OOencode($dateTime->formatDateLong($aTime['timestamp']));
             $newDays[$dayIndex]['dateFull'] = OOencode($dateTime->formatDateFull($aTime['timestamp']));
         }
+    	foreach($newDays as $dkey=>$newTimeswithSum) {
+    	   	$newDays[$dkey]['sum'] = $time->_calcDuration( $newDays[$dkey]['sum'] , 'decimal' );
+    	}        
         $users[$key]['days'] = $newDays;
+        
+   	    // this is the sum of user in decimal notation
+   		$pusers[$key]['sum'] = $time->_calcDuration( $pusers[$key]['sum'] , 'decimal' );        
     }
     
     /**
