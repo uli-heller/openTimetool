@@ -96,9 +96,11 @@
     // this object is to store individual session variables in an extra namespace
     // NOTE : these register functions are deprecated in the meanwhile
     // we soon change them to simple isset($_SESSION['session']) ...
-    if (!session_is_registered('session')) {
+    //if (!session_is_registered('session')) {
+    if (!isset($_SESSION['session'])) {
         $session = new stdClass;    // standard PHP-class constructor
-        session_register('session');
+        //session_register('session');
+        $_SESSION['session'] = '';
 		if(!empty($_REQUEST['template']) && $_REQUEST['template']=='yes') {
 			// check to see if we come from fopen and export and try to read the session data from file ...
 			// see htdocs/moduls/OOExport.php

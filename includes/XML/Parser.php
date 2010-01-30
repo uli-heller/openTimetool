@@ -90,7 +90,7 @@ class XML_Parser extends PEAR
      * @var boolean
      * @see setMode()
      */
-    var $use_call_user_func = true;
+    var $use_call_user_func = false;
 
     // }}}
     // {{{ constructor

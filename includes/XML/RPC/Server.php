@@ -18,7 +18,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Adapted to PEAR standards by Stig Sæther Bakken <stig@php.net>
+// Adapted to PEAR standards by Stig Sï¿½ther Bakken <stig@php.net>
 
 // XML RPC Server class
 // requires: xmlrpc.inc
@@ -60,7 +60,7 @@ function XML_RPC_Server_methodSignature($server, $m)
     
     $methName=$m->getParam(0);
     $methName=$methName->scalarval();
-    if (ereg("^system\.", $methName)) {
+    if (preg_match("/^system\./", $methName)) {
         $dmap=$XML_RPC_Server_dmap; $sysCall=1;
     } else {
         $dmap=$server->dmap; $sysCall=0;
@@ -101,7 +101,7 @@ function XML_RPC_Server_methodHelp($server, $m)
     
     $methName=$m->getParam(0);
     $methName=$methName->scalarval();
-    if (ereg("^system\.", $methName)) {
+    if (preg_match("/^system\./", $methName)) {
         $dmap=$XML_RPC_Server_dmap; $sysCall=1;
     } else {
         $dmap=$server->dmap; $sysCall=0;
@@ -261,7 +261,7 @@ class XML_RPC_Server
             XML_RPC_Server_debugmsg($plist);
             // now to deal with the method
             $methName=$XML_RPC_xh[$parser]['method'];
-            if (ereg("^system\.", $methName)) {
+            if (preg_match("/^system\./", $methName)) {
                 $dmap=$XML_RPC_Server_dmap; $sysCall=1;
             } else {
                 $dmap=$this->dmap; $sysCall=0;

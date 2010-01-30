@@ -43,7 +43,10 @@ class modules_project_treeDyn extends Tree_Dynamic_DBnested
 //        if (isset($projectTreeDyn)) {
 	
 			// AK : Difference between php4 & php5 : in php4 the classname was always in lower case
-        	if (strtolower(get_class($projectTree))!=strtolower(__CLASS__)) {
+	        // Toni, SX : get_class changed its behaviour slightly in php 5.3
+    	    // we now have additionaly to check if projectTree is existing 
+        	// otherwise no tree is every created. This is better anway and should work on any php version			
+        	if (empty($projectTreeDyn) || strtolower(get_class($projectTree))!=strtolower(__CLASS__)) {
             	$treeOptions = array(
                                 'table'         =>  TABLE_PROJECTTREE,
                                 'order'         =>  'name'

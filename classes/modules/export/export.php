@@ -178,7 +178,16 @@ class modules_export extends modules_common
         include_once 'vp/Util/MimeType.php';
         $mimeType = vp_Util_MimeType::getMimeType($exported['type']);
 
-        header('Content-type: '.$mimeType);
+
+		// SX: required for php5.3; cleaner anway ! excel/csv proposes now the correct charset
+		$dcs = ini_get('default_charset');
+		if(!empty($dcs)) {
+	  		$charset = '; charset='.strtoupper(ini_get('default_charset'));
+		} else {
+	  		$charset ='';
+		}
+
+        header('Content-type: '.$mimeType.$charset);
         header('Content-length: '.filesize($filename));
         // this is only for IE, there is a bug since v4.01
         // see http://support.microsoft.com/default.aspx?scid=KB;en-us;q231296

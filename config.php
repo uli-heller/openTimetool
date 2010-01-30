@@ -25,7 +25,7 @@
     /**
 	  * Don't change ! It's the current version !
 	  */
-    $config->applVersion = '2.2.5';
+    $config->applVersion = '2.2.6';
     $config->applName = 'openTimetool'.$config->applVersion;
     
     /**
@@ -68,7 +68,28 @@
     ini_set('display_errors',0);
     ini_set('magic_quotes_gpc',0);
     ini_set('max_execution_time',1000);
- 
+   /**
+    * We need that for php 5.3 to avoid the huge amount of deprecated warnings
+    * They will be worked on in future to get rid of them in a good way
+    * Some are gone already by the way ...
+    */
+    if (strnatcmp(phpversion(),'5.3.0') >= 0)
+    {
+        $php = "5.3"; // or higher
+		error_reporting (E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+		// We have to set this to get that stuff going. Don't understand yet completely though ...
+		// in database we have the stuff in utf-8 anyway
+		// until php 5.2.9 this statement garbled the output
+		// now it seems necessary ...
+		ini_set('default_charset','utf-8');    }
+    else
+    {
+        $php = "5.2";		// or lower
+		error_reporting(E_ALL ^ E_NOTICE);
+    } 
+    date_default_timezone_set('Europe/Berlin');  // php5.3 needs that in any case !!
+    $config->php = $php;
+    
 
     /**
     * The DB DSN, as needed for PEAR::DB.
