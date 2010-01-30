@@ -18,7 +18,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Adapted to PEAR standards by Stig Sæther Bakken <stig@php.net> and
+// Adapted to PEAR standards by Stig Sï¿½ther Bakken <stig@php.net> and
 // Martin Jansen <mj@php.net>
 
 require_once "PEAR.php";
@@ -97,12 +97,12 @@ $GLOBALS['XML_RPC_xh']=array();
 
 function XML_RPC_entity_decode($string)
 {
-    $top=split("&", $string);
+    $top=explode("&", $string);
     $op="";
     $i=0;
     while($i<sizeof($top)) {
-        if (ereg("^([#a-zA-Z0-9]+);", $top[$i], $regs)) {
-            $op.=ereg_replace("^[#a-zA-Z0-9]+;",
+        if (preg_match("/^([#a-zA-Z0-9]+);/", $top[$i], $regs)) {
+            $op.=preg_replace("/^[#a-zA-Z0-9]+;/",
                               XML_RPC_lookup_entity($regs[1]),
                               $top[$i]);
         } else {
@@ -125,7 +125,7 @@ function XML_RPC_lookup_entity($ent)
     if ($XML_RPC_entities[strtolower($ent)])
         return $XML_RPC_entities[strtolower($ent)];
 
-    if (ereg("^#([0-9]+)$", $ent, $regs))
+    if (preg_match("/^#([0-9]+)$/", $ent, $regs))
         return chr($regs[1]);
 
     return "?";
@@ -249,7 +249,7 @@ function XML_RPC_ee($parser, $name)
         } else {
             // we have an I4, INT or a DOUBLE
             // we must check that only 0123456789-.<space> are characters here
-            if (!ereg("^\-?[0123456789 \t\.]+$", $XML_RPC_xh[$parser]['ac'])) {
+            if (!preg_match("/^\-?[0123456789 \t\.]+$/", $XML_RPC_xh[$parser]['ac'])) {
                 // TODO: find a better way of throwing an error
                 // than this!
                 error_log("XML-RPC: non numeric value received in INT or DOUBLE");
@@ -294,7 +294,7 @@ function XML_RPC_ee($parser, $name)
         break;
 
     case "METHODNAME":
-        $XML_RPC_xh[$parser]['method']=ereg_replace("^[\n\r\t ]+", "", $XML_RPC_xh[$parser]['ac']);
+        $XML_RPC_xh[$parser]['method']=preg_replace("/^[\n\r\t ]+/", "", $XML_RPC_xh[$parser]['ac']);
         break;
 
     case "BOOLEAN":
@@ -640,8 +640,8 @@ class XML_RPC_Message
         }
         // see if we got an HTTP 200 OK, else bomb
         // but only do this if we're using the HTTP protocol.
-        if (ereg("^HTTP",$data) &&
-            !ereg("^HTTP/[0-9\.]+ 200 ", $data)) {
+        if (preg_match("/^HTTP/",$data) &&
+            !preg_match("/^HTTP/[0-9\.]+ 200 /", $data)) {
                 $errstr= substr($data, 0, strpos($data, "\n")-1);
                 error_log("HTTP error, got response: " .$errstr);
                 $r=new XML_RPC_Response(0, $XML_RPC_err["http_error"],
@@ -696,7 +696,7 @@ class XML_RPC_Message
                 $r=new XML_RPC_Response($v);
             }
         }
-        $r->hdrs=split("\r?\n", $XML_RPC_xh[$parser]['ha'][1]);
+        $r->hdrs=explode("\r?\n", $XML_RPC_xh[$parser]['ha'][1]);
         return $r;
     }
 
@@ -996,7 +996,7 @@ function XML_RPC_iso8601_encode($timet, $utc=0) {
 function XML_RPC_iso8601_decode($idate, $utc=0) {
     // return a timet in the localtime, or UTC
     $t=0;
-    if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})",$idate, $regs)) {
+    if (preg_match("/([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})/",$idate, $regs)) {
 
         if ($utc) {
             $t=gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);

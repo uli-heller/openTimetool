@@ -161,7 +161,7 @@ class Net_Socket extends PEAR {
     function setBlocking($mode) {
         if (is_resource($this->fp)) {
             $this->blocking = $mode;
-            socket_set_blocking($this->fp, $this->blocking);
+            stream_set_blocking($this->fp, $this->blocking);
             return true;
         }
         return $this->raiseError("not connected");

@@ -180,7 +180,7 @@ class vp_Validation
         if( $required && !vp_Validation::isMinLength( $var, 1 ) )
             return false;
 
-        if( eregi($regex, $var) )
+        if( preg_match('/'.$regex.'/i', $var) )
         {
             return true;
         }
@@ -205,7 +205,7 @@ class vp_Validation
         if( $required && !vp_Validation::isMinLength( $var, 1 ) )
             return false;
 
-        if( eregi("^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$", $var) )
+        if( preg_match("/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i", $var) )
         {
             return true;
         }
@@ -230,7 +230,7 @@ class vp_Validation
         if( $required && !vp_Validation::isMinLength( $var, 1 ) )
             return false;
 
-        if( eregi("^[1-9]?[0-9]+[a-z]?", $var) )
+        if( preg_match("/^[1-9]?[0-9]+[a-z]?/i", $var) )
         {
             return true;
         }
