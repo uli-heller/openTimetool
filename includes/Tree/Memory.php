@@ -236,7 +236,7 @@ class Tree_Memory extends Tree_Common
     {
         if( $this->debug )
         {
-            $startTime = split(" ",microtime());
+            $startTime = explode(" ",microtime());
             $startTime = $startTime[1]+$startTime[0];
         }
 
@@ -245,7 +245,7 @@ class Tree_Memory extends Tree_Common
 
         if( $this->debug )
         {
-            $endTime = split(" ",microtime());
+            $endTime = explode(" ",microtime());
             $endTime = $endTime[1]+$endTime[0];
             print( " reading and preparing tree data took: ".($endTime - $startTime)." <br>" );
         }
@@ -311,7 +311,7 @@ class Tree_Memory extends Tree_Common
 
         if( $this->debug )
         {
-            $startTime = split(" ",microtime());
+            $startTime = explode(" ",microtime());
             $startTime = $startTime[1]+$startTime[0];
         }
 
@@ -350,7 +350,7 @@ class Tree_Memory extends Tree_Common
 
         if( $this->debug )
         {
-            $endTime = split(" ",microtime());
+            $endTime = explode(" ",microtime());
             $endTime = $endTime[1]+$endTime[0];
             print( " building took: ".($endTime - $startTime)." <br>" );
         }
@@ -360,7 +360,7 @@ class Tree_Memory extends Tree_Common
 
         if( $this->debug )
         {
-            $startTime = split(" ",microtime());
+            $startTime = explode(" ",microtime());
             $startTime = $startTime[1]+$startTime[0];
         }
 
@@ -375,7 +375,7 @@ class Tree_Memory extends Tree_Common
 
         if( $this->debug )
         {
-            $endTime = split(" ",microtime());
+            $endTime = explode(" ",microtime());
             $endTime = $endTime[1]+$endTime[0];
             print( " buildStructure took: ".($endTime - $startTime)." <br>" );
         }

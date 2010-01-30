@@ -1,3 +1,7 @@
+2.2.6
+- made oTt ready for php 5.3 : in config.php we put the minimum statements to get it to run
+  eliminated deprecated functions (split to explode an such) 
+  fixed some 5.3 related bugs caused by now different behaviour
 2.2.5 
 - wrong calculated sum in export to OO-template is fixed
 - project related reports are possible now by enhancement to OOTemplate-based export

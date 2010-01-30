@@ -41,7 +41,12 @@
 
     function OOencode( $string )
     {
-        return utf8_encode(str_replace("\n", "<text:line-break />", htmlspecialchars($string)));   // HS
+    	// SX : required on php5.3 when we have to use default_charset = utf-8 (config.php)
+		$dcs = ini_get('default_charset');
+		if($dcs != 'utf-8')
+			return utf8_encode(str_replace("\n", "<text:line-break />", htmlspecialchars($string)));   // HS
+		else
+	  		return str_replace("\n", "<text:line-break />", htmlspecialchars($string));   // HS
     }
 
 //FIXXXXXME go thru all fields properly and OOencode them, put OOencode in PEAR or in $util, or in HTML/Template/Xipe

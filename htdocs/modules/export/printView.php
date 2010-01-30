@@ -146,6 +146,7 @@
         $filenamePrefix = $config->exportDir.'/'.md5(time().session_id());
         $filename = $filenamePrefix.'.html';
 
+
 //print_r($filename);echo " = filename<br>";
 
 
@@ -162,8 +163,14 @@
         }
 
         if ($fp = fopen( $filename , 'w' )) {
-            fwrite( $fp , $content );
-            fclose( $fp );
+			// SX : required on php5.3 when we have to use default_charset = utf-8 (config.php)
+	  		$dcs = ini_get('default_charset');
+	  		if($dcs != 'utf-8')
+	      		fwrite( $fp , $content );	
+	  		else 
+	      		fwrite( $fp , utf8_decode($content) );
+	      			
+          fclose( $fp );
         }
 
         if (isset($_REQUEST['action_toHTML'])) {

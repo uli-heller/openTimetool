@@ -81,8 +81,12 @@ class modules_project_tree extends Tree_Memory
     function &getInstance()
     {
         global $projectTree,$config;
+        
         // is projectTree an instance of this class?
-        if (!strtolower(get_class($projectTree))=='modules_project_tree') {
+        // Toni, SX : get_class changed its behaviour slightly in php 5.3
+        // we now have additionaly to check if projectTree is existing 
+        // otherwise no tree is every created. This is better anway and should work on any php version
+        if (empty($projectTree) || !strtolower(get_class($projectTree))=='modules_project_tree') {
             $projectTree =& new modules_project_tree(   'DBnested',$config->dbDSN,
                                                         array('table'=>TABLE_PROJECTTREE));
             $projectTree->setup();

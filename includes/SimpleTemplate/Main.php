@@ -458,7 +458,7 @@ class SimpleTemplate_Main extends SimpleTemplate_Options
     {
 //print $this->_templateFile.'<br>';
         // cant the log-class do that???
-        $startTime = split(" ",microtime());
+        $startTime = explode(" ",microtime());
         $startTime = $startTime[1]+$startTime[0];
 
         if( $this->_needsRecompile() )
@@ -470,7 +470,7 @@ class SimpleTemplate_Main extends SimpleTemplate_Options
             if( !$this->parse() )
                 return false;
 
-            $endTime = split(" ",microtime());
+            $endTime = explode(" ",microtime());
             $endTime = $endTime[1]+$endTime[0];
             $itTook = ($endTime - $startTime)*100;
             $this->_log("(compilation and) deliverance took: $itTook ms" );
@@ -644,7 +644,7 @@ class SimpleTemplate_Main extends SimpleTemplate_Options
         foreach( $filters as $aFilter )
         {
 // FIXXME use log class
-            $startTime = split(" ",microtime());
+            $startTime = explode(" ",microtime());
             $startTime = $startTime[1]+$startTime[0];
             $sizeBefore = strlen($input);
 
@@ -670,7 +670,7 @@ class SimpleTemplate_Main extends SimpleTemplate_Options
 
             $sizeAfter = strlen($input);
 // FIXXME use log class
-            $endTime = split(" ",microtime());
+            $endTime = explode(" ",microtime());
             $endTime = $endTime[1]+$endTime[0];
             $itTook = ($endTime - $startTime)*100;
 
