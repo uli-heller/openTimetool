@@ -1,33 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.9.4
+-- version 2.11.9.6
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 02, 2009 at 02:27 PM
--- Server version: 5.0.45
--- PHP Version: 5.2.8
+-- Erstellungszeit: 07. Februar 2010 um 17:51
+-- Server Version: 5.1.36
+-- PHP-Version: 5.2.11
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `opentimetool`
+-- Datenbank: `opentimetool`
 --
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `translate_en`
---
-
-CREATE TABLE IF NOT EXISTS `translate_en` (
-  `id` int(11) NOT NULL auto_increment,
-  `string` mediumtext NOT NULL,
-  `numSubPattern` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=295 ;
-
---
--- Dumping data for table `translate_en`
+-- Daten für Tabelle `translate_en`
 --
 
 INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
@@ -273,4 +260,5 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (291, 'Password', 0),
 (292, 'change', 0),
 (293, 'date, time', 0),
-(294, 'Are you sure you want to delete this project, all its sub projects and all  logged times ?\\n\\nAttention! All data of these projects will be irrevocably deleted!', 0);
+(294, 'Are you sure you want to delete this project, all its sub projects and all  logged times ?\\n\\nAttention! All data of these projects will be irrevocably deleted!', 0),
+(295, 'Are you sure you want to delete this report?', 0);

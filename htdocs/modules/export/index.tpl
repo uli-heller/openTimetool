@@ -43,6 +43,7 @@
 -->
 
 {%include vp/Application/HTML/Macro/NextPrev.mcr%}
+{%include common/macro/common.mcr%}
 
 <center>
     <form method="post" name="exportForm">
@@ -100,11 +101,11 @@
             <input type="hidden" name="id" value="">
 
             <tr>
-                <th colspan="5">last exports</th>
+                <th colspan="6">last exports</th>
             </tr>
 
             <tr>
-                <td colspan="5"><br></td>
+                <td colspan="6"><br></td>
             </tr>
 
             <tr>
@@ -113,10 +114,11 @@
                 <th>template</th>
                 <th>download</th>
                 <th>open</th>
+                <th>delete</th>
             </tr>
 			<!-- added @ to avoid notices -->
             {foreach( $exportedFiles as $aFile )}
-                <tr {$aFile['id']==@$_REQUEST['exportedId']?'class="success"':''}>
+                <tr id="removeId{$aFile['id']}" {$aFile['id']==@$_REQUEST['exportedId']?'class="success"':'' }>
                     <td>
                         {$dateTime->format($aFile['timestamp'])}
                     </td>
@@ -138,6 +140,9 @@
                         <input type="radio" name="id" value="{$aFile['id']}">
 -->
                     </td>
+		            <td valign="center">
+        		        {%common_removeAndConfirmButton($_SERVER['PHP_SELF'].'?removeId='.$aFile['id'] , t('Are you sure you want to delete this report?') )%}
+            		</td>
                 </tr>
 <!--
             <tr>
