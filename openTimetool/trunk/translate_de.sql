@@ -1,33 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.9.4
+-- version 2.11.9.6
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 02, 2009 at 02:26 PM
--- Server version: 5.0.45
--- PHP Version: 5.2.8
+-- Erstellungszeit: 07. Februar 2010 um 17:50
+-- Server Version: 5.1.36
+-- PHP-Version: 5.2.11
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `opentimetool`
+-- Datenbank: `opentimetool`
 --
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `translate_de`
---
-
-CREATE TABLE IF NOT EXISTS `translate_de` (
-  `id` int(11) NOT NULL auto_increment,
-  `string` mediumtext NOT NULL,
-  `convertHtml` enum('0','1') NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=295 ;
-
---
--- Dumping data for table `translate_de`
+-- Daten für Tabelle `translate_de`
 --
 
 INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
@@ -269,4 +256,5 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (291, 'Passwort', '0'),
 (292, '&auml;ndern', '0'),
 (293, 'Datum, Uhrzeit', '0'),
-(294, 'Sind Sie sicher, dass Sie dieses Projekt, all Unterprojekte und all gebuchten Zeiten löschen wollen ?\\n\\nAchtung! Sämtliche Informationen dieser Projekte werden unwiderruflich gelöscht!', '1');
+(294, 'Sind Sie sicher, dass Sie dieses Projekt, all Unterprojekte und all gebuchten Zeiten löschen wollen ?\\n\\nAchtung! Sämtliche Informationen dieser Projekte werden unwiderruflich gelöscht!', '1'),
+(295, 'Wollen Sie diesen Export wirklich löschen??', '0');

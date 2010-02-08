@@ -208,6 +208,25 @@ class modules_export extends modules_common
         readfile($filename);
     }
 
+/**
+ * SX : delete temp file and record in export table
+ * Called by remove icon in export popup
+ */     
+    function deleteFile($id)
+    {
+    	global $config,$applError;
+
+        if( !$exported = $this->get($id) )
+            return false;
+
+        $filename = $config->exportDir.'/'.$exported['filename'].'.'.$exported['type'];
+    	if(file_exists($filename)) {
+    		unlink($filename);
+    	}
+    	$this->remove($id);
+        //$applError->log('export::deleteFile - Error deleting '.$filename);    	
+    }
+
 }   // end of class
 
 $export = new modules_export;

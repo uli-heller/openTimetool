@@ -123,10 +123,21 @@
     $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
 
   	/**
-	   * Seperator 4 csv-Export 
-	   */
-	  $config->seperator = ';';
-	
+	* Seperator 4 csv-Export 
+	*/
+	$config->seperator = ';';
+
+	/**
+	 * Compressed presentation of team members to overcome
+	 * possible performance problems when there are many projects
+	 * and users
+	 * We have 4 compression levels:
+	 * 0 = uncompressed (like before)
+	 * 1 = 2 icons with list : managers, members
+	 * 2 = 1 icon, only list with name suffix [PM] for projectmembers
+	 * 3 = same as 2 with even icon skipped
+	 */	
+	$config->teamcompressed = 2;
 	
     /**
     * Automatically determined!    AK !!!!!WORKS only yet when not defined. Have to look on ...
