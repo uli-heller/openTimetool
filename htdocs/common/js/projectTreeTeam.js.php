@@ -180,10 +180,15 @@
 
                 // show the icon depending on the user's rights
                 if (isset($curEl['_teamMember'])) {     // AK isset added
-                	if($config->teamcompressed !=3)
-                   		$data['icon'] = 'icon'.($curEl['_isManager']?'Manager':'User').'.gif';
+                	if($config->teamcompressed !=3) {
+                		if($config->teamcompressed == 2)
+                   			$data['icon'] = 'icon'.($isManager?'Manager':'User').'.gif';
+						else
+                   			$data['icon'] = 'icon'.($curEl['_isManager']?'Manager':'User').'.gif';
+                	}                  	
                    	else
-                   		$data['icon'] = '';
+                   		$data['icon'] = ''; // the spartanic option with no icons at al                
+		
     /* FIXXME do this one day
                     if ($isManager) {
                         $removeImg = '<img src="'.$config->applPathPrefix.'/media/image/common/remove.gif" border="0"/>';
@@ -195,8 +200,9 @@
                 	if($config->teamcompressed !=3)
  		                $data['icon'] = 'folder'.($isMember?($isManager?'Manager':''):'Hidden').'.gif';
                    	else
-                   		$data['icon'] = '';
-                     if ($isManager) {
+                   		$data['icon'] = '';   // the spartanic option with no icons at all
+                   		
+                    if ($isManager) {
                         $editImg = '<img src="'.$config->applPathPrefix.'/media/image/common/edit.gif" border="0"/>';
                         $editLink = ' <a href="?projectId='.$id.'">'.$editImg.'</a>';
                         $data['name'] = $curEl['name'].'&nbsp;'.$editLink;

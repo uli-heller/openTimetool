@@ -134,8 +134,8 @@
 	 * We have 4 compression levels:
 	 * 0 = uncompressed (like before)
 	 * 1 = 2 icons with list : managers, members
-	 * 2 = 1 icon, only list with name suffix [PM] for projectmembers
-	 * 3 = same as 2 with even icon skipped
+	 * 2 = 1 icon and one list with name suffix [PM] for projectmanagers (icon depends on permissions)
+	 * 3 = same as 2 with no icon at all; the spartanic mode; even the folder icon is gone ...
 	 */	
 	$config->teamcompressed = 2;
 	
