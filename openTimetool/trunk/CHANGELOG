@@ -1,7 +1,8 @@
 2.2.6
-- made oTt ready for php 5.3 : in config.php we put the minimum statements to get it to run
-  eliminated deprecated functions (split to explode an such) 
+- made openTimetool ready for php 5.3: config.php is updated with the minimum statements to get it run
+  eliminated deprecated functions (i.e. split to explode, ...) 
   fixed some 5.3 related bugs caused by now different behaviour
+  
 2.2.5 
 - wrong calculated sum in export to OO-template is fixed
 - project related reports are possible now by enhancement to OOTemplate-based export
