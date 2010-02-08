@@ -75,6 +75,10 @@
     
     $export->preset();
 
+    if (isset($_REQUEST['removeId'])) {
+    	$export->deleteFile($_REQUEST['removeId']);
+    }
+
     $nextPrev = new vp_Application_HTML_NextPrev($export);
     $nextPrev->setLanguage( $lang );
     $exportedFiles = $nextPrev->getData();
@@ -97,6 +101,8 @@
     	// AK : tried export with nothing to export ...See printView.php
     	$applError->set('No data for export ...'); 
     }
+
+
 
     $layout->setMainLayout('/modules/dialog');
     require_once($config->finalizePage);
