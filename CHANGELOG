@@ -1,13 +1,11 @@
 2.2.6
-- made openTimetool ready for php 5.3: config.php is updated with the minimum statements to get it run
+- openTimetool is now ready for php 5.3. config.php is updated with the minimum statements to get it run
   eliminated deprecated functions (i.e. split to explode, ...) 
   fixed some 5.3 related bugs caused by now different behaviour
-- Options to compress the presentation (and memory tree) of the team page (see config.php)
-  We want to overcome with these options some memory,performance problems when there are
-  many team members and projects (100 projects and 40 members seems to be a limit somehow
-  for many systems). In config.php the default option is the best compromise for information
-  and performance
-- It's now possible to delete exports (file and db entry) on export popup page
+- major performance improvement for the team page
+  the compress rate for building the team page can now be set by a parameter in the config.php
+  to get the best compromise for sufficient information and performance use the default setting 
+- it's now possible to delete old exports on export popup page (file and db entry)
   
 2.2.5 
 - wrong calculated sum in export to OO-template is fixed
