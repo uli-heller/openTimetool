@@ -35,7 +35,10 @@
                 {%common_dateInput_mobile( 'newData[timestamp_date]' , $data['timestamp'] , 'editForm' )%}
                 <br>
                 <input name="newData[timestamp_time]" value="{echo date('H:i',$data['timestamp'])}" size="5" onBlur="autoCorrectTime('editForm','newData[timestamp_time]')">
-                <input type="button" class="button" value="refresh" onClick="_updateTime()">
+                <!-- update with client time -->
+                <!-- <input type="button" class="button" value="refresh" onClick="_updateTime()"> -->
+                <!-- currently active: update with server time --> 
+                <input type="button" class="button" value="refresh" onClick="location.reload()">
             </td>
         </tr>
 
