@@ -44,10 +44,10 @@
     <meta name="Content-Language" content="de">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="10 days">
-    <meta name="author" content="vision:produktion & System-worX">
-    <meta name="publisher" content="vision:produktion & System-worX">
-    <meta name="copyright" content="vision:produktion & System-worX">
-    <meta name="owner" content="vision:produktion & System-worX">
+    <meta name="author" content="vision:produktion & system worx">
+    <meta name="publisher" content="vision:produktion & system worx">
+    <meta name="copyright" content="vision:produktion & system worx">
+    <meta name="owner" content="vision:produktion & system worx">
     <meta http-equiv="pragma" content="no-cache">
 
 <!-- use getOption here!!! is this not implemented??? -->

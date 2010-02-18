@@ -26,6 +26,8 @@
     //
     //
     //
+    
+	require_once $config->classPath.'/mobile_browser.php';
                        
     if (isset($_REQUEST['logout']) && $_REQUEST['logout']== 1) {
         $userAuth->logout();
@@ -40,7 +42,9 @@
          * SX : not very nice, but when we call this mobile time page, we use a login-page without
          * any decorations. Just the pure 2 input fields. That is suitable and great for mobile access
          */
-   		if((basename($userAuth->getRequestedUrl()) == 'mobile.php')) {
+        $uri =  trim($userAuth->getRequestedUrl());
+        $browser = $_SERVER['HTTP_USER_AGENT'];
+   		if((basename($uri) == 'mobile.php') || is_mobile($browser)) {
     		$layout->setMainLayout('/modules/dialog');   // to get the page with all that stuff around
     	}          
     }
