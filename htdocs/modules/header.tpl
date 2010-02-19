@@ -38,9 +38,9 @@
 <head>
     <title>{echo strip_tags($config->applName)}</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-    <meta name="description" content="Beratung und Konzeption, Datenbanken und Programmierung, Grafik und Design, Internet und Intranet Produktionen">
-    <meta name="abstract" content="Funktionalit&auml;t und Design - Multimedia Agentur, Beratung und Konzeption, Datenbanken und Programmierung, Grafik und Design, Internet und Intranet Produktionen">
-    <meta name="keywords" content="Beratung, beratung, Design, design, Multimedia, multimedia, Multimediaagentur, multimediaagentur, Internet, internet, Intranet, intranet, Datenbanken, datenbanken, Programmierung, programmierung, PHP, php, Linux, linux, LAMP, lamp, Internet-Anwendungen, Intranet-Anwendungen, Extranet-Anwendungen, Content Management Systeme, CMS, cms, E-commerce, ecommerce, E-Business, ebusiness, Communities, interaktive Kommunikation, digitale Kommunikation, Crossmedia, crossmedia">
+    <meta name="description" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time recording">
+    <meta name="abstract" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time recording">
+    <meta name="keywords" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time recording">
     <meta name="Content-Language" content="de">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="10 days">
@@ -60,5 +60,4 @@
     <link rel="shortcut icon" href="/favicon.ico">
     {%common_getJS('common')%}
 </head>
-<!-- vision produktion, vision:produktion, vision produktion gmbh, vision produktion GmbH, vision:produktion gmbh, vision:produktion GmbH, visionp, v:p, Vision, vision, Produktion, produktion, Beratung, beratung, Design, design, Multimedia, multimedia, Multimediaagentur, multimediaagentur, Internet, internet, Intranet, intranet, Datenbanken, datenbanken, Programmierung, programmierung, PHP, php, Linux, linux, LAMP, lamp, Internet-Anwendungen, Intranet-Anwendungen, Extranet-Anwendungen, Content Management Systeme, CMS, cms, E-commerce, ecommerce, E-Business, ebusiness, Communities, interaktive Kommunikation, digitale Kommunikation, System-worX, system-worx -->
 <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
