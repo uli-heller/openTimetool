@@ -2,6 +2,7 @@
 - mobile log: time will updated now with server time
 - mobile access: check for login with mobile browser implemented
 - some minor bugfixes and cleanup
+- bugfix: mobile access for Opera Mini
 
 2.2.6
 - openTimetool is now ready for php 5.3. config.php is updated with the minimum statements to get it run

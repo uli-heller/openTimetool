@@ -7,6 +7,23 @@
     * One of the main pages of openTimeTool !
     * 
     */
+    
+    /**
+     * Check if we are here by erraneous redirect from opera mini and such
+     */
+	require_once $config->classPath.'/mobile_browser.php';
+	$browser = $_SERVER['HTTP_USER_AGENT'];
+	if(is_mobile($browser)) {
+        /**
+         * well we should be in mobile.php but got somehow redirected to
+         * today.php (this one) on some opera mini browsers on some mobiles on some servers 
+         */
+		$thisuri  = $_SERVER['REQUEST_URI'];
+		$thisuri = str_ireplace('today.php','mobile.php',$thisuri);
+		$host  = $_SERVER['HTTP_HOST'];
+		header("Location: http://$host/$thisuri");        
+	}
+    
 	if (!$config->isLiveMode()) {    
 //		include_once $config->applRoot.'/logging.php';
 //		$logging->_logme('today','start'); 
