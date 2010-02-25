@@ -21,7 +21,9 @@
 		$thisuri  = $_SERVER['REQUEST_URI'];
 		$thisuri = str_ireplace('today.php','mobile.php',$thisuri);
 		$host  = $_SERVER['HTTP_HOST'];
-		header("Location: http://$host/$thisuri");        
+		$prot = 'http' . ($_SERVER['HTTPS'] != 'on'?'':'s');
+		header("Location: $prot://$host/$thisuri");
+    exit;        
 	}
     
 	if (!$config->isLiveMode()) {    
