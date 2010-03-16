@@ -31,8 +31,8 @@
 
     $milestones = array(
                         array('percentage'=>0,'color'=>'green')
-                        ,array('percentage'=>80,'color'=>'orange')
-                        ,array('percentage'=>100,'color'=>'red')
+                        ,array('percentage'=>101,'color'=>'yellow')
+                        ,array('percentage'=>125,'color'=>'red')
                     );
     if (!$projectMember->isManager()) {
         $applError->set('You are not a project manager of any project!');
