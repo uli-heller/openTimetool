@@ -328,6 +328,9 @@ class Auth_LDAP extends Auth_common
     */
     function _login( $username , $password )
     {
+    	global $db;
+		global $user;
+    	
         $filter = "(& {$this->_dsn['filter']} ({$this->_dsn['userattr']}=$username))";
         // search
         if ($this->_dsn['scope'] == 'sub') {
@@ -378,23 +381,104 @@ class Auth_LDAP extends Auth_common
                 $info['username'] = $username;
                 $info['password'] = $password;
 
-global $db;
-$query = sprintf("SELECT * FROM %s WHERE %s=%s", TABLE_USER, 'login', $db->quote($username));
-if (DB::isError($res = $db->getRow($query))) {
-    return $this->raiseError(AUTH_ERROR_DB_READ_FAILED, null, null, null, DB::errorMessage($res));
-}
-unset($res['password']);
-if (sizeof($res)) return $res;
-return AUTH_FAILED;
+				/**
+				 * SX : user is authenticated agains LDAP!
+				 * BUT he doesn't exist as oTt-user yet -> create him
+				 * He isn't assigned to any project anyway. So no harm done
+				 */
 
-                return $info;
+				$query = sprintf("SELECT * FROM %s WHERE %s=%s", TABLE_USER, 'login', $db->quote($username));
+				if (DB::isError($res = $db->getRow($query))) {
+    				return $this->raiseError(AUTH_ERROR_DB_READ_FAILED, null, null, null, DB::errorMessage($res));
+				}
+				unset($res['password']);
+				if (sizeof($res)) {
+					return $res;
+				} else {
+					// user is no oTt user yet !!
+					if(empty($info['sn'])) $info['sn'] = $username;  // sanity
+					if(empty($info['givenName'])) $info['givenName'] = $username; // sanity
+					if(empty($info['mail'])) return AUTH_FAILED; // this is absolutely required !
+					
+					$ret = $user->add_ldap_user_passthrough($info['givenName'],$info['sn'],$username,$info['mail']);
+					if($ret === false) return AUTH_FAILED;
+
+					// I am lazy ... Just read the current entry again and return the data					
+					$query = sprintf("SELECT * FROM %s WHERE %s=%s", TABLE_USER, 'login', $db->quote($username));
+					if (DB::isError($res = $db->getRow($query))) {
+    					return $this->raiseError(AUTH_ERROR_DB_READ_FAILED, null, null, null, DB::errorMessage($res));
+					}
+					unset($res['password']);
+					if (sizeof($res)) {
+						return $res;					
+					}
+					return AUTH_FAILED;
+
+				}
             } else {
                 // wrong password
                 return AUTH_FAILED;
             }
         }
-        // user does not exists
-        return -98;
+        // user does not exists in LDAP !
+        //return -98;
+         /**
+         * SX : we might have users which are NO LDAP users but stored in DB
+         * These are usually guest or so which should be able to authenticate against DB data
+         * 
+         * In principle a copy from Auth/DB.php
+         */
+
+		$pwd = $this->digest($username,$password);
+		$username = $db->quote($username);
+		$pwd = $db->quote($pwd);
+        $query = sprintf("SELECT * FROM %s WHERE %s=%s AND %s=%s",
+                            TABLE_USER,
+                            'login',$username,
+                            'password',$pwd
+                         );
+
+
+
+        if( DB::isError( $res = $db->getRow($query)) )
+        {     		
+            return $this->raiseError(AUTH_ERROR_DB_READ_FAILED, null, null,
+                                        null, DB::errorMessage($res) );
+        }
+ 
+
+        unset($res[$db->options['passwordColumn']]);  // erase the password from the data, so it wont be visible in the session data
+        if( sizeof($res) )                          // if the query returns data return them back
+            return $res;
+
+        return -98;                         // no data found
+        // neither LDAP nor DB !!! 
+    }
+    
+    /**
+     * Is given user in LDAP ?
+     */
+    function is_LDAP_user($username)
+    {
+    	
+        $filter = "(& {$this->_dsn['filter']} ({$this->_dsn['userattr']}=$username))";
+        // search
+        if ($this->_dsn['scope'] == 'sub') {
+            $result_id = @ldap_search($this->conn_id, $this->_dsn['basedn'], $filter);
+        } else {
+            // scope is one
+            $result_id = @ldap_list($this->conn_id, $this->_dsn['basedn'], $filter);
+        }
+        if (!$result_id) {
+            return new PEAR_Error("Error searching LDAP.", 41, PEAR_ERROR_DIE);
+        }
+
+        // did we get just one entry?
+        if (ldap_count_entries($this->conn_id, $result_id) == 1) {
+			// user is an ldap user
+    		return true;
+        }    	
+    	return false;
     }
 }
 ?>

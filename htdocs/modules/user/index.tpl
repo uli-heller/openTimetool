@@ -65,7 +65,7 @@
         {%EditData_input($data,'email',t('email').' *')%}
         {%EditData_input($data,'login',t('login').' *')%}
 
-        {if($config->auth->savePwd)}     /* hide password fields and reset by using authentication against LDAP */
+        {if($config->auth->savePwd || !$data['is_LDAP_user'])}     /* hide password fields and reset by using authentication against LDAP */
             {%EditData_password('password',t('password').' ')%}
             {%EditData_password('password1',t('repeat password').' ')%}
             

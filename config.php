@@ -183,8 +183,12 @@
 
     /** 
     * Authentication against LDAP 
-    * In this release the following userdata must be saved in openTimetool (admin mode -> users):
-    * given name, surname, username. The username in openTimetool have to be the same as in your LDAP!    
+    * - mixed LDAP and NON LDAP accounts are possible
+    * - user creation on the fly of a properly authenticated LDAP user during first login
+    *   (user gets an unknown generated password; after switching to DB auth again he can't log in until
+    *   he gets a known password set ! Safety !)
+    * - LDAP schema attributes : uid, givenName and sn (the standard attributes in each official schema)
+    *   Search by uid = The username in openTimetool    
     */
     #$config->auth->method       =   'LDAP';
     #$config->auth->url          =   'ldap://<your_ldap.host.com>/<your_basedn>';
