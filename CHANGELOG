@@ -3,6 +3,8 @@
 - mobile log: time will updated now with server time
 - mobile access: check for login with mobile browser implemented
 - bugfix: mobile access for Opera Mini
+- improved LDAP authentication : mixed LDAP and NON LDAP accounts, user creation on the fly
+  of a properly authenticated LDAP user during first log in
 - some minor bugfixes and cleanup
 
 2.2.6

@@ -39,6 +39,18 @@
     if( !$pageHandler->save( @$_REQUEST['newData'] ) )
     {
         $data = $pageHandler->getData();
+        
+        // if we are auth against LDAP we have to set a flag if we really edit an LDAP user
+        // if not we must be able to modify the password !!
+        $data['is_LDAP_user'] = false;
+        if( $config->auth->method == 'LDAP' )
+        {
+            if(method_exists($userAuth,'is_LDAP_user')) {
+        			if($userAuth->is_LDAP_user($data['login'])) {
+		  				$data['is_LDAP_user'] = false;
+		  			}
+		  		}
+		}
     }
 
         

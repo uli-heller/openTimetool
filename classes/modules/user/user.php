@@ -435,6 +435,59 @@ class modules_user extends modules_common
 		}
 	
 	/**
+	 *   add ldap authenticated user on the fly (SX)
+	 *   Password is generated and random
+	 *   This way no harm is done if authentication is changed to db afterwards ...
+	 */
+	function add_ldap_user_passthrough( $givenname, $surname, $userid, $mail )
+		{
+		global $session, $applError, $config, $db;
+		
+		$ret = true;
+
+		$maxNumUsers = $session->account->numUsers;
+		$this->reset();
+		if( $maxNumUsers <= $this->getCount() )
+		{
+			$applError->set("Your license only allows $maxNumUsers users!");
+			$ret = false;
+		}
+		
+		if( !trim(@$surname) || !trim(@$givenname) )
+		{
+			$applError->set('Please enter the complete name!');
+			$ret = false;
+		}
+		
+		if( !isset($mail) )
+		{
+			$applError->set('Please enter a valid email-address!');
+			$ret = false;
+		}
+		
+		$this->reset();
+		$this->setWhere( 'login='.$db->quote($userid) );
+		if( $this->getCount() )
+		{
+			// should never happen as we checked that before in ldap auth
+			$applError->set('This login is not available anymore!');
+			$ret = false;
+		}
+		
+		$password = $this->randompass();   
+		$data['password'] = $password;
+		$data['surname'] = $surname;
+		$data['name'] = $givenname;
+		$data['email'] = $mail;
+		$data['login'] = $userid;
+		
+		if( $ret )
+			return parent::add( $data );
+		return $ret;
+		}
+		
+	
+	/**
 	 *   is the current user an admin
 	 *
 	 *   @version    13/11/2002
