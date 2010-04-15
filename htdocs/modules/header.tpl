@@ -38,16 +38,16 @@
 <head>
     <title>{echo strip_tags($config->applName)}</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-    <meta name="description" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time recording">
-    <meta name="abstract" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time recording">
-    <meta name="keywords" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time recording">
+    <meta name="description" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time tracking">
+    <meta name="abstract" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time tracking">
+    <meta name="keywords" content="Webbasierte Projektzeiterfassung, web based project time tracking, Zeitmanagement, Zeiterfassung, time tracker, time management">
     <meta name="Content-Language" content="de">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="10 days">
-    <meta name="author" content="vision:produktion & system worx">
-    <meta name="publisher" content="vision:produktion & system worx">
-    <meta name="copyright" content="vision:produktion & system worx">
-    <meta name="owner" content="vision:produktion & system worx">
+    <meta name="author" content="openTimetool">
+    <meta name="publisher" content="openTimetool">
+    <meta name="copyright" content="openTimetool">
+    <meta name="owner" content="openTimetool">
     <meta http-equiv="pragma" content="no-cache">
 
 <!-- use getOption here!!! is this not implemented??? -->
