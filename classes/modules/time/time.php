@@ -473,7 +473,9 @@ class modules_time extends modules_common
             case 'hour':    return sprintf('%02d:%02d',$hours,$minutes);
             case 'decimal': // divide minutes by 60 to get the 100th parts of the hour
                             // times 100 to remove the '0,'
-                            return sprintf('%02d,%02d',$hours,$minutes/(60/100));
+                            // jv: round() is needed for correct output in oo-templates
+                            $decimalMinutes = round($minutes/(60/100));
+                            return sprintf('%02d,%02d',$hours,$decimalMinutes);
             case 'days':    // the hours as a number
                             $time = sprintf('%02d.%02d',$hours,$minutes/(60/100));
                             return str_replace('.',',',round( $time/8 , 2 ));
