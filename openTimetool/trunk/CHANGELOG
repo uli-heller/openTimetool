@@ -1,4 +1,5 @@
 2.2.8
+- iPhone: displayed content is now automatically scaled by using <meta name="viewport" content="width=device-width">
 - export: print view layout improved
 - minor bugfixes
 

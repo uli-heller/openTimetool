@@ -49,6 +49,7 @@
     <meta name="copyright" content="openTimetool">
     <meta name="owner" content="openTimetool">
     <meta http-equiv="pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width">
 
 <!-- use getOption here!!! is this not implemented??? -->
     {if ($userAuth->isLoggedIn())} <!-- we dont need to reload if the user is not logged in -->
