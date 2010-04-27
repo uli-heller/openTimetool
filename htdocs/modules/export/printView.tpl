@@ -39,7 +39,7 @@
                 window.setTimeout("window.print()",1000);
             </script>
     {else}
-        <table class="outline">
+        <table class="outline" width="90%">
             <tr>
                 <td>export</td>
                 <td>
@@ -61,7 +61,7 @@
 	<!-- AK isset instead of sizeof -->
     {if(isset($times))}
         { $durationSum = 0}
-        <table class="outline">
+        <table class="outline" width="90%">
             <tr>
                 {if( $showCols['start'] )}
                     <th>Start</th>
@@ -103,7 +103,7 @@
                 <tr>
                     <td colspan="{$numCols}">
                         <br>
-                        <u>Project: {$projectTreeDyn->getPathAsString($times[0]['projectTree_id'])}</font></u>
+                        <b>Project: {$projectTreeDyn->getPathAsString($times[0]['projectTree_id'])}</b>
                     </td>
                 </tr>
 		
@@ -155,9 +155,9 @@
                     {if(isset($aTime['duration']))}
                         { $durationSecSum+=$aTime['durationSec']}
                     {if( isset($showCols['duration']) )}
-                        <td valign="top" nowrap align="center" {$class}>
+                        <td valign="top" nowrap align="right" {$class}>
                             {if(isset($aTime['duration']))}
-                                {$aTime['duration']} h
+                                {$aTime['duration']}&nbsp;h
                         </td>
                 </tr>
             <tr>
@@ -167,11 +167,11 @@
                 <td colspan="{$numCols-1}" align="right" valign="top">
                     <b>Sum</b>
                 </td>
-                <td align="center">
+                <td align="right">
                     <b>
-                    {$time->_calcDuration($durationSecSum)} h<br>
-                    {$time->_calcDuration($durationSecSum,'decimal')} h<br>
-                    {$time->_calcDuration($durationSecSum,'days')} d
+                    {$time->_calcDuration($durationSecSum)}&nbsp;h<br>
+                    {$time->_calcDuration($durationSecSum,'decimal')}&nbsp;h<br>
+                    {$time->_calcDuration($durationSecSum,'days')}&nbsp;d
                     </b>
                 </td>
             </tr>
