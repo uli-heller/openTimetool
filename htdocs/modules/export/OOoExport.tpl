@@ -55,9 +55,7 @@
                             </tr>
                         {foreach( $templates as $aTemplate )}
                             <tr>
-                                <td>
-                                    <a href="downloadTemplate.php?id={$aTemplate['id']}">{$aTemplate['name']}</a>
-                                </td>
+                                <td>{$aTemplate['name']}</td>
                                 <td align="center">{echo date('d.m.y H:i',$aTemplate['timestamp'])}</td>
                                 <td>{$aTemplate['_type']}</td>
                                 <td>
