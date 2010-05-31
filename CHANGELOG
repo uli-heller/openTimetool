@@ -1,5 +1,6 @@
 2.2.8
-- iPhone: displayed content is now automatically scaled by using <meta name="viewport" content="width=device-width">
+- mobile log: only current projects will be shown in the projectlist now
+- iPhone: content is now automatically scaled by using <meta name="viewport" content="width=device-width">
 - export: print view layout improved
 - minor bugfixes
 
