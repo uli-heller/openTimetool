@@ -26,7 +26,7 @@
     require_once('vp/Application/HTML/Tree.php');
     require_once($config->classPath.'/modules/project/tree.php');
     $projectTree =& modules_project_tree::getInstance();    
-    $allFolders = $projectTree->getAll();    
+    $allFolders = $projectTree->getAllAvailable();    
 
     $pageHandler->setObject($time);
     $data = $pageHandler->saveHandler( @$_REQUEST['newData'] ); // AK : use @ as if empty a null handler is returned
