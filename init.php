@@ -67,8 +67,9 @@
     
 //    $config->setFeature('translate','develop');
     $config->setFeature('translate',true);
-    $config->setLanguages(array('en','de','es'));
-
+    //$config->setLanguages(array('en','de','es'));
+    $config->setLanguages(array('en','de'));
+    
 	// AK : This is something for the next version ! Actually inclomplete stuff !!!!!!!!!!!!!!!!!!
 	$config->setFeature('price',false);
 

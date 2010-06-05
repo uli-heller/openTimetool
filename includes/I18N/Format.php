@@ -82,9 +82,23 @@ class I18N_Format extends PEAR
         parent::PEAR();
         $this->_locale = $locale;
 
+        /**
+         * SX: for 2.2.8
+         * Well we have a problem with utf8/iso8891-1 and the german popup calender
+         * When we are on php 5.3 we have to use charset = utf-8
+         * On lower php versions this isn't the case (see config.php)
+         * We now have to versions of the de.php include with 'März' ;-)
+         * The utf-8 encoded one is called de_utf-8.php 
+         */
+		$charset = ini_get('default_charset');
+		if($charset == 'utf-8') 
+    		$localeinc = $locale.'_utf-8.php';
+		else
+    		$localeinc = $locale.'.php';
+        
 //FIXXME catch locales that we dont have a class for yet, and use default class, which
 // translates using google or something ...
-        if( include_once "I18N/Common/$locale.php" ){
+        if( include_once "I18N/Common/".$localeinc ){
             $class = "I18N_Common_$locale";
             $this->_localeObj = new $class();
         }
