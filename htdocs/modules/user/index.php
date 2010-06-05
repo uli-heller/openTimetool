@@ -47,9 +47,12 @@
         {
             if(method_exists($userAuth,'is_LDAP_user')) {
         			if($userAuth->is_LDAP_user($data['login'])) {
+		  				$data['is_LDAP_user'] = true;
+		  			}
+		  			else {
 		  				$data['is_LDAP_user'] = false;
 		  			}
-		  		}
+		  	}
 		}
     }
 

@@ -29,7 +29,7 @@
     <table class="outline">
         <!--{%table_headline('Change Password')%}-->
 
-        {if($config->auth->savePwd)}
+        {if($config->auth->savePwd || !$data['is_LDAP_user'])}
             {%EditData_password('password',t('password').' ')%}
             {%EditData_password('password1',t('repeat password').' ')%}
 
