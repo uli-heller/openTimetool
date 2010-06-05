@@ -81,7 +81,8 @@
 		// in database we have the stuff in utf-8 anyway
 		// until php 5.2.9 this statement garbled the output
 		// now it seems necessary ...
-		ini_set('default_charset','utf-8');    }
+		ini_set('default_charset','utf-8');    
+    }
     else
     {
         $php = "5.2";		// or lower

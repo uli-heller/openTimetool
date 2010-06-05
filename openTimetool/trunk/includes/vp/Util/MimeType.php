@@ -23,10 +23,13 @@ class vp_Util_MimeType
 {            
 	// AK : added OO 2.0 mimetypes
 	// sxw & sxc are OO1.x; odt&ods are OO2.x
+	// AK : with 2.2.8 we skip the old OO 1.x-stuff now
+	// but keep that mime type stuff for compatibility
+	// It's enough to delete the table row
     var $_map = array(
                         'sxw'   =>  array(  'mimeType'  =>  'application/vnd.sun.xml.writer',
-                                            'name'      =>  'OpenOffice.org - Writer')
-                        ,'odt'  =>  array(  'mimeType'  =>  'application/vnd.oasis.opendocument.text',
+                                            'name'      =>  'OpenOffice.org - Writer') ,
+                        'odt'  =>  array(  'mimeType'  =>  'application/vnd.oasis.opendocument.text',
                         					'name'		 =>  'OpenOffice.org - 2.0 - Writer')
                         ,'sxc'  =>  array(  'mimeType'  =>  'application/vnd.sun.xml.calc',
                                             'name'      =>  'OpenOffice.org - Calc')
