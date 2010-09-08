@@ -1,3 +1,6 @@
+2.2.9
+- Print export improved : cleaner layout and daily sums
+
 2.2.8
 - mobile log: only current projects will be shown in the projectlist now
 - iPhone: content is now automatically scaled by using <meta name="viewport" content="width=device-width">
