@@ -62,43 +62,47 @@
     {if(isset($times))}
         { $durationSum = 0}
         <table class="outline" width="90%">
-            <tr>
-                {if( $showCols['start'] )}
-                    <th>Start</th>
-                {if( $showCols['project'] )}
-                    <th>Project</th>
-                {if( $showCols['comment'] )}
-                    <th>Comment</th>
-                {if( $showCols['task'] )}
-                    <th>Task</th>
-                {if( isset($showCols['duration']) )}
-                    <th>Duration</th>
-            </tr>
+        
+            {if( !$exportIt )}
+                <tr>
+                    {if( $showCols['start'] )}
+                        <th>Start</th>
+                    {if( $showCols['project'] )}
+                        <th>Project</th>
+                    {if( $showCols['comment'] )}
+                        <th>Comment</th>
+                    {if( $showCols['task'] )}
+                        <th>Task</th>
+                    {if( isset($showCols['duration']) )}
+                        <th>Duration</th>
+                </tr>
 
             {if( !$exportIt )}
                 <tr>
                     {if( $showCols['start'] )}
-                        <td align="center">
+                        <td align="left">
                             <input type="checkbox" name="cols[start]" checked onChange="this.form.submit()">
                         </td>
                     {if( $showCols['project'] )}
-                        <td align="center">
+                        <td align="left">
                             <input type="checkbox" name="cols[project]" checked onChange="this.form.submit()">
                         </td>
                     {if( $showCols['comment'] )}
-                        <td align="center">
+                        <td align="left">
                             <input type="checkbox" name="cols[comment]" checked onChange="this.form.submit()">
                         </td>
                     {if( $showCols['task'] )}
-                        <td align="center">
+                        <td align="left">
                             <input type="checkbox" name="cols[task]" checked onChange="this.form.submit()">
                         </td>
                     {if( isset($showCols['duration']) )}
-                        <td align="center">
+                        <td align="left">
                             <input type="checkbox" name="cols[duration]" checked onChange="this.form.submit()">
                         </td>
                 </tr>
-
+        </table>
+        
+        <table class="outline" width="90%" cellspacing="0" cellpadding="0">
             {if( !$showCols['project'] )}
                 <tr>
                     <td colspan="{$numCols}">
@@ -106,10 +110,13 @@
                         <b>Project: {$projectTreeDyn->getPathAsString($times[0]['projectTree_id'])}</b>
                     </td>
                 </tr>
-		
+
+
+            		
             <!-- some intial settings to avoid notices : AK -->
             { $lastUid = -1 }
             { $durationSecSum = 0 }
+            { $durationSecDay = 0 }
             { $lastDate = 0 }
             {foreach($times as $aTime)}
                 { $class='' }
@@ -117,52 +124,123 @@
                     { $class = 'class="backgroundHighlight"' }
                 <tr>
                     {if( $aTime['_user_id'] != $lastUid )}
-                            <td valign="top" nowrap colspan="{$numCols}">
+                            <td valign="top" nowrap style="height: 40px;" colspan="{$numCols}">
                                 <br>
                                 <b>User: {$aTime['_user_name']}&nbsp;{$aTime['_user_surname']}</b>
                             </td>
-                        </tr>
+                </tr>
+ 
+                    {if( $aTime['_user_id'] != $lastUid )}
                         <tr>
+                        {if( $showCols['start'] )}
+                            <th>Start</th>
+                        {if( $showCols['project'] )}
+                            <th>Project</th>
+                        {if( $showCols['comment'] )}
+                            <th>Comment</th>
+                        {if( $showCols['task'] )}
+                            <th>Task</th>
+                        {if( isset($showCols['duration']) )}
+                            <th style="text-align:right;" align="right">Duration</th>
+                        </tr>
+ 
+                       
+                <tr>
 
                     { $curDate = $dateTime->formatDateFull($aTime['timestamp'])}
                     {if( $curDate != $lastDate || $aTime['_user_id'] != $lastUid)}
-                        <td valign="top" colspan="{$numCols}">
+                        {if( !empty($lastDate))}
+                            {if( $showCols['start'] )}
+                                <td valign="top" {$class} style="border-top: 1px solid #C7C7C7;">
+                                &nbsp;
+                                </td>
+                            {if( $showCols['project'] )}
+                                <td valign="top" {$class} style="border-top: 1px solid #C7C7C7;">
+                                &nbsp;
+                                </td>
+                            {if( $showCols['comment'] )}
+                                <td valign="top" {$class}  style="border-top: 1px solid #C7C7C7;">
+                                 &nbsp;
+                                </td>                        
+                            <td  style="border-top: 1px solid #C7C7C7; text-align: left; height: 30px; vertical-align: top;" align="left">
+                        	   Sum
+                            </td>
+                            
+                            <td style="border-top: 1px solid #C7C7C7; text-align: right; vertical-align: top;" align="right">
+                            	{$time->_calcDuration(@$durationSecDay)}&nbsp;h 
+                            	{ @$durationSecDay = 0; }
+                           </td>
+                           </tr>
+                       
+                       	   <tr>
+                       	{else}
+                           <tr>
+                           <td colspan="{$numCols}" style="text-align: right; height: 10px; vertical-align: top;">
+                           </td>
+                           </tr>                       	
+                                
+                       	   
+                        <td valign="top" colspan="{$numCols}" style="border: 1px solid #C7C7C7; border-bottom: 0; background-color: #eeeeee;">
                             <b>{$curDate}</b>
                         </td>
                         </tr>
+                        
                         <tr>
+                        
                     { $lastDate = $curDate}
                     { $lastUid=$aTime['_user_id']}  <!-- to check this in the date part too -->
 
                     {if( $showCols['start'] )}
-                        <td valign="top" {$class}>
+                        <td valign="top" {$class} style="border-left: 1px solid #C7C7C7;border-bottom: 1px solid #EEEEEE;">
                             {echo date('H:i',$aTime['timestamp'])}
                         </td>
                     {if( $showCols['project'] )}
-                        <td valign="top" {$class}>
+                        <td valign="top" {$class} style="border-bottom: 1px solid #EEEEEE;">
                             {if($aTime['_task_needsProject'])}
                                 {$projectTreeDyn->getPathAsString($aTime['projectTree_id'])}
+                            &nbsp;
                         </td>
                     {if( $showCols['comment'] )}
-                        <td valign="top" {$class}>
-                            {echo nl2br($aTime['comment'])}
+                        <td valign="top" {$class}  style="border-bottom: 1px solid #EEEEEE;">
+                            {echo nl2br($aTime['comment'])}&nbsp;
                         </td>
                     {if( $showCols['task'] )}
-                        <td valign="top" nowrap {$class}>
+                        <td valign="top" nowrap {$class}  style="border-bottom: 1px solid #EEEEEE;">
                             {$aTime['_task_name']}
                         </td>
 
                     {if(isset($aTime['duration']))}
-                        { $durationSecSum+=$aTime['durationSec']}
+                        { $durationSecSum+=$aTime['durationSec'];
+                          $durationSecDay+=$aTime['durationSec']}
                     {if( isset($showCols['duration']) )}
-                        <td valign="top" nowrap align="right" {$class}>
+                        <td valign="top" nowrap align="right" {$class} style="border-right: 1px solid #C7C7C7;border-bottom: 1px solid #EEEEEE;">&nbsp;
                             {if(isset($aTime['duration']))}
                                 {$aTime['duration']}&nbsp;h
                         </td>
                 </tr>
-            <tr>
-                <td colspan="{$numCols}"><br></td>
+                
+           
+           <tr> 
+                  {if( $showCols['start'] )}
+                        <td valign="top" {$class} style="border-top: 1px solid #C7C7C7;">
+                            &nbsp;
+                        </td>
+                  {if( $showCols['project'] )}
+                        <td valign="top" {$class} style="border-top: 1px solid #C7C7C7;">
+                            &nbsp;
+                        </td>
+                  {if( $showCols['comment'] )}
+                        <td valign="top" {$class}  style="border-top: 1px solid #C7C7C7;">
+                            &nbsp;
+                        </td>
+                  <td style="border-top: 1px solid #C7C7C7; text-align: left; height: 30px; vertical-align: top;" align="left">
+                  	   Sum
+                  </td>                
+                  <td style="border-top: 1px solid #C7C7C7; text-align: right; vertical-align: top;" align="right">
+                       	{$time->_calcDuration(@$durationSecDay)}&nbsp;h 
+                   </td>
             </tr>
+                   
             <tr>
                 <td colspan="{$numCols-1}" align="right" valign="top">
                     <b>Sum</b>
