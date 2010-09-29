@@ -1,5 +1,8 @@
 2.2.9
-- Print export improved : cleaner layout and daily sums
+- print export: Layout improved and daily sums included
+- update fileicons
+- minor parameter changes for htmldoc (html2pdf)
+- email header for server emails is now adjustable in config.php
 
 2.2.8
 - mobile log: only current projects will be shown in the projectlist now

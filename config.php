@@ -104,9 +104,10 @@
     * when you want to export your timesheets to pdf.
     * 
     * @var string the path to html2pdf
-    * 
+    * $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
+    *    
     * There are many tools/scripts around for that purpose.
-    * On OpenSuse 10 I'm currently using that :
+    * On OpenSuse 10 I'm using that (current adjustment):
     * $config->html2pdf = '/usr/bin/htmldoc --webpage $1 -f $2';
     * 
     * There is a GPL class now in place which does a very rough pdf conversion
@@ -121,25 +122,31 @@
     * $config->$html2psPath = '/usr/bin/html2ps';
     * $config->$ps2pdfPath = '/usr/bin/ps2pdf';
     */
-    $config->html2pdf = '/usr/local/bin/html2pdf $1 $2';
+    $config->html2pdf = '/usr/bin/htmldoc --webpage $1 -f $2';
 
   	/**
-	* Seperator 4 csv-Export 
-	*/
-	$config->seperator = ';';
+	  * Seperator 4 csv-Export 
+	  */
+	  $config->seperator = ';';
 
-	/**
-	 * Compressed presentation of team members to overcome
-	 * possible performance problems when there are many projects
-	 * and users
-	 * We have 4 compression levels:
-	 * 0 = uncompressed (like before)
-	 * 1 = 2 icons with list : managers, members
-	 * 2 = 1 icon and one list with name suffix [PM] for projectmanagers (icon depends on permissions)
-	 * 3 = same as 2 with no icon at all; the spartanic mode; even the folder icon is gone ...
-	 */	
-	$config->teamcompressed = 2;
+    /**
+    * Compressed presentation of team members to overcome
+	  * possible performance problems if there are many projects
+  	* and users
+  	* We have 4 compression levels:
+  	* 0 = uncompressed (like before)
+  	* 1 = 2 icons with list : managers, members
+  	* 2 = 1 icon and one list with name suffix [PM] for projectmanagers (icon depends on permissions)
+  	* 3 = same as 2 with no icon at all; the spartanic mode; even the folder icon is gone ...
+  	*/	
+	  $config->teamcompressed = 2;
 	
+    /**
+    * Email header adjustment
+    */
+//    $config->mailAdditionalHeaders = "From: openTimetool System <noreply@ottsrv.de>\r\n";
+//    $config->mailAdditionalParameters = "-fnoreply@ottsrv.de";
+
     /**
     * Automatically determined!    AK !!!!!WORKS only yet when not defined. Have to look on ...
     * This is the prefix of the path that leads to this application via a user agent.
