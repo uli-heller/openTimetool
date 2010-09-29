@@ -268,7 +268,9 @@ class modules_user extends modules_common
 							//          	        $message = $util->translate($message);
 							$subject = 'Your timetool registration';
 							//              	    $subject = $util->translate('Your timetool registration');
-							if (!mail($data['email'],$subject,$message)) {
+							$mailAdditionalHeaders = (!empty($config->mailAdditionalHeaders)) ? $config->mailAdditionalHeaders : NULL;
+							$mailAdditionalParameters = (!empty($config->mailAdditionalParameters)) ? $config->mailAdditionalParameters : NULL;
+							if (!mail($data['email'],$subject,$message,$mailAdditionalHeaders,$mailAdditionalParameters)) {
 								$applError->set("Error sending the mail to '{$data['email']}'!");
 							} else {
 								$applMessage->set("Info e-mail sent to '{$data['email']}'.");
@@ -320,7 +322,9 @@ class modules_user extends modules_common
 							//          	        $message = $util->translate($message);
 							$subject = 'Password reset in timetool by admin';
 							//              	    $subject = $util->translate('Your timetool registration');
-							if (!mail($data['email'],$subject,$message)) {
+							$mailAdditionalHeaders = (!empty($config->mailAdditionalHeaders)) ? $config->mailAdditionalHeaders : NULL;
+							$mailAdditionalParameters = (!empty($config->mailAdditionalParameters)) ? $config->mailAdditionalParameters : NULL;
+							if (!mail($data['email'],$subject,$message,$mailAdditionalHeaders,$mailAdditionalParameters)) {
 								$applError->set("Error sending the mail to '{$data['email']}'!");
 							} else {
 								$applMessage->set("Info e-mail sent to '{$data['email']}'.");
