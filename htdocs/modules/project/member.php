@@ -112,6 +112,8 @@
         $user->addSelect(TABLE_PROJECTTREE2USER.'.isManager as isManager');
         $user->addSelect(TABLE_PROJECTTREE2USER.'.projectTree_id as projectTree_id');      
         $user->setLeftJoin(TABLE_PROJECTTREE2USER,'user_id='.TABLE_USER.'.id AND projectTree_id='.$projectId );
+		// AK: order that stuff by surname,prename 
+        $user->setOrder('surname,name');
         $users = $user->getAll();
         $selectSizeUsers = sizeof($users)<10 ? 10 : 20;
         $selectSizeMembers = sizeof($users)>10 ? 10 : 5;
