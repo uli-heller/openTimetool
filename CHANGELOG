@@ -3,6 +3,7 @@
 - update fileicons
 - minor parameter changes for htmldoc (html2pdf)
 - email header for server emails is now adjustable in config.php
+- minor bugfixes
 
 2.2.8
 - mobile log: only current projects will be shown in the projectlist now
