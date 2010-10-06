@@ -3,6 +3,7 @@
 - update fileicons
 - minor parameter changes for htmldoc (html2pdf)
 - email header for server emails is now adjustable in config.php
+- on team maintenance page users are now displayed sorted : surname, prename
 - minor bugfixes
 
 2.2.8
