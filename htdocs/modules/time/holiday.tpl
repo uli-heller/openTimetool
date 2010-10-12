@@ -55,6 +55,7 @@
 {%include common/macro/task.mcr%}
 {%include common/macro/project.mcr%}
 {%include common/macro/common.mcr%}
+{%include common/macro/user.mcr%}
 {%include common/macro/table.mcr%}
 {%include vp/Application/HTML/Macro/EditData.mcr%}
 {%include vp/Application/HTML/Macro/Tree.mcr%}
@@ -65,6 +66,20 @@ Use this page to log times for a longer period (i.e. 2 weeks for your holidays, 
 <form method="post" name="editForm" onSubmit="return confirmSave()">
     <table class="outline">
         {%table_headline('Period-Log')%}
+
+
+        {if( $isAdmin )}
+            <tr>
+                <td>User</td>
+                <td>
+                    <select name="user_id">
+                        {%user_asOptions( $users , $userId )%}
+                    </select>
+                </td>
+            </tr>
+        {else}
+            <input type="hidden" name="user_id" value="{$userId}">
+
 
         <tr>
             <td>start task</td>
