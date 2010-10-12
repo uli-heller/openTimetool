@@ -60,8 +60,10 @@
 
             $save['comment'] = $data['comment'];
             $save['projectTree_id'] = $data['projectTree_id'];
-            $save['user_id'] = $userAuth->getData('id');
-
+            //$save['user_id'] = $userAuth->getData('id');
+			// AK: comes now from form (set below or selected if admin)
+            $save['user_id'] = $_REQUEST['user_id'];  
+			
             // date('w') - day of the week, numeric, i.e. "0" (Sunday) to "6" (Saturday)
             $numDays = (($data['endDate'] - $data['startDate']) / (24*60*60) + 1);
             for( $i=0 ; $i<$numDays ; $i++ )
@@ -94,6 +96,8 @@
         }
     }
 
+    
+     
     if( !sizeof($data) )
     {
         $data['startTime'] = 60*60*8;   // use 9:00 as default
@@ -111,5 +115,13 @@
     $isAdmin = $user->isAdmin();
     $projectTreeJsFile = 'projectTree'.($isAdmin?'Admin':'');
 
+    // AK: fill select form if admin
+    if ($isAdmin) {
+        $users = $user->getAll();
+    }
+	// AK: pre seleected dropdown entry or hidden input field (not admin) 
+    (isset($_REQUEST['user_id']))?$userId = $_REQUEST['user_id'] : $userId = $userAuth->getData('id');
+    
+    
     require_once($config->finalizePage);
 ?>
