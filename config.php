@@ -25,7 +25,7 @@
     /**
 	  * Don't change ! It's the current version !
 	  */
-    $config->applVersion = '2.2.9';
+    $config->applVersion = '2.3.0 DEV';
     $config->applName = 'openTimetool'.$config->applVersion;
     
     /**
