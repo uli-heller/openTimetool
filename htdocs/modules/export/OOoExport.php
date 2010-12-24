@@ -169,7 +169,7 @@
                 } else {
                 	// AK : as an OO-file is in principle a zip-file (see also OOotemplate.php)
                 	// we can unzip it here to get access to the content.xml where we put our data in	
-                    exec("cd $dir; unzip $file &2>1");      // change in the directory and unzip the OO-file
+                    exec("cd $dir; unzip $file 2>&1 >/dev/null");      // change in the directory and unzip the OO-file
                     unlink($file);                          // remove the OO file so it wont be zipped into the new OO file
 
                     // put the data in the content.xml file
@@ -228,10 +228,15 @@
                             $table .= $string;
                         fclose($fp);
 
-                        if( $fp = fopen( $dir.'/content.xml' , 'w' ) )
+                        if( $fp = fopen( $dir.'/content.xml' , 'wb' ) )
                         {
                             fwrite($fp,$table);
                             fclose($fp);
+                            
+                            // needed since oo 3 (templates); this empty file creates a corrupt OO-report
+                            // shouldn't happen again as the unzip cmd above created it unintentionally
+                            // by a wrong redirection of stdout and stderr ;-) 
+                            @unlink($dir.'/1');   
                             
                             // AK : Create new OO document by zipping
                             exec("cd $dir; zip -rm new.zip *;mv new.zip new.$extension; chmod 777 new.$extension"); // zip -r means recursive, -m means delete the packed files

@@ -308,6 +308,7 @@ class DB_mysql extends DB_common
 
         if (!$this->autocommit && $ismanip) {
             if ($this->transaction_opcount == 0) {
+            	$result = @mysql_query("SET NAMES 'utf8'");	// HEE patch
                 $result = @mysql_query('SET AUTOCOMMIT=0', $this->connection);
                 $result = @mysql_query('BEGIN', $this->connection);
                 if (!$result) {
@@ -318,8 +319,10 @@ class DB_mysql extends DB_common
         }
 
         if (!$this->options['result_buffering']) {
+        	$result = @mysql_unbuffered_query("SET NAMES 'utf8'");	// HEE patch
             $result = @mysql_unbuffered_query($query, $this->connection);
         } else {
+        	$result = @mysql_query("SET NAMES 'utf8'");	// HEE patch
             $result = @mysql_query($query, $this->connection);
         }
 
@@ -510,6 +513,7 @@ class DB_mysql extends DB_common
                     return $this->mysqlRaiseError(DB_ERROR_NODBSELECTED);
                 }
             }
+            $result = @mysql_query("SET NAMES 'utf8'");	// HEE patch
             $result = @mysql_query('COMMIT', $this->connection);
             $result = @mysql_query('SET AUTOCOMMIT=1', $this->connection);
             $this->transaction_opcount = 0;
@@ -536,6 +540,7 @@ class DB_mysql extends DB_common
                     return $this->mysqlRaiseError(DB_ERROR_NODBSELECTED);
                 }
             }
+            $result = @mysql_query("SET NAMES 'utf8'");	// HEE patch
             $result = @mysql_query('ROLLBACK', $this->connection);
             $result = @mysql_query('SET AUTOCOMMIT=1', $this->connection);
             $this->transaction_opcount = 0;
