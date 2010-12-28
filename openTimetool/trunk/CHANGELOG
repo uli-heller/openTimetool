@@ -1,6 +1,8 @@
 2.3.0
 - Bugfix for OO3-templates (created report was corrupt and needed a repiar)
 - UTF-8-Patch for DB interface
+- Minor Bugfix when several bookings were within one minute -> order clause corrected
+  Some translation bugs are corrected with that fix as well. 
 
 
 2.2.9
