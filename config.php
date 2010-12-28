@@ -77,17 +77,13 @@
     {
         $php = "5.3"; // or higher
 		error_reporting (E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-		// We have to set this to get that stuff going. Don't understand yet completely though ...
-		// in database we have the stuff in utf-8 anyway
-		// until php 5.2.9 this statement garbled the output
-		// now it seems necessary ...
-		ini_set('default_charset','utf-8');    
     }
     else
     {
         $php = "5.2";		// or lower
 		error_reporting(E_ALL ^ E_NOTICE);
     } 
+    ini_set('default_charset','utf-8');
     date_default_timezone_set('Europe/Berlin');  // php5.3 needs that in any case !!
     $config->php = $php;
     
