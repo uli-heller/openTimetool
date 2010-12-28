@@ -759,6 +759,18 @@ so that's why we do the following, i am not sure if that is standard SQL and abs
     {
         return $this->_order;
     }
+    
+    /**
+     * SX (toni kejr) : For bookings with different tasks within 1 minute, we
+     * need to sort DESC by id as well. 
+     * So we need to add this function to make that possible
+     * Used in classes/time only  currently
+     */
+    function addOrder($orderCondition='' , $desc=false)
+    {
+    	$current_order = $this->getOrder();
+    	$this->_order .= ', '.$orderCondition .( $desc ? ' DESC' : '' );
+    }
 
     /**
     *   sets a join-condition

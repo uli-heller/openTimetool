@@ -412,6 +412,9 @@ class modules_time extends modules_common
         if (@$filter['order']) {
             settype($filter['order'],'array');
             $this->setOrder($filter['order'][0],isset($filter['order'][1])?$filter['order'][1]:false);
+            // SX (AK) : in case we have bookings within one minute, we have to order by id as well
+            // shouldn't do any harm if not ;-)
+			$this->addOrder('id',true); 
         }
         if (@$filter['limit']) {
             return $this->getAll($filter['limit'][0],$filter['limit'][1]);
