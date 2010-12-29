@@ -80,7 +80,9 @@ Use this page to log times for a longer period (i.e. 2 weeks for your holidays, 
         {else}
             <input type="hidden" name="user_id" value="{$userId}">
 
-
+		<!-- preselect the last used project for selection menu below  --> 
+        { $data['projectTree_id'] = $lastProject }
+        
         <tr>
             <td>start task</td>
             <td width="100%">
@@ -134,6 +136,9 @@ Use this page to log times for a longer period (i.e. 2 weeks for your holidays, 
     \{
         //project = document.editForm["newData[projectTree_id]"][document.editForm["newData[projectTree_id]"].selectedIndex].text.replace(/^(\s*-)*\s*/,"");;
         project = projectTree.getPathAsString(document.editForm["newData[projectTree_id]"].value);
+        if (!project) \{
+            project = projectTree.getPathAsString(document.editForm["lastProjectId"].value);            
+        \}
         if (!project) \{
             alert("Please select a project!");
             return false;

@@ -24,7 +24,11 @@
 
     require_once $config->classPath.'/modules/time/time.php';
     require_once $config->classPath.'/modules/task/task.php';
-
+    // 2.3.0 SX (AK) : we use the last used projectid if not set in form
+    // similar to shortcut.php
+    require_once($config->classPath.'/modules/project/tree.php');
+    require_once($config->classPath.'/modules/project/member.php');
+    
     $data = array();
     if( isset($_REQUEST['action_save']) )   // AK : isset to avoid notice
     {
@@ -104,6 +108,32 @@
         $data['endTime'] = 60*60*16;    // and 17:00 as end default, those are 8 hours
         $data['startDate'] = time();    // use today as start date
         $data['endDate'] = time();
+        
+        // 2.3.0 SX (AK) : we use the last used projectid if not set in form later on
+ 		// similar to shortcut.php
+        $time->reset();
+        $time->setSelect('projectTree_id');
+        $time->setWhere('user_id='.$userAuth->getData('id'));
+        $time->setOrder('timestamp',true);
+        $lastTime = $time->getAll(0,1);
+        $projectId = $lastTime[0]['projectTree_id'];
+        // check if the project is available, if not use root-id
+        $projectTree =& modules_project_tree::getInstance(true);
+        if( !$projectId || !$projectTree->isAvailable( $projectId , time() ) )
+        {
+           	if( sizeof($availableProjects = $projectTree->getAllAvailable()) )
+           	{
+               	foreach( $availableProjects as $aProject )
+               	{
+                   	if( $projectMember->isMember( $aProject['id'] ) )
+                   	{
+                       	$projectId = $aProject['id'];
+                       	break;
+                   	}
+               	}
+           	}        
+        }
+        $lastProject = $projectId;  // the default project if any
     }
 
     $task->setWhere('calcTime<>0'); // start task needs to be a task that calc's time
