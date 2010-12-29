@@ -2,7 +2,8 @@
 - Bugfix for OO3-templates (created report was corrupt and needed a repiar)
 - UTF-8-Patch for DB interface
 - Minor Bugfix when several bookings were within one minute -> order clause corrected
-  Some translation bugs are corrected with that fix as well. 
+- On period log, the last used project is preselected now. This makes it easier and more
+  intuitiv to book holiday times
 
 
 2.2.9
