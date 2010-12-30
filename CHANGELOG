@@ -2,9 +2,10 @@
 - Bugfix for OO3-templates (created report was corrupt and needed a repiar)
 - UTF-8-Patch for DB interface
 - Minor Bugfix when several bookings were within one minute -> order clause corrected
-- On period log, the last used project is preselected now. This makes it easier and more
-  intuitiv to book holiday times
-
+- On period log and today log, the last used project is used internally now similar to 
+  hotkey bookings, when we have a non project task.
+- New DB upgrade interface. In future DB modifications are automatically done during first
+  start. We are using that already now to add a new translation string.
 
 2.2.9
 - print export: Layout improved and daily sums included
