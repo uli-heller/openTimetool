@@ -49,10 +49,55 @@
 
 
     // those two lines handle the edit functionality
-    $pageHandler->setObject($time);                
+    $pageHandler->setObject($time);     
+
+    $had_a_non_project_task = false;
+    if(isset($_REQUEST['newData']) && !empty($_REQUEST['newData'])) {
+    	// We have new data from form and want to save it below
+            $ourtask = $newData['task_id'];
+            $ourproject = @$newData['projectTree_id'];
+            if(empty($ourproject) && $task->isNoneProjectTask($ourtask)) {
+		        // 2.3.0 SX (AK) : we use the last used projectid if not set in form and task
+	      		// is a task without project
+ 				// similar to shortcut.php
+        		$time->reset();
+        		$time->setSelect('projectTree_id');
+        		$time->setWhere('user_id='.$userAuth->getData('id'));
+        		$time->setOrder('timestamp',true);
+       			$lastTime = $time->getAll(0,1);
+        		$projectId = $lastTime[0]['projectTree_id'];
+        		// check if the project is available, if not use root-id
+        		$projectTree =& modules_project_tree::getInstance(true);
+        		if( !$projectId || !$projectTree->isAvailable( $projectId , time() ) )
+        		{
+           			if( sizeof($availableProjects = $projectTree->getAllAvailable()) )
+           			{
+               			foreach( $availableProjects as $aProject )
+               			{
+                   			if( $projectMember->isMember( $aProject['id'] ) )
+                   			{
+                       			$projectId = $aProject['id'];
+                       			break;
+                   			}
+               			}
+           			}        
+        		}
+        		$ourproject = $projectId;  // the default project if any            
+            }
+            
+            $_REQUEST['newData']['projectTree_id'] = $ourproject;
+            $had_a_non_project_task = true;
+    }
     $saved = $pageHandler->save( $_REQUEST['newData'] );
                      
     $data = $pageHandler->getData();
+    
+    if($had_a_non_project_task) {
+    	// delete the project info for this non project booking again
+    	// to not confuse the user
+    	$data['projectTree_id'] = 0;
+    }
+    
     // convert the time and date, so the macro can show it properly ... do this better somehow
     if(@$data['timestamp_date'] && @$data['timestamp_time'] && !@$data['timestamp']) {
         $_date = explode('.',$data['timestamp_date']);

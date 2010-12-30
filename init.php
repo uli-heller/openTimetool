@@ -14,7 +14,9 @@
 	 *
 	 * 
 	*/
-	
+
+	include_once('db_upgrade.php');
+
 	/**
 	 * The include path; see benchmark-stuff below ...
 	 */
@@ -417,6 +419,11 @@
     // register the objects, so we can use the error/message methods in the config-class
     $config->registerErrorObject( $applError );
     $config->registerMessageObject( $applMessage );
+    
+    /**
+     * Automatic db upgrade interface (starting with 2.3.0)
+     */
+	upgrade_database();    
 
     $dateTime = new I18N_DateTime( $lang );
     $utilHtml   = new vp_Util_HTML;
