@@ -79,9 +79,6 @@ Use this page to log times for a longer period (i.e. 2 weeks for your holidays, 
             </tr>
         {else}
             <input type="hidden" name="user_id" value="{$userId}">
-
-		<!-- preselect the last used project for selection menu below  --> 
-        { $data['projectTree_id'] = $lastProject }
         
         <tr>
             <td>start task</td>

@@ -86,6 +86,24 @@ class modules_task extends modules_common
         $this->reset();
         return $res;
     }
+    
+	/**
+	 * SX (AK): 
+ 	 * tells if given task is a non project task 
+ 	*/
+    function isNoneProjectTask($taskid)
+    {
+    	$noneProjectTasks = $this->getNoneProjectTasks();
+    	$isone = false;
+    	foreach($noneProjectTasks as $task)
+    	{
+    		if($task['id'] == $taskid) {
+    			$isone = true;
+    			break;
+    		}
+    	}
+    	return $isone;
+    }
 
 }   // end of class
 

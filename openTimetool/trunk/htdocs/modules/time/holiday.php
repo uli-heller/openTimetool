@@ -63,7 +63,41 @@
             }
 
             $save['comment'] = $data['comment'];
-            $save['projectTree_id'] = $data['projectTree_id'];
+
+            $starttask = $data['startTask_id'];
+            
+            $ourproject = $data['projectTree_id'];
+            if(empty($ourproject) && $task->isNoneProjectTask($starttask)) {
+		        // 2.3.0 SX (AK) : we use the last used projectid if not set in form and task
+	      		// is a task without project
+ 				// similar to shortcut.php
+        		$time->reset();
+        		$time->setSelect('projectTree_id');
+        		$time->setWhere('user_id='.$userAuth->getData('id'));
+        		$time->setOrder('timestamp',true);
+       			$lastTime = $time->getAll(0,1);
+        		$projectId = $lastTime[0]['projectTree_id'];
+        		// check if the project is available, if not use root-id
+        		$projectTree =& modules_project_tree::getInstance(true);
+        		if( !$projectId || !$projectTree->isAvailable( $projectId , time() ) )
+        		{
+           			if( sizeof($availableProjects = $projectTree->getAllAvailable()) )
+           			{
+               			foreach( $availableProjects as $aProject )
+               			{
+                   			if( $projectMember->isMember( $aProject['id'] ) )
+                   			{
+                       			$projectId = $aProject['id'];
+                       			break;
+                   			}
+               			}
+           			}        
+        		}
+        		$ourproject = $projectId;  // the default project if any            
+            }
+            
+            
+            $save['projectTree_id'] = $ourproject;
             //$save['user_id'] = $userAuth->getData('id');
 			// AK: comes now from form (set below or selected if admin)
             $save['user_id'] = $_REQUEST['user_id'];  
@@ -108,32 +142,6 @@
         $data['endTime'] = 60*60*16;    // and 17:00 as end default, those are 8 hours
         $data['startDate'] = time();    // use today as start date
         $data['endDate'] = time();
-        
-        // 2.3.0 SX (AK) : we use the last used projectid if not set in form later on
- 		// similar to shortcut.php
-        $time->reset();
-        $time->setSelect('projectTree_id');
-        $time->setWhere('user_id='.$userAuth->getData('id'));
-        $time->setOrder('timestamp',true);
-        $lastTime = $time->getAll(0,1);
-        $projectId = $lastTime[0]['projectTree_id'];
-        // check if the project is available, if not use root-id
-        $projectTree =& modules_project_tree::getInstance(true);
-        if( !$projectId || !$projectTree->isAvailable( $projectId , time() ) )
-        {
-           	if( sizeof($availableProjects = $projectTree->getAllAvailable()) )
-           	{
-               	foreach( $availableProjects as $aProject )
-               	{
-                   	if( $projectMember->isMember( $aProject['id'] ) )
-                   	{
-                       	$projectId = $aProject['id'];
-                       	break;
-                   	}
-               	}
-           	}        
-        }
-        $lastProject = $projectId;  // the default project if any
     }
 
     $task->setWhere('calcTime<>0'); // start task needs to be a task that calc's time
