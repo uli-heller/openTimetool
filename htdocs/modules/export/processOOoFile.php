@@ -176,7 +176,8 @@
         if( !$projects[$curProjectId] )               // if this project has not been found yet, set its name
         {
             $projects[$curProjectId]['projectname'] = OOencode($aTime['_projectTree_name']);
-           	$projects[$curProjectId]['sum'] = 0;
+            $projects[$curProjectId]['projectcomment'] = OOencode($aTime['_projectTree_comment']);
+            $projects[$curProjectId]['sum'] = 0;
         }   
         if( $aTime['_task_calcTime'] ) {  // only if there is a time for this task, add it to the sum ('Gehen' has no time) by HS           
             $projects[$curProjectId]['sum'] += $aTime['durationSec'];
