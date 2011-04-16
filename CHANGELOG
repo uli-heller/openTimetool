@@ -1,3 +1,7 @@
+2.3.1
+- PEAR classes upgraded to latest version (for all using the built-in version)
+- Bugfix "Today Log" : form "forgot" about the project after booking and in edit mode
+
 2.3.0
 - Bugfix for OO3-templates (created report was corrupt and needed a repiar)
 - UTF-8-Patch for DB interface
