@@ -52,11 +52,11 @@
     $pageHandler->setObject($time);     
 
     $had_a_non_project_task = false;
-    if(isset($_REQUEST['newData']) && !empty($_REQUEST['newData'])) {
-    	// We have new data from form and want to save it below
-            $ourtask = $newData['task_id'];
-            $ourproject = @$newData['projectTree_id'];
-            if(empty($ourproject) && $task->isNoneProjectTask($ourtask)) {
+    if(isset($_REQUEST['newData']['projectTree_id']) && empty($_REQUEST['newData']['projectTree_id'])) {
+        	// We have new data from form and want to save it below
+            $ourtask = $_REQUEST['newData']['task_id'];
+            $ourproject = @$_REQUEST['newData']['projectTree_id'];
+            if($task->isNoneProjectTask($ourtask)) {
 		        // 2.3.0 SX (AK) : we use the last used projectid if not set in form and task
 	      		// is a task without project
  				// similar to shortcut.php
