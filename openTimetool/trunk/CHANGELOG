@@ -1,4 +1,16 @@
-2.3.1
+2.3.2
+- Added credentials for LDAP binding in config.php in case anonymous bind isnt allowed
+- Added a couple of new variables for OO temnplating:
+  all sums in hozrs are available as sumdays as well now (i.e. $sum as before and $sumdays additionally)
+  maxduration is available as {$aProject['maxdurationdays']} or {$aProject['maxduration']}
+  rest (maxduration - booked) as {$aProject['restdays']} or {$aProject['rest']} 
+- Switched now to utf-8 completely 
+- Bugfix 'couldnt get previous entry for entry' and time 0 when adding a booking before first stamp
+- Overview by project can now be filtered : active, closed, all : in config you have additionally
+  2 ways of sorting this list (as before or by parent, end date and name)
+- Checking for project overbooking if a max duration is given.
+
+2.3.0.1
 - PEAR classes upgraded to latest version (for all using the built-in version)
 - Bugfix "Today Log" : form "forgot" about the project after booking and in edit mode
 

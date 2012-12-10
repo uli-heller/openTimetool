@@ -140,13 +140,17 @@
                         </form>
 
                     {if( sizeof($noneProjectTasks) )}
-                        <form action="{$config->applPathPrefix}/modules/time/shortcut.php" method="post">
+                        <form name="shortForm" action="{$config->applPathPrefix}/modules/time/shortcut.php" method="post" onSubmit="return confirmShort();">
+                        <input type="hidden" name="shortoverBooked" id="shortoverBooked" value="0">
+    					<input type="hidden" name="shortrestAvailable" id="shortrestAvailable" value="0">
+    					<input type="hidden" name="currTask" id="currTask" value="0">
                         <td class="statusLine" align="left" nowrap>
                             <b>Hot-Keys</b>
                         </td>
                         <td class="statusLine" align="left" nowrap>
                             {foreach( $noneProjectTasks as $aNoneTask)}        
-                                <input name="shortcutTaskId[{$aNoneTask['id']}]" type="submit" value="{$aNoneTask['name']}" class="button">
+                                <input name="shortcutTaskId[{$aNoneTask['id']}]" type="submit" 
+                                	value="{$aNoneTask['name']}" class="button" onclick="javascript:document.shortForm.currTask.value={$aNoneTask['id']}" />
                         </td>
                         </form>
                     
@@ -183,3 +187,38 @@
         </td>
     </tr>
 </table>
+<script type="text/javascript" language="JavaScript">
+    function confirmShort()
+    \{
+    	var currentTime = new Date();
+    	var month = currentTime.getMonth() + 1;
+    	var day = currentTime.getDay();
+    	var year = currentTime.getFullYear();
+    	var hours = currentTime.getHours();
+    	var minutes = currentTime.getMinutes();
+    	if (minutes < 10) \{
+    		minutes = "0" + minutes;
+    	\}
+      
+		bookDate = day+'.'+month+'.'.year;
+		bookTime = hours + ":" + minutes;
+		taskId = document.shortForm.currTask.value;
+		projectTreeId = "";
+		oldid = 0;
+		
+		xajax.call( 'checkBookings', \{ mode:'synchronous', parameters:[projectTreeId,taskId,oldid,bookDate,bookTime,'short'] \} );
+
+		if(document.shortForm["shortoverBooked"].value && document.shortForm["shortoverBooked"].value != "0") \{
+			neg = document.shortForm["shortrestAvailable"].value.indexOf('-');
+			if(neg != -1) \{
+			    overbooked = document.shortForm["shortrestAvailable"].value.substr(1);
+			    message = "{$T_MSG_PROJECT_OVERBOOKED}"+"\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\} else \{
+			    message = "{$T_MSG_PROJECT_OVERBOOKED21}"+document.shortForm["shortrestAvailable"].value+" "+"{$T_MSG_PROJECT_OVERBOOKED22}\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\}
+	        return confirm(message);	  
+		\} else \{
+		    return true;
+		\}
+    \}
+</script>

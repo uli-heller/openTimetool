@@ -37,7 +37,7 @@
 <html>
 <head>
     <title>{echo strip_tags($config->applName)}</title>
-    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="description" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time tracking">
     <meta name="abstract" content="openTimetool, Webbasierte Projektzeiterfassung, web based project time tracking">
     <meta name="keywords" content="Webbasierte Projektzeiterfassung, web based project time tracking, Zeitmanagement, Zeiterfassung, time tracker, time management">
@@ -60,5 +60,8 @@
     <link rel="icon" href="/favicon.ico" type="image/ico">
     <link rel="shortcut icon" href="/favicon.ico">
     {%common_getJS('common')%}
+
+<!-- activate xajax (SX) -->
+	{$xajax->printJavascript($config->applBase."/includes/xajax/")}
 </head>
 <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">

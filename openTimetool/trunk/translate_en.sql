@@ -1,17 +1,37 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.9.6
+-- version 3.5.3
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 07. Februar 2010 um 17:51
--- Server Version: 5.1.36
--- PHP-Version: 5.2.11
+-- Erstellungszeit: 10. Dez 2012 um 16:03
+-- Server Version: 5.5.28-log
+-- PHP-Version: 5.3.17
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Datenbank: `opentimetool`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `translate_en`
+--
+
+CREATE TABLE IF NOT EXISTS `translate_en` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `string` mediumtext NOT NULL,
+  `numSubPattern` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=307 ;
 
 --
 -- Daten für Tabelle `translate_en`
@@ -37,7 +57,7 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (17, 'Logout', 0),
 (18, 'Overview', 0),
 (19, 'now!', 0),
-(20, 'all ', 0),
+(20, 'allX', 0),
 (21, 'needs project?', 0),
 (22, 'calculate time?', 0),
 (23, 'HTML-color', 0),
@@ -261,4 +281,18 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (292, 'change', 0),
 (293, 'date, time', 0),
 (294, 'Are you sure you want to delete this project, all its sub projects and all  logged times ?\\n\\nAttention! All data of these projects will be irrevocably deleted!', 0),
-(295, 'Are you sure you want to delete this report?', 0);
+(295, 'Are you sure you want to delete this report?', 0),
+(297, 'There are no projects with more than zero hours, that you are allowed to see.', 0),
+(302, 'CANCEL : No booking!', 0),
+(301, 'Do you still want to book ?', 0),
+(300, 'hours left', 0),
+(299, 'CAUTION: Only ', 0),
+(298, 'CAUTION: Project overbooked!', 0),
+(304, 'Active projects', 0),
+(305, 'Closed projects', 0),
+(306, 'All projects', 0),
+(303, 'OK : Booking will be done! (Project overbooked)', 0);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
