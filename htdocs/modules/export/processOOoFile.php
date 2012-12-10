@@ -7,6 +7,11 @@
      * See OOoTemplate for some details
      * Language compilation is done by this as well
      * 
+     * Note : all global variables defined here are are available in template 
+     * 
+     * Rev 1.9  2012/11/16 Enhanc triggerde by Anovio
+     * - sum fugures are added now as days as well : $sum AND $sumdays 
+     * 
      * Revision 1.8 2009/09/28  Enhancement triggered by HiSec.at
      * - We provide now a 3rd array with all projects 
      * - Within this array we have the "old" user array
@@ -70,6 +75,12 @@
     $tpl = new HTML_Template_Xipe($options);
     $show = $session->temp->time_index;
 
+    
+    // you can switch on debugging here. Output is written to a file on server
+    $dbg = false;
+   	if($dbg) {
+		$f = fopen($config->applRoot.'/tmp/ooexport.txt','wb');
+	}  
 
 
 // copy from time/index.php!!!!
@@ -126,9 +137,16 @@
             $sum += $aTime['durationSec'];
 //        }
     }
-    // this is the overall sum !!
-    $sum = $time->_calcDuration( $sum , 'decimal' );
+    // this is the overall sum !! Can be used in Template as $sum, $sumdays
+    $tsum = $sum;
+    $sum = $time->_calcDuration( $tsum , 'decimal' );  
+    $sumdays = $time->_calcDuration( $tsum , 'days' );  
 
+    
+    if($dbg) {
+		fwrite($f,"Global: ".$tsum.' sumdec= '.$sum.' sumdays= '.$sumdays);
+	}
+    
     foreach( $users as $key=>$aUser )
     {
         $newDays = array(); // so the last user doesnt get all the times
@@ -151,12 +169,16 @@
             $newDays[$dayIndex]['dateFull'] = OOencode($dateTime->formatDateFull($aTime['timestamp']));
         }
     	foreach($newDays as $dkey=>$newTimeswithSum) {
-    	   	$newDays[$dkey]['sum'] = $time->_calcDuration( $newDays[$dkey]['sum'] , 'decimal' );
+    		$tsum = $newDays[$dkey]['sum'];
+    	   	$newDays[$dkey]['sum'] = $time->_calcDuration( $tsum , 'decimal' );
+    	   	$newDays[$dkey]['sumdays'] = $time->_calcDuration( $tsum , 'days' );
     	}        
         $users[$key]['days'] = $newDays;
         
    	    // this is the sum of user in decimal notation
-   		$pusers[$key]['sum'] = $time->_calcDuration( $pusers[$key]['sum'] , 'decimal' );        
+   	    $tsum = $pusers[$key]['sum'];
+   		$pusers[$key]['sum'] = $time->_calcDuration( $tsum , 'decimal' );        
+   		$pusers[$key]['sumdays'] = $time->_calcDuration( $tsum , 'days' );        
     }
     
     /**
@@ -164,11 +186,7 @@
      * with sums for each project and each user 
      */
     $projects = array();
-    // you can switch on debugging here. Output is written to a file on server
-    $dbg = false;
-   	if($dbg) {
-		$f = fopen($config->applRoot.'/tmp/ooexport.txt','wb');
-	}  
+
 	// build the project array and calc the project sums in sec
     foreach( $times as $aTime )
     {               
@@ -178,6 +196,10 @@
             $projects[$curProjectId]['projectname'] = OOencode($aTime['_projectTree_name']);
             $projects[$curProjectId]['projectcomment'] = OOencode($aTime['_projectTree_comment']);
             $projects[$curProjectId]['sum'] = 0;
+            $projects[$curProjectId]['sumdays'] = 0;
+            $projects[$curProjectId]['maxduration'] = $aTime['_projectTree_maxDuration'];  // in h
+            $maxdursec = $aTime['_projectTree_maxDuration'] * 3600;
+            $projects[$curProjectId]['maxdurationdays'] = $time->_calcDuration( $maxdursec , 'days' );
         }   
         if( $aTime['_task_calcTime'] ) {  // only if there is a time for this task, add it to the sum ('Gehen' has no time) by HS           
             $projects[$curProjectId]['sum'] += $aTime['durationSec'];
@@ -240,15 +262,19 @@
 			}	        
 	        // transform the sum from sec to dec hours 4 all newDays
     	    foreach($newDays as $dkey=>$newTimeswithSum) {
-    	    	$newDays[$dkey]['sum'] = $time->_calcDuration( $newDays[$dkey]['sum'] , 'decimal' );
+    	    	$tsum = $newDays[$dkey]['sum'];
+    	    	$newDays[$dkey]['sum'] = $time->_calcDuration( $tsum , 'decimal' );
+    	    	$newDays[$dkey]['sumdays'] = $time->_calcDuration( $tsum , 'days' );
     	    }
 	        	
     	    $pusers[$key]['days'] = $newDays;
     	    
     	    
     	    // this is the sum of user in decimal notation
-    		$pusers[$key]['sum'] = $time->_calcDuration( $pusers[$key]['sum'] , 'decimal' );
-    	    
+    	    $tsum = $pusers[$key]['sum'];
+    		$pusers[$key]['sum'] = $time->_calcDuration( $tsum , 'decimal' );
+    		$pusers[$key]['sumdays'] = $time->_calcDuration( $tsum , 'days' );
+    		
     	}    
     	$projects[$curProjectId]['users']	= $pusers;
 		if($dbg) {
@@ -256,14 +282,20 @@
 		}
 		
 		// this is the project sum in decimal notation
-		$projects[$curProjectId]['sum'] = $time->_calcDuration( $projects[$curProjectId]['sum'] , 'decimal' );
+		$tsum =  $projects[$curProjectId]['sum'];
+		$projects[$curProjectId]['sum'] = $time->_calcDuration( $tsum , 'decimal' );
+		$projects[$curProjectId]['sumdays'] = $time->_calcDuration( $tsum , 'days' );
+		$rest = $projects[$curProjectId]['maxduration'] - $projects[$curProjectId]['sum'];
+		$restsec = $rest * 3600;
+		$projects[$curProjectId]['rest'] = $rest;
+		$projects[$curProjectId]['restdays'] = $time->_calcDuration( $restsec , 'days' );
 		
     }
         
 	if($dbg) {
-		fwrite($f,"Times:".print_r($times,true));
-		fwrite($f,"Users:".print_r($users,true));
-		fwrite($f,"Projects:".print_r($projects,true));
+		fwrite($f,"***Times:".print_r($times,true));
+		fwrite($f,"***Users:".print_r($users,true));
+		fwrite($f,"***Projects:".print_r($projects,true));
 		fclose($f);
 	}
 

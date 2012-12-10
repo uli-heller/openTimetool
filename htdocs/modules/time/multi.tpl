@@ -45,7 +45,9 @@ It uses the {%common_help('autoCorrect','auto correct','features')%} functionali
 <br><br>
 
 
-<form method="post" name="editForm" action="{$_SERVER['PHP_SELF']}">
+<form method="post" name="editForm"  onSubmit="return confirmSave()">
+    <input type="hidden" name="overBooked" id="overBooked" value="0">
+    <input type="hidden" name="restAvailable" id="restAvailable" value="0">
     <table class="outline">
 
         {if( $isAdmin )}
@@ -106,6 +108,55 @@ It uses the {%common_help('autoCorrect','auto correct','features')%} functionali
         </tr>
     </table>
 </form>
+
+
+<div id="msgxajax" name="msgxajax"></div>
+
+<script type="text/javascript" language="JavaScript">
+    function confirmSave()
+    \{
+		// we have to run through all 5 bookins and call our check. If one fails, we  
+		var bookDate = new Array();
+		var bookTime = new Array();
+		var taskId = new Array();
+		var projectTreeId = new Array();
+		var i,ix;
+		for(i=0;i<5;i++) \{
+			ix = "newData["+i+"][timestamp_date]";
+        	bookDate[i] = document.editForm[ix].value;
+		\}
+		for(i=0;i<5;i++) \{
+			ix = "newData["+i+"][timestamp_time]";
+        	bookTime[i] = document.editForm[ix].value;
+		\}
+		for(i=0;i<5;i++) \{
+			ix = "newData["+i+"][task_id]";
+        	taskId[i] = document.editForm[ix].value;
+		\}
+		for(i=0;i<5;i++) \{
+			ix = "newData["+i+"][projectTree_id]";
+			projectTreeId[i] = document.editForm[ix].value;
+		\}
+		oldid = 0;
+
+		xajax.call( 'checkmultipleBookings', \{ mode:'synchronous', parameters:[projectTreeId,taskId,oldid,bookDate,bookTime] \} );
+		
+		//return false;
+		if(document.editForm["overBooked"].value && document.editForm["overBooked"].value != "0") \{
+			neg = document.editForm["restAvailable"].value.indexOf('-');
+			if(neg != -1) \{
+			    overbooked = document.editForm["restAvailable"].value.substr(1);
+			    message = "{$T_MSG_PROJECT_OVERBOOKED}"+"\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\} else \{
+			    message = "{$T_MSG_PROJECT_OVERBOOKED21}"+document.editForm["restAvailable"].value+" "+"{$T_MSG_PROJECT_OVERBOOKED22}\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\}
+	        return confirm(message);	  
+		\} else \{
+		    return true;
+		\}
+    \}
+</script>
+
                      
 
 

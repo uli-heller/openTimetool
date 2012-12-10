@@ -70,9 +70,12 @@ function upgrade_database()
 		/*
 		 * Upgrade required
 		 */
+		
+		mysql_query("SET NAMES 'utf8'");
+			
 		switch($current_schema_version) {
 			case '2.3.0' :
-				$newversion = '2.3.0';
+				$newversion = '2.3.1';
 				$sqlcheck = "SELECT id from `translate_en` where id=297";
 				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
 	 							"(297, 'There are no projects with more than zero hours, that you are allowed to see.', 0)";
@@ -82,7 +85,88 @@ function upgrade_database()
 	 							"(297, 'Es gibt keine Projekte mit gebuchten Stunden, die Sie sehen d&uuml;rfen.', '0')";
 				insert_record($sqlcheck, $sqlinsert);
 				update_schema_info($newversion);
+			case '2.3.1' :
+				$newversion = '2.3.2';
+				$sqlcheck = "SELECT id from `translate_en` where id=298";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(298, 'CAUTION: Project overbooked!', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=298";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(298, 'ACHTUNG: Projekt überbucht!', '0')";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_en` where id=299";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(299, 'CAUTION: Only ', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=299";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(299, 'ACHTUNG: Nur ', '0')";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_en` where id=300";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(300, 'hours left', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=300";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(300, 'Stunden übrig', '0')";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_en` where id=301";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(301, 'Do you still want to book ?', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=301";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(301, 'Wollen Sie die Buchung trotzdem durchführen?', '0')";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_en` where id=302";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(302, 'CANCEL : No booking!', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=302";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(302, 'Abrechen: Buchung wird nicht durchgeführt', '0')";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_en` where id=303";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(303, 'OK : Booking will be done! (Project overbooked)', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=303";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(303, 'Weiter: Buchung wird durchgeführt, Projekt wird überbucht!', '0')";				
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_en` where id=304";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(304, 'Active projects', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=304";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(304, 'Aktive Projekte', '0')";				
+				insert_record($sqlcheck, $sqlinsert);				
+				$sqlcheck = "SELECT id from `translate_en` where id=305";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(305, 'Closed projects', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=305";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(305, 'Geschlossene Projekte', '0')";				
+				insert_record($sqlcheck, $sqlinsert);				
+				$sqlcheck = "SELECT id from `translate_en` where id=306";
+				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
+	 							"(306, 'All projects', 0)";
+				insert_record($sqlcheck, $sqlinsert);
+				$sqlcheck = "SELECT id from `translate_de` where id=306";
+				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
+	 							"(306, 'Alle Projekte', '0')";				
+				insert_record($sqlcheck, $sqlinsert);				
 
+				// we switch of this much too short english word as it garbles often the translation
+				$sqlcheck = "SELECT id from `translate_en` where id=20";
+				$sqlinsert = "UPDATE `translate_en` SET `string`='allX' WHERE `id`=20";
+				update_record($sqlcheck, $sqlinsert);
+				
+				
+				update_schema_info($newversion);
 		} // switch end
 	}
 	
@@ -90,7 +174,7 @@ function upgrade_database()
 }
 
 /**
- * checks first and then does the insert
+ * checks first and then does the insert 
  * 
  * @param string $sqlcheck
  * @param string $sqlinsert
@@ -108,6 +192,26 @@ function insert_record($sqlcheck, $sqlinsert)
 		}
 	}
 }
+/**
+ * checks first and then does the update
+ * 
+ * @param string $sqlcheck
+ * @param string $sqlinsert
+ */
+function update_record($sqlcheck, $sqlupdate)
+{
+	
+	if(($rescheck = mysql_query($sqlcheck)) === false ) {
+		die("Can't get info : ".mysql_error());
+	}
+	$res = mysql_num_rows($rescheck);
+	if(!empty($res)) { 
+		if(($res = mysql_query($sqlupdate)) === false ) {
+			die("Upgrade failed : ".mysql_error());
+		}
+	}
+}
+
 
 /**
  * Upgrade schema version in db	

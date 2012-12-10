@@ -94,8 +94,8 @@
             <td valign="top">{$aTime['_task_name']}</td>
             <td valign="top">{%trim $aTime['comment'] 30 "..."%}</td>
             <td>
-                <form method="post" action="{$_SERVER['PHP_SELF']}">
-                    <input type="hidden" class="button" name="quickLog" value="{$aTime['id']}">
+                <form method="post" onSubmit="return confirmQuickSave({$aTime['projectTree_id']},{$aTime['task_id']});">
+                    <input type="hidden" name="quickLog" value="{$aTime['id']}">
                     <input type="submit" value="now!" class="button">
                 </form>
                 <!--<a href="{$_SERVER['PHP_SELF']}?quickLog={$aTime['id']}">Log now</a>-->
@@ -105,8 +105,10 @@
 
 <br><br>
 
-<form method="post" name="editForm" action="{$_SERVER['PHP_SELF']}">
+<form method="post" name="editForm" onSubmit="return confirmSave();">
     <input type="hidden" name="newData[user_id]" value="{$data['user_id']}">
+    <input type="hidden" name="overBooked" id="overBooked" value="0">
+    <input type="hidden" name="restAvailable" id="restAvailable" value="0">
     <table width="100%" class="outline">
         {%table_headline( 'Logging' , 'log' )%}
         <tr>
@@ -143,3 +145,70 @@
 
     projectTree.init(true);
 </script>
+
+
+<div id="msgxajax" name="msgxajax"></div>
+
+<script type="text/javascript" language="JavaScript">
+    function confirmSave()
+    \{
+		bookDate = document.editForm["newData[timestamp_date]"].value;
+		bookTime = document.editForm["newData[timestamp_time]"].value;
+		taskId = document.editForm["newData[task_id]"].value;
+		projectTreeId = document.editForm["newData[projectTree_id]"].value;
+		oldid = 0;
+
+	
+		xajax.call( 'checkBookings', \{ mode:'synchronous', parameters:[projectTreeId,taskId,oldid,bookDate,bookTime] \} );
+		
+		if(document.editForm["overBooked"].value && document.editForm["overBooked"].value != "0") \{
+			neg = document.editForm["restAvailable"].value.indexOf('-');
+			if(neg != -1) \{
+			    overbooked = document.editForm["restAvailable"].value.substr(1);
+			    message = "{$T_MSG_PROJECT_OVERBOOKED}"+"\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\} else \{
+			    message = "{$T_MSG_PROJECT_OVERBOOKED21}"+document.editForm["restAvailable"].value+" "+"{$T_MSG_PROJECT_OVERBOOKED22}\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\}
+	        return confirm(message);	  
+		\} else \{
+		    return true;
+		\}
+    \}
+
+    function confirmQuickSave(projectTreeId,taskId)
+    \{
+        
+    	var currentTime = new Date();
+    	var month = currentTime.getMonth() + 1;
+    	var day = currentTime.getDay();
+    	var year = currentTime.getFullYear();
+    	var hours = currentTime.getHours();
+    	var minutes = currentTime.getMinutes();
+    	if (minutes < 10) \{
+    		minutes = "0" + minutes;
+    	\}
+      	
+		bookDate = day+'.'+month+'.'.year;
+		bookTime = hours + ":" + minutes;
+
+		oldid = 0;
+		
+
+		xajax.call( 'checkBookings', \{ mode:'synchronous', parameters:[projectTreeId,taskId,oldid,bookDate,bookTime] \} );
+		
+		if(document.editForm["overBooked"].value && document.editForm["overBooked"].value != "0") \{
+			neg = document.editForm["restAvailable"].value.indexOf('-');
+			if(neg != -1) \{
+			    overbooked = document.editForm["restAvailable"].value.substr(1);
+			    message = "{$T_MSG_PROJECT_OVERBOOKED}"+"\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\} else \{
+			    message = "{$T_MSG_PROJECT_OVERBOOKED21}"+document.editForm["restAvailable"].value+" "+"{$T_MSG_PROJECT_OVERBOOKED22}\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\}
+	        return confirm(message);	  
+		\} else \{
+		    return true;
+		\}
+    \}
+    
+</script>
+

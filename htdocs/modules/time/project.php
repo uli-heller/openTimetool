@@ -39,6 +39,10 @@
     } else {
         $isAdmin = $user->isAdmin();
         
+        // SX : Dec2012
+        $filter = @$_POST['filter'];
+		if(empty($filter)) $filter='active';        
+        
         $time->preset();
         $time->setSelect('SUM(durationSec) AS durationSumSec,projectTree_id,maxDuration');
         if (!$isAdmin) {
@@ -49,7 +53,19 @@
             $time->setWhere('projectTree_id IN ('.implode(',',$projectIds).')');
         }
         $time->addWhere(TABLE_TASK.'.calcTime=1 AND '.TABLE_TASK.'.needsProject=1');
-        $time->setOrder(TABLE_PROJECTTREE.'.l');
+        
+        switch($config->project_overview_sort) {
+        	case 0:
+	        	$time->setOrder(TABLE_PROJECTTREE.'.l');
+        		break;
+        	case 1:
+        		$time->setOrder(TABLE_PROJECTTREE.'.parent,'.TABLE_PROJECTTREE.'.endDate,'.TABLE_PROJECTTREE.'.name');
+        		break;
+        	case 2:
+        		$time->setOrder(TABLE_PROJECTTREE.'.endDate,'.TABLE_PROJECTTREE.'.name');
+        		break;
+        }
+
         $time->setGroup('projectTree_id');
         if ($times = $time->getAll()) {
 
@@ -64,6 +80,35 @@
                 $times[$key]['_isProjectAvail'] = $projectTree->isAvailable($times[$key]['projectTree_id'],time());
             }
 
+            // filter projects according selection
+			$filteredTimes = array();
+			foreach ($times as $key=>$aTime) {
+				switch($filter) {
+					case 'all':
+						$filteredTimes[$key] = $aTime;
+						$all = "boldbutton";
+						$closed = $active = ''; 						
+						break;
+					case 'closed':
+						if(!$times[$key]['_isProjectAvail']) {
+							$filteredTimes[$key] = $aTime;
+						}
+						$closed = "boldbutton";
+						$active = $all = ''; 						
+						break;
+					case 'active':
+					default:
+						if($times[$key]['_isProjectAvail']) {
+							$filteredTimes[$key] = $aTime;
+						}
+						$active = "boldbutton";
+						$all = $closed = ''; 						
+						break;
+				}
+			}          
+			$times = $filteredTimes;
+			unset($filteredTimes);
+            
             foreach ($times as $key=>$aTime) {
 				// AK : avoid php notices
 				if(isset($times[$key]['_percent']))             	

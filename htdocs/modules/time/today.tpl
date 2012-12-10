@@ -11,8 +11,10 @@
 {%include common/macro/table.mcr%}
 
 
-<form method="post" name="editForm" action="{$_SERVER['PHP_SELF']}">
+<form method="post" name="editForm" onSubmit="return confirmSave()">
     <input type="hidden" name="newData[id]" value="{$data['id']}">
+    <input type="hidden" name="overBooked" id="overBooked" value="0">
+    <input type="hidden" name="restAvailable" id="restAvailable" value="0">
     <table class="outline">
         {%table_headline('Today-Log')%}
         <tr>
@@ -132,8 +134,34 @@
         </tr>
     </table>
 
+<div id="msgxajax" name="msgxajax"></div>
 
+<script type="text/javascript" language="JavaScript">
+    function confirmSave()
+    \{
+		bookDate = document.editForm["newData[timestamp_date]"].value;
+		bookTime = document.editForm["newData[timestamp_time]"].value;
+		taskId = document.editForm["newData[task_id]"].value;
+		projectTreeId = document.editForm["newData[projectTree_id]"].value;
+		oldid = document.editForm["newData[id]"].value;
 
+		xajax.call( 'checkBookings', \{ mode:'synchronous', parameters:[projectTreeId,taskId,oldid,bookDate,bookTime] \} );
+		
+		//return false;
+		if(document.editForm["overBooked"].value && document.editForm["overBooked"].value != "0") \{
+			neg = document.editForm["restAvailable"].value.indexOf('-');
+			if(neg != -1) \{
+			    overbooked = document.editForm["restAvailable"].value.substr(1);
+			    message = "{$T_MSG_PROJECT_OVERBOOKED}"+"\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\} else \{
+			    message = "{$T_MSG_PROJECT_OVERBOOKED21}"+document.editForm["restAvailable"].value+" "+"{$T_MSG_PROJECT_OVERBOOKED22}\n{$T_MSG_PROJECT_BOOKING_CHOICE_QUESTION}\n\n{$T_MSG_PROJECT_BOOKING_CHOICE_CANCEL}\n{$T_MSG_PROJECT_BOOKING_CHOICE_OK}\n";
+			\}
+	        return confirm(message);	  
+		\} else \{
+		    return true;
+		\}
+    \}
+</script>
 
 
 

@@ -424,6 +424,7 @@ input.button
 input.button:hover, input[type=submit]:hover, input[type=button]:hover
 {
     color: [[$styleSheet->mainColor]];
+    font-weight: normal;
 }
 
 a.button {
@@ -439,6 +440,9 @@ a.button:hover {
     text-decoration: none;
 }
 
+#boldbutton {
+	font-weight:bold;
+}
 
 
 .required

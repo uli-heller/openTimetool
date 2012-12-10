@@ -1,17 +1,37 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.9.6
+-- version 3.5.3
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 07. Februar 2010 um 17:50
--- Server Version: 5.1.36
--- PHP-Version: 5.2.11
+-- Erstellungszeit: 10. Dez 2012 um 16:02
+-- Server Version: 5.5.28-log
+-- PHP-Version: 5.3.17
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Datenbank: `opentimetool`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `translate_de`
+--
+
+CREATE TABLE IF NOT EXISTS `translate_de` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `string` mediumtext NOT NULL,
+  `convertHtml` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=307 ;
 
 --
 -- Daten für Tabelle `translate_de`
@@ -257,4 +277,18 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (292, '&auml;ndern', '0'),
 (293, 'Datum, Uhrzeit', '0'),
 (294, 'Sind Sie sicher, dass Sie dieses Projekt, all Unterprojekte und all gebuchten Zeiten löschen wollen ?\\n\\nAchtung! Sämtliche Informationen dieser Projekte werden unwiderruflich gelöscht!', '1'),
-(295, 'Wollen Sie diesen Export wirklich löschen??', '0');
+(295, 'Wollen Sie diesen Export wirklich löschen??', '0'),
+(297, 'Es gibt keine Projekte mit gebuchten Stunden, die Sie sehen d&uuml;rfen.', '0'),
+(302, 'Abrechen: Buchung wird nicht durchgeführt', '0'),
+(301, 'Wollen Sie die Buchung trotzdem durchführen?', '0'),
+(300, 'Stunden übrig', '0'),
+(298, 'ACHTUNG: Projekt überbucht!', '0'),
+(299, 'ACHTUNG: Nur ', '0'),
+(306, 'Alle Projekte', '0'),
+(305, 'Geschlossene Projekte', '0'),
+(304, 'Aktive Projekte', '0'),
+(303, 'Weiter: Buchung wird durchgeführt, Projekt wird überbucht!', '0');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
