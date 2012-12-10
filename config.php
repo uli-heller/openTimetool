@@ -20,14 +20,14 @@
     #$_SERVER["SERVER_PORT"] = 443;
 
     // AK : Just for documentation. That is builtin php stuff 
-    if (!class_exists("stdClass")) $config = new stdClass;
+   if (class_exists("stdClass")) $config = new stdClass;
 
     /**
 	  * Don't change ! It's the current version !
 	  */
-    $config->applVersion = '2.3.1';
+    $config->applVersion = '2.3.2 unstable';
     $config->applName = 'openTimetool'.$config->applVersion;
-    $config->schema_version = '2.3.0';
+    $config->schema_version = '2.3.2';
     
     /**
     * AK the link behind the logo on the upper right ...
@@ -144,26 +144,17 @@
 //    $config->mailAdditionalHeaders = "From: openTimetool System <noreply@ottsrv.de>\r\n";
 //    $config->mailAdditionalParameters = "-fnoreply@ottsrv.de";
 
-    /**
-    * Automatically determined!    AK !!!!!WORKS only yet when not defined. Have to look on ...
-    * This is the prefix of the path that leads to this application via a user agent.
-    * I.e. if the application is reachable under this domain:
-    *   http://www.myhost.com/myApps/timetool
-    * then this variable would need to be '/myApps/timetool'
-    * If the application runs directly on a virtual host, this string would need
-    * to be empty ''
-    * 
-    * @var string the application path prefix
-    */
-//    $config->applPathPrefix     = '/openTimetool';       
-    /**
-    * Automatically determined!		AK !!!!! WORKS only when not in yet 
-    *
-    */
-//    $config->applRoot           = $_SERVER['DOCUMENT_ROOT'].$config->applPathPrefix.'/htdocs';  
-//    $config->finalizePage       = $_SERVER['DOCUMENT_ROOT'].$config->applPathPrefix.'/htdocs/finalize.php';
-
-
+	/**
+	 * Sorting on "Overview by Project
+	 * 0 : as before 
+	 * 1 : sorted by parent, end date and project name
+	 * 2 : sorted strictly by end date and name
+	 * Choose witch one fits your needs best
+	 */  
+	$config->project_overview_sort = 0; // as before, the default 
+	//$config->project_overview_sort = 1; // by parent, end date and name 
+	//$config->project_overview_sort = 2; // strictly by end date and name
+	
 
     /**
     * If there are additional things that need to be included, 
@@ -195,11 +186,17 @@
     * - LDAP schema attributes : uid, givenName and sn (the standard attributes in each official schema)
     *   Search by uid = The username in openTimetool    
     */
-    #$config->auth->method       =   'LDAP';
-    #$config->auth->url          =   'ldap://<your_ldap.host.com>/<your_basedn>';
-    #$config->auth->digest       =   'md5';
-    #$config->auth->savePwd      =   false;  // password fields hidden
-
+    /*
+    $config->auth->method       =   'LDAP';
+    $config->auth->url          =   'ldap://<your_ldap.host.com>/<your_basedn>';
+    $config->auth->digest       =   'md5';
+    $config->auth->savePwd      =   false;  // password fields hidden
+    // if you need authentication to ldap server = no anonymous access allowed
+    $config->auth->ldap_adminid	 = 	 '';  // authenticate against LDAP server; see ldap_bind in php manual
+    $config->auth->ldap_adminpwd	 = 	 '';  
+    */
+    
+    
     /** 
     * actually you can have different run modes, which allow you to configure the 
     * application once and run it in different environments, but i removed that for the

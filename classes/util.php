@@ -48,6 +48,7 @@ class util
     {
         global $translator, $lang;
         $translated = $translator->simpleTranslate($string,$lang);  // only translate exact matches
+        //$translated = $this->convToISO($translated); // SX
         echo $translated;
     }
 
@@ -58,6 +59,7 @@ class util
         // if the simple-translation didnt succeed we need to use the regExp-translation
         // and translate handles all that itself, so no extra code around it needed
         $ret = $translator->translate($string,$lang);
+        //$ret = $this->convToISO($ret); // SX
 
         return $ret;
     }
@@ -111,6 +113,21 @@ class util
         return sprintf('%.2f',$price);
     }
 
+    
+    // SX: conv to iso to have tstrings correctly translated to iso 
+    function convToISO($str)
+	{
+		$curenc = mb_detect_encoding($str,"UTF-8, ISO-8859-1, WINDOWS-1252 , GBK",true);
+		if( $curenc !="ISO-8859-1" )
+		{
+			return  iconv($curenc,"ISO-8859-1",$str);
+		}
+		else
+		{
+			return $str;
+		}
+	}
+    
 }   // end of class
 
 $util = new util;

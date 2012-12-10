@@ -60,6 +60,12 @@ class modules_time extends modules_common
         $data = parent::get($id);
         // if this entry is not the user's own entry, check if he is admin
         // if not he is not allowed to add a new entry
+        //var_dump($id); var_dump($data['user_id']); var_dump($userAuth->getData('id')); var_dump($user->isAdmin());
+        if(empty($data['user_id'])) {
+        	// in some strange situation I'll get a useless id; Seems to be the id of a deleted entry in db.... dont know why, but I skip that
+        	// ToDo: seems it comes from my xajax enhancement; have to look in that later
+        	return false;
+        }
         if( $data['user_id']!=$userAuth->getData('id') && !$user->isAdmin() ) {
             $applError->set('You don\'t have the permission to edit this entry!');
             return false;
@@ -151,7 +157,7 @@ class modules_time extends modules_common
         $oldData = array();
         $this->reset(); // we dont need the joined data here, so we dont need to call preset
         // AK : eliminate php notice by isset
-        if (isset($data['id'])) {
+        if (isset($data['id']) && !empty($data['id'])) {
             $oldData = $this->get($data['id']);
         }
         
@@ -234,7 +240,13 @@ class modules_time extends modules_common
             $data = $this->get($data);
         }
         if (!($prev=$this->_getPreviousInTime( $data['timestamp'], $data['user_id'] ))) {
-            $applError->log('couldnt get previous entry for entry with id='.$data['id']);
+        	if($next=$this->_getNextInTime( $data['timestamp'], $data['user_id'] )) {
+        		$data['durationSec'] = $this->roundTime($next['timestamp']-$data['timestamp'],$next['projectTree_id']);
+        		if (!$this->update($data)) {
+                    $applError->log('failed updating entry with id='.$data['id']);
+                }
+        	}
+            //$applError->log('couldnt get previous entry for entry with id='.$data['id']);
         } else {
             // get the preceeding 3 elements
             $this->reset();
@@ -275,7 +287,88 @@ class modules_time extends modules_common
             return $prev[0];
         return false;
     }
+    
+    /**
+    *   get the element after the one with the given timestamp
+    *   for the given user
+    *
+    *   @param  int     the time for which to get the next element
+    *   @param  int     the user_id
+    *   @return mixed   either the row or false
+    */
+    function _getNextInTime( $timestamp , $uid )
+    {
+        $this->reset();
+        $this->setWhere("timestamp>$timestamp AND user_id=$uid");
+        $this->setOrder('timestamp');
+        $next = $this->getAll(0,1);
+        if( sizeof($next) )
+            return $next[0];
+        return false;
+    }    
 
+    /**
+     * We get the latest timestamp of given project
+     * @param int $projectId
+     */
+    function getLastTimestampProject($projectId) {
+    	if(empty($projectId)) return false;
+    	
+        $this->reset();
+        $this->setWhere('projectTree_id='.$projectId);
+        $this->setOrder('timestamp',true);
+        $this->setSelect('timestamp');
+        $rows = $this->getAll(0,1);
+                	
+    	return $rows[0]['timestamp'];
+    }
+    
+    /**
+     * We get the duration of 5 latest timestamps of given project
+     * Additionally we return the timestamp and the task for our
+     * xajax check function about overbooking
+     * @param int $projectId
+     */
+    function getLastDurationsProject($projectId) {
+    	if(empty($projectId)) return false;
+    	
+        $this->reset();
+        $this->setWhere('projectTree_id='.$projectId);
+        $this->setOrder('timestamp',true);
+        $this->setSelect('timestamp,task_id,durationSec');
+        $rows = $this->getAll(0,5);
+                	
+    	return $rows;
+    }    
+    
+
+    /**
+     * get the element before the one with the given timestamp
+     */
+    function _getPreviousTimestampProject( $timestamp , $projectId )
+    {
+        $this->reset();
+        $this->setWhere("timestamp<$timestamp AND projectTree_id=$projectId");
+        $this->setOrder('timestamp',true);
+        $prev = $this->getAll(0,1);
+        if( sizeof($prev) )
+            return $prev[0];
+        return false;
+    }
+    /**
+     * get the element after the one with the given timestamp
+     */
+    function _getNextTimestampProject( $timestamp , $projectId )
+    {
+        $this->reset();
+        $this->setWhere("timestamp>$timestamp AND projectTree_id=$projectId");
+        $this->setOrder('timestamp',false);
+        $prev = $this->getAll(0,1);
+        if( sizeof($prev) )
+            return $prev[0];
+        return false;
+    }
+    
     /**
     *   overwrite this method to correct the times around it
     *

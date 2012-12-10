@@ -47,6 +47,9 @@
     // we do only log for the current user here!
     $_REQUEST['newData']['user_id'] = $userId;
 
+    
+    $projectTree =& modules_project_tree::getInstance(true);
+    
 
     // those two lines handle the edit functionality
     $pageHandler->setObject($time);     
@@ -82,12 +85,13 @@
                			}
            			}        
         		}
-        		$ourproject = $projectId;  // the default project if any            
-            }
-            
-            $_REQUEST['newData']['projectTree_id'] = $ourproject;
-            $had_a_non_project_task = true;
+        		$ourproject = $projectId;  // the default project if any
+            	$had_a_non_project_task = true;
+            } 
+            $_REQUEST['newData']['projectTree_id'] = $ourproject;            
     }
+    
+    
     $saved = $pageHandler->save( $_REQUEST['newData'] );
                      
     $data = $pageHandler->getData();

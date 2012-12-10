@@ -1,7 +1,7 @@
 <?php
     /**
      * 
-     * $Id
+     * $Id$
      * 
      * ************** switch to SVN *************
     *  $Log: messages.php,v $
@@ -26,5 +26,12 @@
     $MSG_LOG_FOR_PROJECT =  'Log for the project';
     $MSG_FOR             =  'for:';
     $MSG_ARE_YOUR_SURE =    'Are you sure?';
-
-?>
+    
+    // Project overbooking alerts
+    $MSG_PROJECT_OVERBOOKED = 'CAUTION: Project overbooked!';
+    $MSG_PROJECT_OVERBOOKED21 = "CAUTION: Only ";
+    $MSG_PROJECT_OVERBOOKED22 = "hours left";
+	$MSG_PROJECT_BOOKING_CHOICE_QUESTION = "Do you still want to book ?";
+	$MSG_PROJECT_BOOKING_CHOICE_CANCEL = "CANCEL : No booking!";
+	$MSG_PROJECT_BOOKING_CHOICE_OK = "OK : Booking will be done! (Project overbooked)";
+	?>

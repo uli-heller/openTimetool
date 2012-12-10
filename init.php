@@ -215,6 +215,8 @@
 
     require_once($config->classPath.'/util.php');
     require_once($config->classPath.'/modules/user/user.php');
+    
+    
 
     /**
     *        DB connect
@@ -527,4 +529,5 @@
 
     include_once 'messages.php';
 
+    
 ?>

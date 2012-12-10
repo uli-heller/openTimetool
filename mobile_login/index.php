@@ -17,7 +17,7 @@
 <html>
 <head>
     <title></title>
-    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="description" content="">
     <meta name="abstract" content="">
     <meta name="keywords" content="">
