@@ -144,6 +144,7 @@
                         <input type="hidden" name="shortoverBooked" id="shortoverBooked" value="0">
     					<input type="hidden" name="shortrestAvailable" id="shortrestAvailable" value="0">
     					<input type="hidden" name="currTask" id="currTask" value="0">
+    					<input type="hidden" name="projectTree_id" id="projectTree_id" value="{$currentTask['projectTree_id']}">
                         <td class="statusLine" align="left" nowrap>
                             <b>Hot-Keys</b>
                         </td>
@@ -203,7 +204,7 @@
 		bookDate = day+'.'+month+'.'.year;
 		bookTime = hours + ":" + minutes;
 		taskId = document.shortForm.currTask.value;
-		projectTreeId = "";
+		projectTreeId = document.shortForm.projectTree_id.value;
 		oldid = 0;
 		
 		xajax.call( 'checkBookings', \{ mode:'synchronous', parameters:[projectTreeId,taskId,oldid,bookDate,bookTime,'short'] \} );

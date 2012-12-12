@@ -31,6 +31,7 @@
     $projectTree =& modules_project_tree::getInstance(true);
 
 	//AK : use isset instead of size ; php5 ?
+	$data = array();
     if (isset($_REQUEST['newData'])) {
         $saved = 0;
         foreach ($_REQUEST['newData'] as $aNew) {
@@ -48,7 +49,7 @@
         if ($saved) {
             $applMessage->set("$saved datasets successfully saved.");
         }
-        if (!isset($data)) {   // AK : instead of sizeof -> php5 throws a notice
+        if (!empty($data)) {   // AK : instead of sizeof -> php5 throws a notice
             $applError->set('Please correct the data of the shown entries!');
         }
     }
