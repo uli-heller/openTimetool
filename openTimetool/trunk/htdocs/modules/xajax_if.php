@@ -32,16 +32,21 @@ require_once($config->classPath.'/modules/project/tree.php');
 require_once $config->classPath.'/modules/project/treeDyn.php';
 require_once $config->classPath.'/modules/project/member.php';
 
+define('XAJAXDBG',false);
+
 
 /**
  * Just an interface to docheckBookings below
+ * covering today,index,shortcut and quick log
  */
 function checkBookings($projectTreeId,$taskId,$oldId,$bookDate,$bookTime,$calledfrom='today')
 {
 	$objResponse = new xajaxResponse();
-	
+
+	if(XAJAXDBG) 	$objResponse->assign("msgxajax","innerHTML","checkBookings<br>");
+
 	$ret = docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$bookTime,$calledfrom);
-	
+
 	$objResponse = $ret->objResponse;
 	foreach($ret->htmlretarr as $name=>$val) {
 		$objResponse->assign($name,"value",$val);
@@ -52,15 +57,21 @@ function checkBookings($projectTreeId,$taskId,$oldId,$bookDate,$bookTime,$called
 
 /**
  * Just an interface to docheckBookings below
- * Input params are all fields
+ * Input params are all fields and we come from multi log
  */
 function checkmultipleBookings($projectTreeId,$taskId,$oldId,$bookDate,$bookTime,$calledfrom='today')
 {
 	$objResponse = new xajaxResponse();
+
+	if(XAJAXDBG) 	$objResponse->assign("msgxajax","innerHTML","checkmultipleBookings<br>");
+
 	
+	$btimesarr = array();
 	foreach($projectTreeId as $index=>$pid) {
 		// now we call each booking and break if one is overbooked
-		$ret = docheckBookings($objResponse,$projectTreeId[$index],$taskId[$index],0,$bookDate[$index],$bookTime[$index],$calledfrom);
+		if(!isset($btimesarr[$projectTreeId[$index]])) $btimesarr[$projectTreeId[$index]] = null;
+		
+		$ret = docheckBookings($objResponse,$projectTreeId[$index],$taskId[$index],0,$bookDate[$index],$bookTime[$index],'period',$btimesarr[$projectTreeId[$index]]);
 		$objResponse = $ret->objResponse;
 		if($ret->htmlretarr['overBooked'] > 0) {
 			// we have an overbooking here
@@ -74,6 +85,75 @@ function checkmultipleBookings($projectTreeId,$taskId,$oldId,$bookDate,$bookTime
 	return $objResponse;
 }
 
+/**
+ * Just an interface to docheckBookings below
+ * covering period log
+ */
+function checkperiodBookings($projectTreeId,$startDate,$endDate,$startTime,$endTime,$startTask,$endTask)
+{
+	global $util;
+
+	$objResponse = new xajaxResponse();
+
+	if(XAJAXDBG) 	$objResponse->assign("msgxajax","innerHTML","checkperiodBookings<br>");
+
+
+	$oldId = 0;
+	$bookedtimes = null;
+
+	$startTimeS = $util->makeTimestamp($startTime);
+	$endTimeS = $util->makeTimestamp($endTime);
+	$startDateS = $util->makeTimestamp($startDate);
+	$endDateS = $util->makeTimestamp($endDate);
+
+
+	$numDays = (($endDateS - $startDateS) / (24*60*60) + 1);
+	if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","start=".$startDate.' end='.$endDate." = numdays: ".$numDays."<br>");
+	if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","start=".$startDateS.' end='.$endDateS." = numdays: ".$numDays."<br>");
+	
+	for( $i=0 ; $i<$numDays ; $i++ )
+	{
+		if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","numdays=".$numDays.' currdayix='.$i."<br>");
+
+		$curDate = ($startDateS + $i*24*60*60 ); // get the day we are working on now
+		if( date('w',$curDate)==0 || date('w',$curDate)==6) // check that it is no weekend day
+		continue;
+
+		// save start task for this
+		$bookDate = date('d.m.Y',$curDate);
+		$bookTime = date('H:i',$startTimeS);
+		$taskId = $startTask;
+
+		// bookedtimes is by ref, so we get it back and feed it again in next call
+		$ret = docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$bookTime,'period',$bookedtimes);
+		if($ret->htmlretarr['overBooked'] > 0) {
+			// we have an overbooking here
+			if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML",print_r($ret->htmlretarr['overBooked'],true).' '.print_r($ret->htmlretarr['restAvailable'],true)."<br>");
+			break;  // outa here
+		}
+
+		// end task for that day
+		$bookTime = date('H:i',$endTimeS);
+		$taskId = $endTask;
+		
+		$ret = docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$bookTime,'period',$bookedtimes);
+		
+		if($ret->htmlretarr['overBooked'] > 0) {
+			// we have an overbooking here
+			if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML",print_r($ret->htmlretarr['overBooked'],true).' '.print_r($ret->htmlretarr['restAvailable'],true)."<br>");
+			break;  // outa here
+		}
+	}
+
+	// we either have the ret from an overbooking or the last one without overbooking
+	foreach($ret->htmlretarr as $name=>$val) {
+		$objResponse->assign($name,"value",$val);
+	}
+	
+	unset($bookedtimes);
+	
+	return $objResponse;
+}
 
 
 /**
@@ -83,19 +163,21 @@ function checkmultipleBookings($projectTreeId,$taskId,$oldId,$bookDate,$bookTime
  * We check if we have overbooked and set a variable
  * data in hidden field on form. In the submit JS-Function we have then the
  * checking if the project is overbooked
- * 
+ *
  * calledfrom: parameter if we have to do special things
- * 
- * As we are called now from 2 xajax functions, we return a structure and populate the html fields 
+ *
+ * As we are called now from 2 xajax functions, we return a structure and populate the html fields
  * in the 2 xajax functions.
  * 
+ * & $btimes : in period log we have to collect alle bookings in a loop. So we return the bookings and feed it again
+ * 			   in next call
+ *
  */
-function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$bookTime,$calledfrom)
+function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$bookTime,$calledfrom='today',& $btimes = null)
 {
 	global $userAuth;
 	global $task,$time;
 
-	define('XAJAXDBG',false);
 
 	$ret = new stdClass;
 	$ret->htmlretarr = array();  // key = name, value = value
@@ -106,14 +188,14 @@ function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$b
 	$overbooked = false;
 	$rest=$hrest=0;
 	$laststamp = '';
-	
+
 	if($calledfrom == 'short') {
 		$prefback = 'short';
 	} else {
 		$prefback='';
 	}
 
-	if(XAJAXDBG) $objResponse->assign("msgxajax","innerHTML","checkBookings<br>");
+	if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","<br>docheckBookings<br>");
 
 	$projectTree =& modules_project_tree::getInstance(true);  // base of that all
 
@@ -141,10 +223,10 @@ function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$b
 		// check only if there is a max duration
 		if(empty($maxDuration)) {
 			/*
-			$objResponse->assign($prefback."restAvailable","value",$hrest);
-			$objResponse->assign($prefback."overBooked","value",$overbooked);
-			return $objResponse;
-			*/
+			 $objResponse->assign($prefback."restAvailable","value",$hrest);
+			 $objResponse->assign($prefback."overBooked","value",$overbooked);
+			 return $objResponse;
+			 */
 			$ret->htmlretarr = array($prefback."restAvailable"=>$hrest, $prefback."overBooked"=>$overbooked);
 			$ret->objResponse = $objResponse;
 			return $ret;
@@ -157,8 +239,8 @@ function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$b
 
 		if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","OUR stamp: ".$timestamp.' ('.date('r',$timestamp).')<br>');
 
-			
-		$btimes = AllBookedTimes($projectTreeId);
+		// if called from periodlog, we get the btimes from last call	
+		if(empty($btimes)) $btimes = AllBookedTimes($projectTreeId);
 
 		$currsum = $beforesum = SumBookedTimes($btimes);
 
@@ -204,12 +286,13 @@ function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$b
 
 		krsort($btimes);
 
+		$dbgupdate = false;
 		if (!empty($oldId)) {
-			$btimes = updateDuration(XAJAXDBG,$btimes, $oldData,$objResponse ); // first update the entries around the old time
-			$btimes = updateDuration(XAJAXDBG,$btimes, $oldId,$objResponse ); // update the entries around the updated time
+			$btimes = updateDuration($dbgupdate,$btimes, $oldData,$objResponse ); // first update the entries around the old time
+			$btimes = updateDuration($dbgupdate,$btimes, $oldId,$objResponse ); // update the entries around the updated time
 		} else {
 			// new stamp just sort it in
-			$btimes = updateDuration(XAJAXDBG,$btimes,$newData,$objResponse);
+			$btimes = updateDuration($dbgupdate,$btimes,$newData,$objResponse);
 		}
 
 		if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML",'updated btimes: '.print_r($btimes,true).'<p>');
@@ -218,12 +301,14 @@ function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$b
 
 		if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","Booked sum after update: ".$currsum.'<br>');
 
-
+		$justbooked = $currsum - $beforesum;
+		if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","Just booked: ".$time->_calcDuration($justbooked,'hour').'<br>');
+		
 		$rest = $maxDuration - $currsum;
-		$wouldbe = $beforesum + ($beforesum - $currsum);
-		if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","Would have after booking: ".$wouldbe.'('.$time->_calcDuration($wouldbe,'hour').')<br>');
+		//$wouldbe = $beforesum + ($beforesum - $currsum);
+		if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","Would have after booking: ".$rest.'('.$time->_calcDuration($rest,'hour').')<br>');
 
-		if($rest < 0 || ($rest-$wouldbe)<0) {
+		if($rest < 0) {
 			$overbooked = true;
 		}
 
@@ -235,21 +320,23 @@ function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$b
 
 		if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","Rest: ".$rest.'('.$hrest.')<br>');
 
-		unset($btimes); unset($projectTree);
+		if($calledfrom != 'period' && $calledfrom != 'multi' ) unset($btimes);
+		
+		unset($projectTree);
 
 	}
 
 	/*
-	$objResponse->assign($prefback."restAvailable","value",$hrest);
-	$objResponse->assign($prefback."overBooked","value",$overbooked);
-		
-	return $objResponse;
-	*/
-	
+	 $objResponse->assign($prefback."restAvailable","value",$hrest);
+	 $objResponse->assign($prefback."overBooked","value",$overbooked);
+
+	 return $objResponse;
+	 */
+
 	$ret->htmlretarr = array($prefback."restAvailable"=>$hrest, $prefback."overBooked"=>$overbooked);
 	$ret->objResponse = $objResponse;
 	return $ret;
-	
+
 }
 
 /**
@@ -257,15 +344,15 @@ function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$b
  */
 function updateDuration($dbg, $btimes, $data, & $objResponse)
 {
-	global $time;
+	global $time,$task;
 
 	if($dbg) $objResponse->append("msgxajax","innerHTML","In updateduration: ".print_r($data,true).'<br>');
-	if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML",'<br>updatedDuration btimes0: '.print_r($btimes,true).'<p>');
 
 	if (is_numeric($data)) {
+		if($dbg) $objResponse->append("msgxajax","innerHTML",'<br>updatedDuration btimes0: '.print_r($btimes,true).'<p>');
 		foreach($btimes as $b) {
 			if($dbg) $objResponse->append("msgxajax","innerHTML","get rec ".$b['id']."<br>");
-				
+
 			if($b['id'] == $data) {
 				$data = $b;
 				break;
@@ -278,7 +365,7 @@ function updateDuration($dbg, $btimes, $data, & $objResponse)
 
 	//$rows = get3PrevTimestamps($dbg,$btimes,$data['timestamp'],$data['user_id'], $objResponse);
 
-	if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML",'<br>updatedDuration btimes1: '.print_r($btimes,true).'<p>');
+	if($dbg) $objResponse->append("msgxajax","innerHTML",'<br>updatedDuration btimes before: '.print_r($btimes,true).'<p>');
 
 
 	$rows = array();
@@ -293,14 +380,20 @@ function updateDuration($dbg, $btimes, $data, & $objResponse)
 			if($dbg) $objResponse->append("msgxajax","innerHTML","found starting prev with id ".$d['id']."<br>");
 			$n = next($btimes);
 			if(empty($n)) {
+				if($dbg) $objResponse->append("msgxajax","innerHTML","found no next ".$next['id']."<br>");
+				
 				// no previous stamp : booking before last start
-				$next = prev($btimes);
-				if(!empty($next)) {
-				 $btimes[$d['timestamp']]['durationSec'] = $next['timestamp']-$d['timestamp'];
+				$prev = prev($btimes);
+				if(!empty($prev)) {
+					if($dbg) $objResponse->append("msgxajax","innerHTML","found prev ".$prev['id']."<br>");
+				 	$btimes[$d['timestamp']]['durationSec'] = $prev['timestamp']-$d['timestamp'];
 				}
 				break;
+			} else {
+				$rows[]=$n;
 			}
 			$p = prev($btimes);
+			if($dbg) $objResponse->append("msgxajax","innerHTML","prev: ".$p['id']."<br>");
 			if(!empty($p)) $rows[]=$p;
 			$p = prev($btimes);
 			if(!empty($p)) $rows[]=$p;
@@ -309,19 +402,23 @@ function updateDuration($dbg, $btimes, $data, & $objResponse)
 		$d = next($btimes);
 	}
 
-	if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML",'<br>updatedDuration btimes2: '.print_r($btimes,true).'<p>');
 
-
-	if($dbg) $objResponse->append("msgxajax","innerHTML","prev3: ".print_r($rows,true).'<br>');
+	if($dbg) $objResponse->append("msgxajax","innerHTML","rows: ".print_r($rows,true).'<br>');
 
 	for ($i=1; $i<sizeof($rows); $i++) {
 		$ts = $rows[$i-1]['timestamp'];
+		if($dbg) $objResponse->append("msgxajax","innerHTML",'row loop : row-1 '.print_r($rows[$i-1],true).'<br>');
+		
 		// round the time before updating, this depends on the project it belongs to
 		$durationSec = $time->roundTime($rows[$i]['timestamp']-$rows[$i-1]['timestamp'],$rows[$i-1]['projectTree_id']);
-		$btimes[$ts]['durationSec'] = $durationSec;
+		if($dbg) $objResponse->append("msgxajax","innerHTML",'Calc duration '.$durationSec.'<br>');		
+		if($task->hasDuration($btimes[$ts]['task_id'])) {
+			if($dbg) $objResponse->append("msgxajax","innerHTML",'Task has duration. Update with '.$durationSec.'<br>');
+			$btimes[$ts]['durationSec'] = $durationSec;
+		}
 	}
 
-	if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML",'<br>updatedDuration btimes3: '.print_r($btimes,true).'<p>');
+	if($dbg) $objResponse->append("msgxajax","innerHTML",'<br>updatedDuration btimes after: '.print_r($btimes,true).'<p>');
 
 	return $btimes;
 }
@@ -447,7 +544,7 @@ if(strtoupper(trim(CHARSET)) != 'UTF-8' )
 // Specify the PHP functions to wrap. The JavaScript wrappers will be named xajax_functionname
 $xajax->registerFunction("checkBookings");
 $xajax->registerFunction("checkmultipleBookings");
-
+$xajax->registerFunction("checkperiodBookings");
 
 // Process any requests.  Because our requestURI is the same as our html page,
 // this must be called before any headers or HTML output have been sent

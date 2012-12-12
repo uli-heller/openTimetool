@@ -87,6 +87,21 @@ class modules_task extends modules_common
         return $res;
     }
     
+    /**
+    *   this gets the tasks that have a duration and need a project
+    */
+    function getProjectTasks()
+    {
+        $this->reset();
+        $this->setWhere('needsProject=1,calcTime=1');
+        $res = $this->getAll();
+        // we do the reset here, to be clear in every call afterwards, since this method gets called
+        // mostly before using the class somewhere else
+        $this->reset();
+        return $res;
+    }    
+    
+    
 	/**
 	 * SX (AK): 
  	 * tells if given task is a non project task 
@@ -104,7 +119,48 @@ class modules_task extends modules_common
     	}
     	return $isone;
     }
+	/**
+	 * SX (AK): 
+ 	 * tells if given task is a project task 
+ 	*/
+    function isProjectTask($taskid)
+    {
+    	$ProjectTasks = $this->getProjectTasks();
+    	$isone = false;
+    	foreach($ProjectTasks as $task)
+    	{
+    		if($task['id'] == $taskid) {
+    			$isone = true;
+    			break;
+    		}
+    	}
+    	return $isone;
+    }
+    
+        /**
+    *   this gets the tasks that have a duration and need a project
+    */
+    function hasDuration($taskid)
+    {
+        $this->reset();
+        $this->setWhere('calcTime=1');
+        $res = $this->getAll();
+        // we do the reset here, to be clear in every call afterwards, since this method gets called
+        // mostly before using the class somewhere else
+        $this->reset();
 
+    	$isone = false;
+    	foreach($res as $task)
+    	{
+    		if($task['id'] == $taskid) {
+    			$isone = true;
+    			break;
+    		}
+    	}
+		return $isone;
+    }    
+    
+    
 }   // end of class
 
 $task = new modules_task;
