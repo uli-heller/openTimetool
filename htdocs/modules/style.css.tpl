@@ -137,6 +137,11 @@ table.outline {
     background-color: [[$styleSheet->bgHighlightColor]];
 }
 
+table.poutline {
+    margin-left: -7px;  /* SX Correct the alignment of filter buttons */
+}
+
+
 /**
 *   this class is for outlined divs that are positioned dynamically
 */

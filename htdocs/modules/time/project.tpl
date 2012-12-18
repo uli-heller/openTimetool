@@ -18,15 +18,15 @@
 -->
 <form name="filterForm" action="{$_SERVER['PHP_SELF']}" method="post">
 <input type="hidden" name="filter" value="{$filter}">
-<table class="outline" width="50%">
+<table class="poutline" width="50%">
 	<tr>
-    	<td class="statusLine" align="left" nowrap>
+    	<td class="pButtons" align="left" nowrap>
 			<input type="submit" value="Active projects" class="button" id="{$active}" onclick="javascript:document.filterForm['filter'].value='active';" />
         </td>
-    	<td class="statusLine" align="left" nowrap>
+    	<td class="pButtons" align="left" nowrap>
 			<input type="submit" value="Closed projects" class="button" id="{$closed}"  onclick="javascript:document.filterForm['filter'].value='closed';" />
         </td>
-    	<td class="statusLine" align="left" nowrap>
+    	<td class="pButtons" align="left" nowrap>
 			<input type="submit" value="All projects" class="button" id="{$all}"  onclick="javascript:document.filterForm['filter'].value='all';"/>
         </td>       
      </tr>

@@ -1,7 +1,7 @@
 2.3.2
 - Added credentials for LDAP binding in config.php in case anonymous bind isnt allowed
 - Added a couple of new variables for OO temnplating:
-  all sums in hozrs are available as sumdays as well now (i.e. $sum as before and $sumdays additionally)
+  all sums in hours are available as sumdays as well now (i.e. $sum as before and $sumdays additionally)
   maxduration is available as {$aProject['maxdurationdays']} or {$aProject['maxduration']}
   rest (maxduration - booked) as {$aProject['restdays']} or {$aProject['rest']} 
 - Switched now to utf-8 completely 
