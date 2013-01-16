@@ -62,6 +62,6 @@
     {%common_getJS('common')%}
 
 <!-- activate xajax (SX) -->
-	{$xajax->printJavascript($config->applBase."/includes/xajax/")}
+	{$xajax->printJavascript("../../xajax/")}
 </head>
 <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
