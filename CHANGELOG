@@ -1,3 +1,5 @@
+2.3.2.1
+- Bugfix: xajax including when webroot is on opentimetool/htdocs
 2.3.2
 - Added credentials for LDAP binding in config.php in case anonymous bind isnt allowed
 - Added a couple of new variables for OO temnplating:

@@ -233,7 +233,7 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 
 	/**
 	 *  http://www.mysite.com/directory1/file.php or http://www.mysite.com/directory1/directory2/directory3/file.php 
-	 *  return /directory 
+	 *  return /directory1 
 	 *  This way we have the path of installdir of our application
 	 *  
 	 *  SX : Nov 2012
