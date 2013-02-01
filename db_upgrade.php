@@ -133,7 +133,7 @@ function upgrade_database()
 				insert_record($sqlcheck, $sqlinsert);
 				$sqlcheck = "SELECT id from `translate_de` where id=303";
 				$sqlinsert = "INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES " .
-	 							"(303, 'Weiter: Buchung wird durchgeführt, Projekt wird überbucht!', '0')";				
+	 							"(303, 'OK: Buchung wird durchgeführt, Projekt wird überbucht!', '0')";				
 				insert_record($sqlcheck, $sqlinsert);
 				$sqlcheck = "SELECT id from `translate_en` where id=304";
 				$sqlinsert = "INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES " .
