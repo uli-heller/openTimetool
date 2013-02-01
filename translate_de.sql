@@ -287,7 +287,7 @@ INSERT INTO `translate_de` (`id`, `string`, `convertHtml`) VALUES
 (306, 'Alle Projekte', '0'),
 (305, 'Geschlossene Projekte', '0'),
 (304, 'Aktive Projekte', '0'),
-(303, 'Weiter: Buchung wird durchgeführt, Projekt wird überbucht!', '0');
+(303, 'OK: Buchung wird durchgeführt, Projekt wird überbucht!', '0');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
