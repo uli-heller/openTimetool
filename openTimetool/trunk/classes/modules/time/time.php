@@ -572,9 +572,11 @@ class modules_time extends modules_common
                             // jv: round() is needed for correct output in oo-templates
                             $decimalMinutes = round($minutes/(60/100));
                             return sprintf('%02d,%02d',$hours,$decimalMinutes);
-            case 'days':    // the hours as a number
+            case 'days':    // the days as a dec number
                             $time = sprintf('%02d.%02d',$hours,$minutes/(60/100));
-                            return str_replace('.',',',round( $time/8 , 2 ));
+                            $daydec = round( $time/8 , 2 );
+                            // 2.3.2.2 : now we return a string with decimal places
+                            return str_replace('.',',',sprintf('%01.2f',$daydec));
         }
     }
 
