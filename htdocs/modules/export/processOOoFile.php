@@ -289,7 +289,8 @@
 		$tsum =  $projects[$curProjectId]['sum'];
 		$projects[$curProjectId]['sum'] = $time->_calcDuration( $tsum , 'decimal' );
 		$projects[$curProjectId]['sumdays'] = $time->_calcDuration( $tsum , 'days' );
-		$rest = $projects[$curProjectId]['maxduration'] - $projects[$curProjectId]['sum'];
+		// Bugfix 2.3.2.2 : Rest was wrong as descimal places were always cut off 
+		$rest = $projects[$curProjectId]['maxduration'] - (float)str_replace(',','.',$projects[$curProjectId]['sum']);
 		$restsec = $rest * 3600;
 		$projects[$curProjectId]['rest'] = $rest;
 		$projects[$curProjectId]['restdays'] = $time->_calcDuration( $restsec , 'days' );

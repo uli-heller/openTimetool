@@ -1,3 +1,6 @@
+2.3.2.3
+- Slight improvement : sum of day in decimal will now be with 2 decimal places in overview
+  and in OO exports (2,00 days instead of 2 days) 
 2.3.2.2
 - A few more variables for export templates: 
   {$general['exportdate']},{$general['firstname']},{$general['lastname']}
