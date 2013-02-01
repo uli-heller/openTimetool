@@ -110,6 +110,10 @@
     $timespanUntil = OOencode($dateTime->formatDate($show['dateUntil']));
 
 
+    // 2.3.2 : some general info for template
+    $general['exportdate'] = date('d.m.Y');
+    $general['firstname'] = $userAuth->getData('name');
+    $general['lastname'] = $userAuth->getData('surname');
 
     // put all the users in the first level of the array
     $users = array();
