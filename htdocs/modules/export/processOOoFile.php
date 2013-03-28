@@ -59,7 +59,8 @@
     // get the data to fill the template
     require_once($config->classPath.'/modules/project/tree.php');
     require_once($config->classPath.'/modules/time/time.php');
-
+    require_once($config->classPath.'/modules/task/task.php');
+    
     // so we dont get no php-errors in the template, which might make it invalid
     // i.e if a foreach has no values to go thru
     ini_set('display_errors',0);
@@ -109,6 +110,7 @@
     $timespanFrom = OOencode($dateTime->formatDate($show['dateFrom']));
     $timespanUntil = OOencode($dateTime->formatDate($show['dateUntil']));
 
+    $until = $show['dateFrom'];  // SX To get the previously booked times below
 
     // 2.3.2 : some general info for template
     $general['exportdate'] = date('d.m.Y');
@@ -201,6 +203,10 @@
             $projects[$curProjectId]['projectcomment'] = OOencode($aTime['_projectTree_comment']);
             $projects[$curProjectId]['sum'] = 0;
             $projects[$curProjectId]['sumdays'] = 0;
+            $booked_before_sec = SumBookedTimes($curProjectId,$until,$f,false);
+            $booked_before_hours = (float)str_replace(',','.',$time->_calcDuration( $booked_before_sec , 'decimal' ));          
+            $projects[$curProjectId]['sumbefore'] = $booked_before_hours;  // SX March 2013 bug
+            $projects[$curProjectId]['sumbeforedays'] = $time->_calcDuration( $booked_before_sec , 'days' );
             $projects[$curProjectId]['maxduration'] = $aTime['_projectTree_maxDuration'];  // in h
             $maxdursec = $aTime['_projectTree_maxDuration'] * 3600;
             $projects[$curProjectId]['maxdurationdays'] = $time->_calcDuration( $maxdursec , 'days' );
@@ -289,11 +295,19 @@
 		$tsum =  $projects[$curProjectId]['sum'];
 		$projects[$curProjectId]['sum'] = $time->_calcDuration( $tsum , 'decimal' );
 		$projects[$curProjectId]['sumdays'] = $time->_calcDuration( $tsum , 'days' );
+		// Bugfix 2.3.2.3 Mar 2013 : The previously booked times have to be included in rest calc
+		$booked_before_hours = $projects[$curProjectId]['sumbefore'];
 		// Bugfix 2.3.2.2 : Rest was wrong as descimal places were always cut off 
-		$rest = $projects[$curProjectId]['maxduration'] - (float)str_replace(',','.',$projects[$curProjectId]['sum']);
+		$sumf = (float)str_replace(',','.',$projects[$curProjectId]['sum']);
+		$rest = $projects[$curProjectId]['maxduration'] -  $booked_before_hours - $sumf;
 		$restsec = $rest * 3600;
 		$projects[$curProjectId]['rest'] = $rest;
 		$projects[$curProjectId]['restdays'] = $time->_calcDuration( $restsec , 'days' );
+		$totalbookedhours = $booked_before_hours + $sumf;
+		$totalbookedsec = $totalbookedhours*3600;
+		$projects[$curProjectId]['totalbooked'] = $totalbookedhours;
+		$projects[$curProjectId]['totalbookeddays'] = $time->_calcDuration( $totalbookedsec , 'days' );
+		
 		
     }
         
@@ -321,4 +335,68 @@
 	// don't activate. Will be written into content.xml ...
     //require_once($config->finalizePage);
 
+    /**
+     * End of script; helpers functions follwing
+     */
+    
+    /**
+     * Get all booked times on given project
+     *
+     * Ak, system worx : We need that for the project sums 
+     */
+    function AllBookedTimes($dataID)
+    {
+    	global $projectTree;
+    	global $task;
+    
+    	$ret = array();
+    
+    	$time = new modules_common(TABLE_TIME);
+    	$time->reset();
+    	$time->setWhere('projectTree_id='.$dataID);
+    	$time->setOrder('timestamp',true);
+    	if ($time->getCount()) {
+    		// AK, system worx : retrieve all logged times for that project
+    		$result = $time->GetAll();
+    		foreach($result as $data) {
+    			$ret[$data['timestamp']] = $data;
+    		}
+    	}
+    	unset($time);
+    
+    	return $ret;
+    }
+    
+    
+    /**
+     * Get a sum of all booked times on given project until given date
+     *
+     * Ak, system worx : We need that for the project sums
+     */
+    function SumBookedTimes($projectId,$until,$f,$dbg)
+    {
+    	global $projectTree;
+    	global $task;
+    
+    	$bookedTimes = AllBookedTimes($projectId);
+    	
+    	$sum = 0;
+    
+    	foreach($bookedTimes as $data) {
+    		if($dbg) {
+    			fwrite($f,"times ".print_r($data,true).PHP_EOL);
+    		}
+    		if($data['timestamp'] <= $until) {
+    			if(!$task->isNoneProjectTask($data['task_id'])) $sum += $data['durationSec'];
+    		}
+    	}
+    	if($dbg) {
+    		fwrite($f,"Sum ".$sum.PHP_EOL);
+    	}   
+    	return $sum;
+    }    
+    
+    
+    
+    
 ?>
