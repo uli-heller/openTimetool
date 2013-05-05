@@ -1,6 +1,6 @@
-2.3.2.4
+2.3.3
 - Bugfix OO-templating : Rest sum was wrong (always used the total)
-  New variables for templating : {$aProject['totalbookeddays']} or {$aProject['totalbooked']} 
+  New variables for templating : {$aProject['totalbookeddays']} and {$aProject['totalbooked']} 
 2.3.2.3
 - Slight improvement : sum of day in decimal will now be with 2 decimal places in overview
   and in OO exports (2,00 days instead of 2 days) 
