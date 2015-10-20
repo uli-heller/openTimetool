@@ -1,0 +1,10 @@
+If you run openTimetool on a server where PHP runs as FastCGI you most probably will have
+major problems :
+
+One of the most important lines within the whole openTimetool package is
+this one in that file :
+
+php_value auto_prepend_file <docroot>/openTimetool/config.php
+
+PHP as FastCGI will silently ignore that line!  
+  
