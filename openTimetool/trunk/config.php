@@ -25,7 +25,7 @@
     /**
 	  * Don't change ! It's the current version !
 	  */
-    $config->applVersion = '2.3.3';
+    $config->applVersion = '2.3.4';
     $config->applName = 'openTimetool'.$config->applVersion;
     $config->schema_version = '2.3.2';
     
