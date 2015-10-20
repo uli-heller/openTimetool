@@ -31,7 +31,7 @@
     */
  
     if(!isset($account) || !isset($config)) {
-		print_r("Something terribly went wrong with auto_prepend. Maybe Suhosin ? See README ...");
+		print_r("Something terribly went wrong with auto_prepend. Maybe Suhosin or PHP as FastCGI ? See README ...");
 		//require("/srv/www/system-worx.de/pm/openTimetool/config.php");
 		die();
     }
