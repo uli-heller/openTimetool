@@ -313,6 +313,10 @@ class Auth_LDAP extends Auth_common
 			return new PEAR_Error('Error connecting to LDAP.', 41, PEAR_ERROR_DIE);
 		}
 
+		// AK : we have to set the protocol version in meanwhile
+		ldap_set_option($this->conn_id, LDAP_OPT_PROTOCOL_VERSION, 3);
+
+		
 		if(!empty($config->auth->ldap_adminid)) {
 			// bind with credentials from config.php
 			if ((@ldap_bind($this->conn_id,$config->auth->ldap_adminid,$config->auth->ldap_adminpwd)) == false) {
