@@ -50,7 +50,7 @@
         require_once $config->classPath.'/modules/project/treeDyn.php';
         require_once $config->classPath.'/modules/time/time.php';
         require_once $config->classPath.'/modules/task/task.php';
-        $projectTreeDyn =& modules_project_treeDyn::getInstance();
+        $projectTreeDyn = modules_project_treeDyn::getInstance();
         
         $time->preset();
         $time->setWhere('user_id='.$userAuth->getData('id'));

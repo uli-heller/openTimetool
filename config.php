@@ -24,9 +24,9 @@
     /**
 	  * Don't change ! It's the current version !
 	  */
-    $config->applVersion = '2.3.5';
+    $config->applVersion = '2.3.4';
     $config->applName = 'openTimetool'.$config->applVersion;
-    $config->schema_version = '2.3.2';
+    $config->schema_version = '2.3.3';
     
     /**
     * AK the link behind the logo on the upper right ...
@@ -94,7 +94,8 @@
     * @var string the DB connection parameters
     */
     $config->dbDSN = 'mysql://<USERNAME>:<PASSWORD>@localhost/opentimetool';
-
+    
+    
     /**
     * This is the path to html2pdf, this application is needed
     * when you want to export your timesheets to pdf.

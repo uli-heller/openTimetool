@@ -150,6 +150,7 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 		}
 
 		$_SERVER['DOCUMENT_ROOT'] = $this->getDocRoot();
+
 		if (!isset($this->applPathPrefix)) {
 			$this->applPathPrefix = $this->getApplPathPrefix($rootDir,$secureMode);
 		}
@@ -349,13 +350,14 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 				}
 			}
 		}
-
+		
 		if( !$lang ) {
 			require_once( 'I18N/Negotiator.php' );
-			$neg = new I18N_Negotiator;
+			$neg = new I18N_Negotiator();
 			$lang = $this->checkLanguage($neg->getLanguageMatch());
 		}
-
+		
+		
 		$oldApplPathPrefix = $this->applPathPrefix;
 		$this->applPathPrefix = $this->applPathPrefix."/$lang";
 		if( $newLang != "/$lang/" ) {
@@ -412,8 +414,8 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 
 	function anyErrorOrMessage()
 	{
-		$error =& $this->getErrorObject();
-		$message =& $this->getMessageObject();
+		$error = $this->getErrorObject();
+		$message = $this->getMessageObject();
 		// check if any errors occured
 		// if so we show them in the main.tpl
 		// we have to check this here, because all pages have been processed upto this point!
@@ -427,7 +429,7 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 
 	function anyError()
 	{
-		$error =& $this->getErrorObject();
+		$error = $this->getErrorObject();
 
 		if( ($this->isLiveMode() && $error->existAnyText()) ||
 		(!$this->isLiveMode() && $error->existAny()) )
@@ -439,7 +441,7 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 
 	function anyMessage()
 	{
-		$message =& $this->getMessageObject();
+		$message = $this->getMessageObject();
 
 		if( ($this->isLiveMode() && $message->existAnyText()) ||
 		(!$this->isLiveMode() && $message->existAny()) )
@@ -453,7 +455,7 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 	{
 		global $util;   // this sucks !!!!
 
-		$error = &$this->getErrorObject();
+		$error = $this->getErrorObject();
 		$errors =  $this->isLiveMode() ? $error->getAllText(null) : $error->getAll(null);
 
 		$ret = '';
@@ -473,7 +475,7 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 
 
 		$ret = '';	// AK : Oh well ...
-		$message = &$this->getMessageObject();
+		$message = $this->getMessageObject();
 		$messages = $this->isLiveMode() ? $message->getAllText(null) : $message->getAll(null);
 
 		foreach( $messages as $aMessage )
@@ -486,5 +488,25 @@ class vp_Application_Config extends HTML_Template_Xipe_Options
 		return $ret;
 	}
 
+	/**
+	 * AK: check if symlinks are working; other checks maybe added as wells
+	 */
+	function check_installation() {
+		
+		$testfile = $this->vApplRoot.'/media/image/redDot.gif';  // media in install root is a symlink
+		if( $fp = fopen( $testfile , 'rb' ) === false) {
+			die("<h2>Installation problem : symbolic links dont't seem to work properly or no read permission for web server!<br><br>
+					Installationsproblem: symbolische Links gehen nicht, oder keine Leserechte für Webserver!</h2>");
+		} 
+		
+		$testfile = $this->vApplRoot.'/en/robots.txt';  // en is a symlink
+		if( $fp = fopen( $testfile , 'rb' ) === false) {
+			die("<h2>Installation problem : symbolic language link (en,de in htdocs) not available or working!<br><br>
+					Installationsproblem: symbolischer link der Sprachvariante (en,de unter htdocs) geht nicht!</h2>");
+		}
+		
+	}
+	
+	
 } // end of class
 ?>

@@ -24,7 +24,11 @@
     //
     //
 
-    require_once($config->classPath.'/modules/time/time.php');
+
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
+	require_once($config->classPath.'/modules/time/time.php');
     require_once($config->classPath.'/modules/project/tree.php');
     require_once($config->classPath.'/modules/project/member.php');
 
@@ -46,7 +50,7 @@
             $projectId = $lastTime[0]['projectTree_id'];
             // check if the project is available, if not use root-id
 //FIXXME this is way too complicated, make a method like: $project->getAvailable(0,1) or something like this
-            $projectTree =& modules_project_tree::getInstance(true);
+            $projectTree = modules_project_tree::getInstance(true);
             if( !$projectId || !$projectTree->isAvailable( $projectId , time() ) )
             {
                 if( sizeof($availableProjects = $projectTree->getAllAvailable()) )

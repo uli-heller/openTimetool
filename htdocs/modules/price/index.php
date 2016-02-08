@@ -27,7 +27,11 @@
     //
     //
 
-    require_once($config->classPath.'/modules/user/user.php');
+
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
+	require_once($config->classPath.'/modules/user/user.php');
     require_once($config->classPath.'/modules/project/tree.php');
     require_once($config->classPath.'/modules/task/task.php');
     require_once($config->classPath.'/modules/price/price.php');
@@ -45,7 +49,7 @@
 
     // get the data for the add/edit fields
     $users = $user->getAll();
-    $projectTree =& modules_project_tree::getInstance(true);
+    $projectTree = modules_project_tree::getInstance(true);
     $projects = $projectTree->getNode();
     $tasks = $task->getAll();
 

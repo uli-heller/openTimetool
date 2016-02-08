@@ -114,9 +114,9 @@ class modules_time extends modules_common
         //  where the time shall be booked onto
         //
         // since $projectMember caches data internally we only need on instance throughout the entire application
-        $projectMember =& modules_project_member::getInstance(); // actually we could also use it from global, but hey :-)
+        $projectMember = modules_project_member::getInstance(); // actually we could also use it from global, but hey :-)
 
-        $projectTree =& modules_project_tree::getInstance();
+        $projectTree = modules_project_tree::getInstance();
         if (!$projectMember->isMember( $data['projectTree_id'] , $data['user_id'])) {            
             $_project = $projectTree->getPathAsString($data['projectTree_id']);
             if ($data['user_id']!=$curUserId) {
@@ -199,7 +199,7 @@ class modules_time extends modules_common
     {
         global $dateTime,$applMessage;
 
-        $projectTree =& modules_project_tree::getInstance();
+        $projectTree = modules_project_tree::getInstance();
         $parents = $projectTree->getParents($projectId);
         $parents = array_reverse($parents);
         // AK initialTime not used here -> eliminate it due to php notice !
@@ -388,7 +388,7 @@ class modules_time extends modules_common
             }
             // check if the project is available, if not dont allow removing any entries
 //print 'remove: $projectTree->isAvailable( '.$oldData['projectTree_id'].' , '.$oldData['timestamp'].' )<br>';
-            $projectTree =& modules_project_tree::getInstance();
+            $projectTree = modules_project_tree::getInstance();
             if ($projectTree->isAvailable( $oldData['projectTree_id'],$oldData['timestamp'])) {
                 $ret = parent::remove($id);
                 if ($ret) {

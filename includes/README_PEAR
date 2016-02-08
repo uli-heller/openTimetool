@@ -11,8 +11,8 @@ Afterwards openTimetool is working with the installed 4 PEAR packages mentioned 
 can easily update them with pear installer from then on (for instance with "pear upgrade Log")
 
 
-NOTE : The XINE engine and I18N are PEAR packages as well. But they weredeveloped by the 
-former developer of openTimetool "Wolfgang Kiesing". Wolfgang doesn't maintain openTimetool 
+NOTE : The XINE engine and I18N are PEAR packages as well. But they were developed by the 
+initial developer of openTimetool "Wolfgang Kiesing". Wolfgang doesn't maintain openTimetool 
 anymore and so he doesn't the XINE engine and I18N from PEAR. As the current PEAR versions are 
 hard coded for PHP4, we don't use them and maintain these beasts in this application from now on. 
 Some changes for PHP5 compatibility are already implemented though.

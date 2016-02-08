@@ -24,7 +24,11 @@
     //
     //
 
-    require_once $config->classPath.'/modules/time/time.php';
+
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
+	require_once $config->classPath.'/modules/time/time.php';
     require_once $config->classPath.'/modules/project/treeDyn.php';
     require_once $config->classPath.'/modules/project/member.php';
     require_once $config->classPath.'/modules/project/tree.php';
@@ -69,7 +73,7 @@
         $time->setGroup('projectTree_id');
         if ($times = $time->getAll()) {
 
-            $projectTree =& modules_project_tree::getInstance();
+            $projectTree = modules_project_tree::getInstance();
             $largestDuration = 0;
             foreach ($times as $key=>$aTime) {
                 $times[$key]['_durationSum'] = $time->_calcDuration($aTime['durationSumSec'],'decimal');
