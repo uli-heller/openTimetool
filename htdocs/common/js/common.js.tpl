@@ -47,6 +47,32 @@ function removeConfirm( url , message )
 }
 
 /**
+*   show a confirm box before redirecting to the remove URL
+*
+*   @param  string      the URL to redirect to on positive confirm
+*   @param  string      the message/question to show to the user
+*/
+function removeConfirmAll( url , message )
+{
+    markRow( "all" );
+
+    if( !message )
+        message = "[[$T_MSG_REMOVE_CONFIRM]]";
+
+    //document.getElementById('rowId_'+id).style.border = '2px dashed red';
+    if( confirm( message ) )
+    {
+        markRow( "all" , "red" );
+        window.location = url;
+    }
+    else
+    {
+// FIXXME dont hard code the color here and in the markRow function
+        markRow( "all" , "white" );
+    }
+}
+
+/**
 *   highlight all the td's inside the given tr
 *   @param  string  the name of the tr
 */

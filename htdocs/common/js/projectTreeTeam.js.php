@@ -33,6 +33,10 @@
     //
     //
 
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
+
     require_once $config->classPath.'/modules/project/cache.php';
     require_once 'HTTP/Header/Cache.php';
     require_once 'HTML/TreeMenu.php';    
@@ -47,7 +51,7 @@
     if (modules_project_cache::needsRebuild($tplFile,$httpCache)) {
         require_once $config->classPath.'/modules/project/tree.php';
         require_once $config->classPath.'/modules/user/user.php';
-        $projectTree =& modules_project_tree::getInstance();
+        $projectTree = modules_project_tree::getInstance();
         // get the id's we need to remove from the tree, those the user is not allowed to see
         $allIds = array();
     //    $allIds = $projectTree->getChildrenIds(0,0);  not implemented yet, second parameter=0 shall get all children

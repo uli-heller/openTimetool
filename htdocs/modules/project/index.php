@@ -5,9 +5,13 @@
     // AK: added a lot of isset to avoid notices. Clicking project->modify the first time,
     // $_REQUEST is simple empty
 
-    require_once('vp/Application/HTML/Tree.php');
+
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
+	require_once('vp/Application/HTML/Tree.php');
     require_once($config->classPath.'/modules/project/tree.php');
-    $projectTree =& modules_project_tree::getInstance();
+    $projectTree = modules_project_tree::getInstance();
 
 
     if (isset($_REQUEST['tree']['add']) && is_array($_REQUEST['tree']['add'])) {

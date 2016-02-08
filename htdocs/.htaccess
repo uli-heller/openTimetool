@@ -3,9 +3,8 @@
 # AllowOverride Options or AllowOverride All
 # needs to be set in the Apache config!!!
 #
+# If running other than as apache2 module: set this in your php.ini
 php_flag register_globals on
-
-php_value auto_prepend_file "/srv/www/htdocs/openTimetool/config.php"
 
 Options -Indexes +FollowSymLinks
 

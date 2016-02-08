@@ -29,17 +29,24 @@
     *
     *
     */
- 
+
+	//echo $_SERVER['PHP_SELF'].'<br>';
+	//if(stripos($_SERVER['PHP_SELF'],'en/en/en') !== false) die("aus");
+
+	require_once("../config.php");
+	
     if(!isset($account) || !isset($config)) {
+    	// shouldnt happen anymore as we dont use auto_prepend anymore
 		print_r("Something terribly went wrong with auto_prepend. Maybe Suhosin or PHP as FastCGI ? See README ...");
 		//require("/srv/www/system-worx.de/pm/openTimetool/config.php");
 		die();
     }
+    
    
     if (isset($_REQUEST['resetAccountName'])) {
         $account->setAccountName();      
     }
-//var_dump($_REQUEST['newData']['accountName'])
+
     if (isset($_REQUEST['newData']['accountName'])) {
         require_once $config->classPath.'/modules/remote/remote.php';
 

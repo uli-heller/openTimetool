@@ -82,7 +82,7 @@ class modules_project_cache
         // otherwise we would only get the users who are really a member of
         // this very project
         require_once $config->classPath.'/modules/project/treeDyn.php';
-        $projectTreeDyn =& modules_project_treeDyn::getInstance();
+        $projectTreeDyn = modules_project_treeDyn::getInstance();
         $_projectIds = $projectTreeDyn->getAllChildrenIds($projectIds[0]);
         if (sizeof($_projectIds)) {
             $projectIds = array_merge($projectIds,$_projectIds);

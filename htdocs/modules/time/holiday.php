@@ -22,6 +22,10 @@
     //
     //
 
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
+
     require_once $config->classPath.'/modules/time/time.php';
     require_once $config->classPath.'/modules/task/task.php';
     // 2.3.0 SX (AK) : we use the last used projectid if not set in form
@@ -78,7 +82,7 @@
        			$lastTime = $time->getAll(0,1);
         		$projectId = $lastTime[0]['projectTree_id'];
         		// check if the project is available, if not use root-id
-        		$projectTree =& modules_project_tree::getInstance(true);
+        		$projectTree = modules_project_tree::getInstance(true);
         		if( !$projectId || !$projectTree->isAvailable( $projectId , time() ) )
         		{
            			if( sizeof($availableProjects = $projectTree->getAllAvailable()) )

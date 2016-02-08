@@ -6,6 +6,11 @@
 //
 //
 
+
+// as we dont have auto_prepend anymore, we have to include our config here
+require_once("../config.php");
+
+
 //$_SERVER['VPCUST'] = 'demo1';
 
 /*
