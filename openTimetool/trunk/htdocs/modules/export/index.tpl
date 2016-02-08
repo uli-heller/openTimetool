@@ -144,13 +144,19 @@
         		        {%common_removeAndConfirmButton($_SERVER['PHP_SELF'].'?removeId='.$aFile['id'] , t('Are you sure you want to delete this report?') )%}
             		</td>
                 </tr>
-<!--
-            <tr>
-                <td colspan="5" align="center">
-                    <input type="submit" value="download again">
-                </td>
-            </tr>
--->
+            {if( $isAdmin )}
+  		        <tr id="all">
+                	<td colspan="5" align="right">
+                		delete all exports
+                	</td>
+	            	<td valign="center">
+	            	    {%common_removeAndConfirmButtonAll($_SERVER['PHP_SELF'].'?removeId=all' , t('Are you sure you want to delete all exports?') )%}
+	            	<!--
+	            	    {%common_removeAndConfirmButton($_SERVER['PHP_SELF'].'?removeId='.$aFile['id'] , t('Are you sure you want to delete this report?') )%}
+					-->
+                	</td>
+            	</tr>
+            	
             </form>
             
             <tr>

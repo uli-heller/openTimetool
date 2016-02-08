@@ -51,7 +51,7 @@ class vp_WebService_Common
                                     null, null, null, 'Auth_Error', true);
         }
 
-        @$obj =& new $classname( $parsedDsn );
+        @$obj = new $classname( $parsedDsn );
 
         if( !is_object($obj) )
             return new PEAR_Error('could not make instance of '.$classname);

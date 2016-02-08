@@ -39,7 +39,11 @@
     * 
     */
 
-    require_once($config->classPath.'/modules/export/export.php');
+
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
+	require_once($config->classPath.'/modules/export/export.php');
     require_once('vp/Application/HTML/NextPrev.php');
     
 
@@ -76,11 +80,18 @@
     $export->preset();
 
     if (isset($_REQUEST['removeId'])) {
-    	$export->deleteFile($_REQUEST['removeId']);
+    	if($_REQUEST['removeId'] == 'all') {
+    		$export->deleteAllFiles();
+    	} else {
+    	  	$export->deleteFile($_REQUEST['removeId']);
+    	}
     }
+    
+ 
 
     $nextPrev = new vp_Application_HTML_NextPrev($export);
     $nextPrev->setLanguage( $lang );
+    
     $exportedFiles = $nextPrev->getData();
     if( $exportedFiles )
     {

@@ -228,7 +228,7 @@ function wrapOnMouseMove(event)
     events.handle("onmousemove");
     if (is.ns) {
         mouse.getPos(event);                          // pass the event to the mouse method which gets the position, it needs it to use event.pageX and event.pageY
-        document.routeEvent(event);                   // pass on the events so each node in the HTML document can retreive events too
+        if(typeof(document.routeEvent) != 'undefined') document.routeEvent(event);                   // pass on the events so each node in the HTML document can retreive events too
     }
 //  debug.writeln("onmousemove");
 }
@@ -249,7 +249,7 @@ function wrapOnMouseDown(e)
   }
   
   if( is.ns ) {        
-    document.routeEvent(e);                       // pass on the events so each node in the HTML document can retreive events too
+	  if(typeof(document.routeEvent) != 'undefined') document.routeEvent(e);                       // pass on the events so each node in the HTML document can retreive events too
   }
 }
 
@@ -258,7 +258,7 @@ function wrapOnMouseUp(e)
   events.handle("onmouseup");
   if( is.ns )
   {
-    document.routeEvent(e);                       // pass on the events so each node in the HTML document can retreive events too
+	  if(typeof(document.routeEvent) != 'undefined') document.routeEvent(e);                       // pass on the events so each node in the HTML document can retreive events too
   }
 }
 

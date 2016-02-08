@@ -18,7 +18,11 @@
     //
     //
     //
-                      
+
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../config.php");
+
+
     require_once 'HTTP/Header/Cache.php';
 
     // compile the template (if needed), so we can check $tpl->compiled()

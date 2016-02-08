@@ -20,6 +20,10 @@
     //  - initial commit
     //
     //
+    
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
     require_once $config->classPath.'/modules/project/cache.php';
     require_once 'HTTP/Header/Cache.php';
     require_once 'HTML/TreeMenu.php';
@@ -36,7 +40,7 @@
         
     if (modules_project_cache::needsRebuild($tplFile,$httpCache)) {
         require_once $config->classPath.'/modules/project/tree.php';
-        $projectTree =& modules_project_tree::getInstance();
+        $projectTree = modules_project_tree::getInstance();
 
 		// AK : switch DataSource is in Tree/Memory.php and has follwing definition : 
 		// function switchDataSource( $type , $dsn='' , $options=array() )

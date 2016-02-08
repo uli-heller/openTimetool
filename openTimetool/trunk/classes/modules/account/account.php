@@ -158,6 +158,7 @@ class modules_account   // extends modules_common
         global $session;
 //        $session->account->data = $data;
         unset($session->account);
+        $session->account = new stdClass();
         $session->account->numUsers = $this->numUsers;
         $session->account->features = $this->features;    
         $session->account->isActive = true;

@@ -87,7 +87,7 @@ class modules_project_tree extends Tree_Memory
 		// we now have additionaly to check if projectTree is existing
 		// otherwise no tree is created. This is better anway and should work on any php version
 		if (empty($projectTree) || !strtolower(get_class($projectTree))=='modules_project_tree') {
-			$projectTree =& new modules_project_tree(   'DBnested',$config->dbDSN,
+			$projectTree = new modules_project_tree(   'DBnested',$config->dbDSN,
 			array('table'=>TABLE_PROJECTTREE));
 			$projectTree->setup();
 		}

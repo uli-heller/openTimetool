@@ -51,7 +51,7 @@ class modules_project_treeDyn extends Tree_Dynamic_DBnested
                                 'table'         =>  TABLE_PROJECTTREE,
                                 'order'         =>  'name'
                 	            );
-            	$projectTreeDyn =& new modules_project_treeDyn( $config->dbDSN , $treeOptions );
+            	$projectTreeDyn = new modules_project_treeDyn( $config->dbDSN , $treeOptions );
         	}
 //        }
         return $projectTreeDyn;
@@ -399,6 +399,6 @@ class modules_project_treeDyn extends Tree_Dynamic_DBnested
 */
 }
 
-$projectTreeDyn =& modules_project_treeDyn::getInstance();
+$projectTreeDyn = modules_project_treeDyn::getInstance();
 
 ?>

@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `translate_en` (
   `string` mediumtext NOT NULL,
   `numSubPattern` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=307 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=309 ;
 
 --
 -- Daten für Tabelle `translate_en`
@@ -291,7 +291,9 @@ INSERT INTO `translate_en` (`id`, `string`, `numSubPattern`) VALUES
 (304, 'Active projects', 0),
 (305, 'Closed projects', 0),
 (306, 'All projects', 0),
-(303, 'OK : Booking will be done! (Project overbooked)', 0);
+(303, 'OK : Booking will be done! (Project overbooked)', 0),
+(307, 'Delete All Exports', 0),
+(308, 'Are you sure you want to delete all exports?', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

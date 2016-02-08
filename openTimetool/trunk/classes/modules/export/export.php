@@ -226,6 +226,31 @@ class modules_export extends modules_common
     	$this->remove($id);
         //$applError->log('export::deleteFile - Error deleting '.$filename);    	
     }
+    
+    
+    /**
+     * AK : delete all exports 
+     * Called by delete_all-Button in export popup
+     */
+    function deleteAllFiles()
+    {
+    	global $config,$applError;
+    
+     	
+    	if( !$exported = $this->getAll() )
+    		return false;
+
+    	foreach($exported as $ex) {
+    	
+	    	$filename = $config->exportDir.'/'.$ex['filename'].'.'.$ex['type'];
+    		if(file_exists($filename)) {
+    			unlink($filename);
+    		}
+    		$this->remove($ex['id']);
+    	}
+    	 
+    }
+    
 
 }   // end of class
 

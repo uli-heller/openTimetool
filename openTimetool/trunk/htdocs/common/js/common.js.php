@@ -17,7 +17,11 @@
     //  - init commit
     //
     //       
-                             
+
+	// as we dont have auto_prepend anymore, we have to include our config here
+	require_once("../../../config.php");
+
+
     require_once 'HTTP/Header/Cache.php';
     $httpCache = new HTTP_Header_Cache();
     $httpCache->setHeader( 'Content-Type' , 'text/javascript' );
@@ -30,4 +34,5 @@
     $httpCache->sendHeaders();
 
     include($tpl->getCompiledTemplate());
+
 ?>
