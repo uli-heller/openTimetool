@@ -518,6 +518,7 @@ class modules_user extends modules_common
 	{
 		global $session,$applError;
 
+		if (!isset($session->temp->user)) $session->temp->user = new stdClass();
 		$session->temp->user->isAdmin = $this->canBeAdmin() ? true : false;
 
 		if( !$session->temp->user->isAdmin )

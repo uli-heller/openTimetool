@@ -91,7 +91,7 @@ class modules_account   // extends modules_common
 
 		// AK : eliminate php notice on first start
         if(isset($session->accountName)) $oldAccountName = $session->accountName;
-        else $session->accountName ='';
+        else @$session->accountName ='';
 
 		// AK : eliminate php notice on first start
         if (!isset($oldAccountName) || $oldAccountName!=$this->getAccountName()) {

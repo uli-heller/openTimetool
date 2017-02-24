@@ -36,12 +36,19 @@
         HTTP_Header::redirect($config->home);
     }
 
-    if( isset($_REQUEST['removeId']) )	// AK: isset added
-        $user->remove( $_REQUEST['removeId'] );
+    if( isset($_REQUEST['removeId']) ) {	// AK: isset added
+        if ($config->demoMode) {
+            $applMessage->set('Please note! This function is disabled in the demo version.');
+        } else {
+            $user->remove( $_REQUEST['removeId'] );
+        }
+    }
 
     $pageHandler->setObject($user);
-    if( !$pageHandler->save( @$_REQUEST['newData'] ) )
-    {
+    if (!empty($_REQUEST['newData']['id']) && $config->demoMode) {
+        $applMessage->set('Please note! This function is disabled in the demo version.');
+    } else {
+      if( !$pageHandler->save( @$_REQUEST['newData'] ) ) {
         $data = $pageHandler->getData();
         
         // if we are auth against LDAP we have to set a flag if we really edit an LDAP user
@@ -58,8 +65,8 @@
 		  			}
 		  	}
 		}
+      }
     }
-
         
     $user->preset();
     $user->setWhere();
