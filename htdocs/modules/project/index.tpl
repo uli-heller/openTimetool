@@ -402,8 +402,11 @@
             <td valign="center" {$class}>
                 {%common_editButton($_SERVER['PHP_SELF'].'?id='.$aFolder['id'])%}
             </td>
-            <td  valign="center" {$class}>
-                {%common_removeAndConfirmButton($_SERVER['PHP_SELF'].'?removeId='.$aFolder['id'] , t('Are you sure you want to delete this project, all its sub projects and all logged times ?\n\nAttention! All data of these projects will be irrevocably deleted!') )%}
+            <td valign="center" {$class}>
+                {if( $projectTree->getRootId() == $aFolder['id'] )}
+                    <div style="width:26px;height:17px;"> </div>
+                {else}
+                    {%common_removeAndConfirmButton($_SERVER['PHP_SELF'].'?removeId='.$aFolder['id'] , t('Are you sure you want to delete this project, all its sub projects and all logged times ?\n\nAttention! All data of these projects will be irrevocably deleted!') )%}
             </td>
 
         </tr>
