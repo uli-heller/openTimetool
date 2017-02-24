@@ -92,9 +92,9 @@ class vp_Application_HTML_NextPrev
         {
             $session->temp->nextPrev->listCount = $_REQUEST['setListCount'];
         }
-        if( !isset($session->temp->nextPrev->listCount ))	// AK : isset
-        	$session->temp->nextPrev->listCount = new stdClass();
-            $session->temp->nextPrev->listCount = $defaultListCount;
+        if( !isset($session->temp->nextPrev ))	// AK : isset
+        	$session->temp->nextPrev = new stdClass();
+        $session->temp->nextPrev->listCount = $defaultListCount;
 
 
         if( isset($_REQUEST['setListStart']) )	// AK : isset

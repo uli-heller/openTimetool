@@ -36,7 +36,11 @@
     }	
 	
     $pageHandler->setObject($user);
-    $pageHandler->save( @$_REQUEST['newData'] );
+    if (!empty($_REQUEST['newData']) && $config->demoMode) {
+        $applMessage->set('Please note! This function is disabled in the demo version.');
+    } else {
+        $pageHandler->save( @$_REQUEST['newData'] );
+    }
     $data = $pageHandler->getData();
            
     $user->preset();
