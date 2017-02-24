@@ -98,7 +98,7 @@
 *   define the font only ONCE for all elements that are relevant
 *   this works like kind of inheritance ...
 */
-body, td, input, textarea, font, a, b, i
+body, td, input, textarea, font, a, b, i, select
 {
     font-family : verdana, geneva, arial;
     font-size: [[$styleSheet->fontSize]];
@@ -281,7 +281,7 @@ td.message
 {
     background-color: [[$styleSheet->lighterColor]];
     border: white 1px inset;
-    padding: 0 5 0 5;
+    padding: 0 5px;
 }
 
 
@@ -293,7 +293,7 @@ td.message
 
 img.button
 {
-    padding: 0 5 0 5;
+    padding: 0 5px;
     border: 0px;
 }
 
