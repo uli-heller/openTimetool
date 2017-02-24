@@ -43,6 +43,8 @@
     $config->numUsers = 999;
 
     $config->demoMode = false;
+
+    $config->sessionName = 'ottapp';
     
     /**
     * AK : session timeout = auto logout
