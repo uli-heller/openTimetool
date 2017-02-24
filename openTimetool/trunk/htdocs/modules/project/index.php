@@ -60,7 +60,7 @@
     	$vp_Application_HTML_Tree = new vp_Application_HTML_Tree;
     	
     // AK : we can now delete projects projects with all booked times
-    if (isset($_REQUEST['removeId'])) {
+    if (isset($_REQUEST['removeId']) && $projectTree->getRootId() != $_REQUEST['removeId']) {
     	// with this new call I delete all times and project memberships for the given project (and subprojects).
         $projectTree->RemoveProject($_REQUEST['removeId']);
         // now we use that html tree to trigger the remove action for the project tree and datarecords.
