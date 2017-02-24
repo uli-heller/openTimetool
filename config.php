@@ -26,7 +26,7 @@
 	  */
     $config->applVersion = '2.3.4';
     $config->applName = 'openTimetool'.$config->applVersion;
-    $config->schema_version = '2.3.3';
+    $config->schema_version = '2.3.4';
     
     /**
     * AK the link behind the logo on the upper right ...
@@ -41,6 +41,8 @@
     * @var integer number of allowed users 
     */
     $config->numUsers = 999;
+
+    $config->demoMode = false;
     
     /**
     * AK : session timeout = auto logout
@@ -172,6 +174,7 @@
     *    
     * Authentication against openTimetool DB - standard 
     */
+    if (!isset($config->auth)) $config->auth = new stdClass();
     $config->auth->method       =   'DB';
     $config->auth->url          =   $config->dbDSN;
     $config->auth->digest       =   'md5';
