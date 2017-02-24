@@ -1,0 +1,33 @@
+Some installation remarks if you want to install openTimetool on a hosted server with SAFEMODE=ON ...
+
+You have to create manually the substructure below <openTimetool>/htdocs/tmp , where the compiled html sources are stored. If you don't do that you'll get all sorts of messages like "Warning: mkdir(): SAFE MODE Restriction in effect. ..."
+
+Currently unsolved is the file handling during export of reports though. This means if you got 
+openTimetool running on a safemode-server you most probably can't export your reports ...
+
+Here is the structure below the htdocs/tmp-folder :
+##################################################
+_cache
+	projectTree
+common
+	js
+_exportDir
+external
+	calendar
+modules
+	price
+	project
+	task
+	time
+	user
+OOExport
+_OOoTemplateDir
+tmp
+	OOExport
+##################################################
+
+All these folders have to be created manually and chmod-ed to "777" !!
+
+Good Luck
+
+Toni

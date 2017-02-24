@@ -1,0 +1,36 @@
+Some notes concerning upgrade of an old version of openTimetool
+
+Upgrade is a simple process :
+
+1) save your current config.php
+2) overwrite all files with the new ones
+3) merge your saved config.php to the new one currently overwritten
+   Note: Delete the auto_prepend statement in htdocs/.htaccess if still in
+4) use phpMyAdmin to import the 2 language files translate_de.sql and translate_en.sql
+   (empty the tables before)
+   Note : If upgrading from 2.3.0 and higher, you can skip that step
+5) empty everything except .htaccess below htdocs/tmp
+
+After these steps you should have the new version up and running
+
+From 2.3.0 on, the database upgrade should happen automatically. 
+NOTE: Please change $config->schema_version in config.php to make that working.
+
+############## German version ##############
+
+Upgrade ist ein einfacher Prozess :
+
+1) Sicherung von config.php
+2) Überschreiben aller Dateien durch die Dateien der neuen Version
+3) Übernahme der lokalen Einstellungen aus den gesicherten Dateien 
+   config.php in die gerade neue installierten Dateien
+   Hinweis: Der Befehl auto_prepend in htdocs/.htaccess ist ggfls. zu löschen
+4) Import der Sprachdateien translate_de.sql und translate_en.sql mittels
+   phpMyAdmin (vorher leeren)
+   Achtung: Bei Upgrade von Version 2.3.0 und höher kann dieser Punkt entfallen 
+5) Alles außer .htaccess unter htdocs/tmp löschen
+   
+Danach sollte das System in der neuen Version laufen.
+
+Ab Version 2.3.0 sollte der Datenbank-Upgrade automatisch erfolgen.
+ACHTUNG. Dafür muss die Variable $config->schema_version in Ihrer config.php richtig gesetzt sein.

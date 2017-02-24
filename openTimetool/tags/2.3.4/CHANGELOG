@@ -1,0 +1,238 @@
+2.3.4
+- Eliminated the auto_prepend line in htdocs/.htaccess. Now openTimetool is running  
+  as fastCGI as well and the path need not to be configured anymore
+- it's now possible to delete all old exports on export popup page (file and db entry)  
+- Tested on PHP 5.6.1 and mySql 5.6.27
+2.3.3
+- Bugfix OO-templating : Rest sum was wrong (always used the total)
+  New variables for templating : {$aProject['totalbookeddays']} and {$aProject['totalbooked']} 
+2.3.2.3
+- Slight improvement : sum of day in decimal will now be with 2 decimal places in overview
+  and in OO exports (2,00 days instead of 2 days) 
+2.3.2.2
+- A few more variables for export templates: 
+  {$general['exportdate']},{$general['firstname']},{$general['lastname']}
+2.3.2.1
+- Bugfix: xajax including when webroot is on opentimetool/htdocs
+- ProjectTree on any booking page shows only active projects if not in admin mode
+2.3.2
+- Added credentials for LDAP binding in config.php in case anonymous bind isnt allowed
+- Added a couple of new variables for OO templating:
+  all sums in hours are available as sumdays as well now (i.e. $sum as before and $sumdays additionally)
+  maxduration is available as {$aProject['maxdurationdays']} or {$aProject['maxduration']}
+  rest (maxduration - booked) as {$aProject['restdays']} or {$aProject['rest']} 
+- Switched now to utf-8 completely 
+- Bugfix 'couldnt get previous entry for entry' and time 0 when adding a booking before first stamp
+- Overview by project can now be filtered : active, closed, all : in config you have additionally
+  2 ways of sorting this list (as before or by parent, end date and name)
+- Checking for project overbooking if a max duration is given
+
+2.3.0.1
+- PEAR classes upgraded to latest version (for all using the built-in version)
+- Bugfix "Today Log" : form "forgot" about the project after booking and in edit mode
+
+2.3.0
+- Bugfix for OO3-templates (created report was corrupt and needed a repiar)
+- UTF-8-Patch for DB interface
+- Minor Bugfix when several bookings were within one minute -> order clause corrected
+- On period log and today log, the last used project is used internally now similar to 
+  hotkey bookings, when we have a non project task.
+- New DB upgrade interface. In future DB modifications are automatically done during first
+  start. We are using that already now to add a new translation string.
+
+2.2.9
+- print export: Layout improved and daily sums included
+- update fileicons
+- minor parameter changes for htmldoc (html2pdf)
+- email header for server emails is now adjustable in config.php
+- on team maintenance page users are now displayed sorted : surname, prename
+- as admin you might select now the user on period log (similar to muli log) 
+- minor bugfixes
+
+2.2.8
+- mobile log: only current projects will be shown in the projectlist now
+- iPhone: content is now automatically scaled by using <meta name="viewport" content="width=device-width">
+- export: print view layout improved
+- LDAP enhancements : 
+  Account creation of Non-LDAP-users on LDAP-authentication systems now possible
+  Non-LDAP-users may change their password now
+- Eliminated template for OpenOffice 1.x (new sql, but old ones are still compatible)
+- minor bugfixes and cleanup
+
+2.2.7
+- improved LDAP authentication: mixed LDAP and NON LDAP accounts, user creation on the fly
+  of a properly authenticated LDAP user during first log in
+- overview by project: colors adapted (up to 100% ... green, > 100% yellow, > 125% red)
+- mobile log: time will updated now with server time
+- mobile access: check for login with mobile browser implemented
+- bugfix: mobile access for Opera Mini
+- some minor bugfixes and cleanup
+
+2.2.6
+- openTimetool is now ready for php 5.3. config.php is updated with the minimum statements to get it run
+  eliminated deprecated functions (i.e. split to explode, ...) 
+  fixed some 5.3 related bugs caused by now different behaviour
+- major performance improvement for the team page
+  the compress rate for building the team page can now be set by a parameter in the config.php
+  to get the best compromise for sufficient information and performance use the default setting 
+- it's now possible to delete old exports on export popup page (file and db entry)
+  
+2.2.5 
+- wrong calculated sum in export to OO-template is fixed
+- project related reports are possible now by enhancement to OOTemplate-based export
+- in folder docs/Samples for OO Templating/ you'll find
+  a) 2 templates for project based OO-Export
+  b) a brief description of the data available for OO-Export-Templating (in en and de)	 
+
+2.2.4 (includes the changes from release 2.2.3)
+- users may now be deleted completely with all booked times and project memberships
+- projects can now be deleted with all subprojects, all team memberships and all booked times
+  both features are really necessary for house keeping of an oTt installation over times
+  Attention! All data will be irrevocably removed by using this functions!
+
+2.2.3 (release was not built, all changes in release 2.2.4)
+- authentication against LDAP implemented, configurable in config.php
+  password fields and reset password function will now automatically hidden if authentication against LDAP is used
+  also the "change password" link in the navigation 
+- overview by date, extended filter: display all users available also for admins now
+
+2.2.2
+- added feature for mobile access
+  Call openTimetool with http://<server>/<ott-installdir>/mobile_login
+  You'll get then a login form and afterwards a simplified variant of quick-log without any window decorations and 
+  without JavaScript except for the button to manually reset the time field. 
+  So this button only will work on browsers of mobile devices who can handle that click event by JavaScript.  
+  See also new Readme : mobile_access
+- csv-export : field seperator can now be set in config.php. default = ';'
+  date and time splitted in 2 columns
+  duration column now in decimal notation (i.e. 1,5 instead of 1:30)
+  comment column now as last one behind duration
+
+2.2.1
+- eliminated spanish language by now as we don't have a native speaker anymore
+- Password reset : Admin can reset the password of a user. The user gets a random new one sent by mail.
+- User may change now his password after successfull login
+- Team inheritance from parent project by checkbox in team edit form
+- Upgrade-readme and language files as seperate sql-files for import
+   
+
+2.2.0.3
+- added a readme for suhosin patch (aka hardened php)
+- added an "if" in htdocs to inform about possible suhosin problems
+- some minor bugfixes (some <? substituded by <?php).
+
+2.2.0.2
+- Javascript bugfix implemented (loading Project trees)
+- Update install: New info how OOo-export will work by using php and
+  the suhosin security extension (aka hardened php) is added 
+  
+2.2.0.1
+- stripped the config.pgp : eliminated documentation of not yet tested auth methods
+- eliminated some trailing '@' in if clauses which led to problems on DSL (damend small linux)
+
+2.2
+- Some php notices eliminated
+- Invisible non-UTF8-chracters in navigator.tpl eliminated : 
+  caused a translation problem due to a php-5.2.1-bug in preg_replace
+
+2.1.1.1
+- Some php notices eliminated
+- phpinfo.php now for diagnostic reasons part of the package
+- auto-logout time can now be configured in config.php (incl. overide of php.ini setting)
+  Well some people don't want to log out which is ok in a small safe environment ..
+- minor bugfixing
+
+2.1.1
+- Using now the latest php4/php5 pear components for DB access (incl. in package)
+- Code completely revised for php5 comptibility
+- Deleted code for km-log; too special and not for everybod useful (yet incomplete  though)
+- Added default template for OpenOffice 2.0; OO 2.0 support 
+- Switch from CVS to Subversion (SVN)
+
+1.1
+- extended remote-interface
+- added time->getFiltered
+- show only available users in the filter view
+- show only the times the users are allowed to see, before u could see all times
+  if the user was shown (for a manager)
+- added tree-view selector for projects
+- enhanced project/team member editor, now one can also see all the team members of a project the user is in
+- let project managers add team members
+- bugfix in today log, it was showing other team members current times
+- make the quick log window a bit bigger, for better overview
+- css-link was without the language and was ALWAYS redirected, this was unnecessary traffic
+- optionally, send user a mail, when changing his data or when adding a new user
+- dont let users see admin pages, if he is not admin
+- make the tree work properly in IE
+- CSV export
+- show summary of hours per day in the overview/by date
+- overview by project
+- show count down to reload of page
+- bugfixes #0000074,
+
+1.0.5
+- export in SSL-mode workaround for IE
+
+1.0.4
+- sort the entries chronologically in the exported files
+- preselect last entered entries in today-log
+- use proper http-caching for css, js, speeds up the page by a lot!
+- removing E_ALL warnings
+- moving to Xipe and QueryTool
+- bugfixes in today-log
+
+1.0.3
+- bugfix: edit task-comments in languages other than english
+- dont show 'round' and 'close' values in the project-page-overview if none given
+  bugfix: fixes also the JS-error which occured
+
+1.0.2
+- quite some security bugfixes in user and time-class
+- required field checks esp. in user class
+- download of exported files
+- set button-classes in CSS properly for IE esp.
+- set some fields to required
+
+1.0.1
+- made OOo-export work properly with proper encoding and added proper templates
+- turned of display_errors in OO, which caused problems when a forech got no data to loop
+
+version 0.9.5
+- admin can switch to admin mode and edit all data
+
+version 0.9.4
+- export to PDF, OOo works fine, using the new SimpleTemplate version 1.6.1
+
+version 0.1.3   use with vp-v0.1.2
+- added buttons for tasks that dont need projects, like 'break', 'leaving', etc.
+
+version 0.1.2
+- holiday - show only valid end and start tasks
+- bugfix, dont show current date when editing an old one
+
+version 0.1.1   use with vp-v0.1.1
+- show scrollbars in quick log (now also for IE)
+- unset session data when user is not logged in
+- added holidays
+- moved a lot of stuff into macros and in common.js
+- time/index.php - on 'save as new' and that fails we dont get to see the data again :-(
+- generate print preview without the need to push the show button first
+- when saving of a time failed because of the projects-validation period
+  and not the project itself, but a parent is not available at this period
+  the message 'valid from ... through ... ' is not shown properly - for now we dont show the period!
+- make the join-query in the price-class work
+- added prev-next logic in price, task and user admin
+- fixed IE JS incompatibilities/bugs
+- added language flags
+- first part of the spanish translation
+- price - added validUntil
+- various fixes and enhancements for the error stuff
+- quite some changes in the JS functionality
+- better use of macros
+- checkin the pics with proper names
+
+version 0.1
+
+this is the first real release, it was created 26.8.02 14:21
+it contains all main features and a basic implementation of the price stuff
+that only works on tasks directly!
