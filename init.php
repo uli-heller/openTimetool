@@ -84,7 +84,7 @@
     /**
     *  init the session object here, because we need the session data
     */
-    $sessionname = 'sid4'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->sessionName);
+    $sessionname = 'sid'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->applName);
     session_name($sessionname);
     //if(!empty($_REQUEST[$sessionname])) session_id($_REQUEST[$sessionname]);
 

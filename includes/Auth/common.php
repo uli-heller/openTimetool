@@ -357,7 +357,7 @@ class Auth_common extends PEAR
 
 		  //AK Check if session already existing ...
         if(!isset($_SESSION)) {
-		    session_name('sid4'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->sessionName));
+		    session_name('sid'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->applName));
 		    session_start();
         }
         $this->_session = &$_SESSION[$this->sessionArrayName];

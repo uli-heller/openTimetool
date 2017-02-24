@@ -51,6 +51,7 @@
 {%include common/macro/common.mcr%}
 {%include vp/Application/HTML/Macro/Error.mcr%}
 
+
 {include($layout->getHeaderTemplate(true))}
 
 <!-- this should work too :-) for creating some space at the top of the site -->
@@ -128,10 +129,8 @@
                     <td class="statusLine" align="center">
                         {$config->applName}
                         &nbsp;<i>{$account->isAspVersion()?'asp':'net'}</i>
-                        {if($config->demoMode)}
-                            <i>/demo</i>
                     </td>
-                    {if(!is_array($user->canBeAdmin())&&$user->canBeAdmin()!==false)}
+                    {if( $user->canBeAdmin() )}
                         <td class="statusLine" align="center">
                             licensed for: {$session->account->numUsers} user
                         </td>
@@ -172,8 +171,9 @@
 
 </table>
 </center>
+{include($layout->getFooterTemplate(true))}
 
-<script type="text/javascript">
+<script>
 
     var _countDownTime = {$userAuth->options['expire']};
     
@@ -206,4 +206,3 @@
     
 </script>
 
-{include($layout->getFooterTemplate(true))}

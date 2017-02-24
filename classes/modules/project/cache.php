@@ -181,8 +181,6 @@ class modules_project_cache
         if (@$session->temp->projectTreeJS->user_id==$userId) {
             $otherUser = false;
         } else {
-            if (!isset($session->temp)) $session->temp = new stdClass();
-            if (!isset($session->temp->projectTreeJS)) $session->temp->projectTreeJS = new stdClass();
             $session->temp->projectTreeJS->user_id = $userId;
         }    
         
