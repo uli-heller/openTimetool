@@ -1,0 +1,13 @@
+Feature for mobile and PDA access with a browser like Opera Mini 3.x/4.x :
+
+  Call openTimetool with http://<server>/<ott-installdir>/mobile_login
+  You'll get then a login form and afterwards a simplified variant of quick-log 
+  without any window decorations and without JavaScript 
+  
+  Technically this is done by an index.php in folder mobile_login which
+  just redirects to the mobile-page (incl. login if required)
+  
+  Please note : This redirect-url in http-equiv="refresh" in this index.php
+  (<meta http-equiv="refresh" content="0; url=../htdocs/de/modules/time/mobile.php"/>)
+  has the german language code in it. If you prefer to get the english version
+  by default just substitude that "de" by "en".   
