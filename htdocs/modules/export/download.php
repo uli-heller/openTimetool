@@ -15,11 +15,7 @@
     *
     */
 
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-	require_once($config->classPath.'/modules/export/export.php');
+    require_once($config->classPath.'/modules/export/export.php');
                       
     if( !isset($_REQUEST['id']) ) {							// AK : isset
         require_once 'HTTP/Header.php';

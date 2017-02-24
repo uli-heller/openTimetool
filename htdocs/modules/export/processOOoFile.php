@@ -44,11 +44,6 @@
      *
     */
 
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-
     function OOencode( $string )
     {
     	// SX : required on php5.3 when we have to use default_charset = utf-8 (config.php)

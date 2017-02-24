@@ -1,8 +1,3 @@
-2.3.4
-- Eliminated the auto_prepend line in htdocs/.htaccess. Now openTimetool is running  
-  as fastCGI as well and the path need not to be configured anymore
-- it's now possible to delete all old exports on export popup page (file and db entry)  
-- Tested on PHP 5.6.1 and mySql 5.6.27
 2.3.3
 - Bugfix OO-templating : Rest sum was wrong (always used the total)
   New variables for templating : {$aProject['totalbookeddays']} and {$aProject['totalbooked']} 

@@ -24,7 +24,7 @@ $pdfFile = dirname(__FILE__) . '/test2.pdf';
 // Remove old one, just to make sure we are making it afresh
 @unlink($pdfFile);
 
-$pdf = new HTML_ToPDF($htmlFile, $defaultDomain, $pdfFile);
+$pdf =& new HTML_ToPDF($htmlFile, $defaultDomain, $pdfFile);
 // Set that we do not want to use the page's css
 $pdf->setUseCSS(false);
 // Give it our own css, in this case it will make it so

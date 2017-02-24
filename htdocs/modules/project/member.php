@@ -27,11 +27,7 @@
     //
     //
 
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-	require_once $config->classPath.'/modules/project/treeDyn.php';
+    require_once $config->classPath.'/modules/project/treeDyn.php';
     require_once $config->classPath.'/modules/project/member.php';
     require_once $config->classPath.'/modules/user/user.php';
 

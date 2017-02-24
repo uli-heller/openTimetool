@@ -20,13 +20,13 @@
 <input type="hidden" name="filter" value="{$filter}">
 <table class="poutline" width="50%">
 	<tr>
-    	<td class="pButtons" align="left" nowrap="nowrap">
+    	<td class="pButtons" align="left" nowrap>
 			<input type="submit" value="Active projects" class="button" id="{$active}" onclick="javascript:document.filterForm['filter'].value='active';" />
         </td>
-    	<td class="pButtons" align="left" nowrap="nowrap">
+    	<td class="pButtons" align="left" nowrap>
 			<input type="submit" value="Closed projects" class="button" id="{$closed}"  onclick="javascript:document.filterForm['filter'].value='closed';" />
         </td>
-    	<td class="pButtons" align="left" nowrap="nowrap" width="100%">
+    	<td class="pButtons" align="left" nowrap>
 			<input type="submit" value="All projects" class="button" id="{$all}"  onclick="javascript:document.filterForm['filter'].value='all';"/>
         </td>       
      </tr>

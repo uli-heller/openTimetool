@@ -7,9 +7,6 @@
     * One of the main pages of openTimeTool !
     * 
     */
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
     
     /**
      * Check if we are here by erraneous redirect from opera mini and such
@@ -51,7 +48,7 @@
     $_REQUEST['newData']['user_id'] = $userId;
 
     
-    $projectTree = modules_project_tree::getInstance(true);
+    $projectTree =& modules_project_tree::getInstance(true);
     
 
     // those two lines handle the edit functionality
@@ -73,7 +70,7 @@
        			$lastTime = $time->getAll(0,1);
         		$projectId = $lastTime[0]['projectTree_id'];
         		// check if the project is available, if not use root-id
-        		$projectTree = modules_project_tree::getInstance(true);
+        		$projectTree =& modules_project_tree::getInstance(true);
         		if( !$projectId || !$projectTree->isAvailable( $projectId , time() ) )
         		{
            			if( sizeof($availableProjects = $projectTree->getAllAvailable()) )

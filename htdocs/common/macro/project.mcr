@@ -67,8 +67,8 @@
 
     {if( $projectTree->getRootId() == $aProject['id'] )}
         &nbsp;
-        <!-- a href="{$_SERVER['PHP_SELF']}?unfoldAll=true" title="unfold all">
-            <img src="viewTree.gif" border="0" style="vertical-align:bottom;"></a -->
+        <a href="{$_SERVER['PHP_SELF']}?unfoldAll=true" title="unfold all">
+            <img src="viewTree.gif" border="0" style="vertical-align:bottom;"></a>
                                
         
 <!--

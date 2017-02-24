@@ -82,7 +82,7 @@ class modules_project_cache
         // otherwise we would only get the users who are really a member of
         // this very project
         require_once $config->classPath.'/modules/project/treeDyn.php';
-        $projectTreeDyn = modules_project_treeDyn::getInstance();
+        $projectTreeDyn =& modules_project_treeDyn::getInstance();
         $_projectIds = $projectTreeDyn->getAllChildrenIds($projectIds[0]);
         if (sizeof($_projectIds)) {
             $projectIds = array_merge($projectIds,$_projectIds);
@@ -181,8 +181,6 @@ class modules_project_cache
         if (@$session->temp->projectTreeJS->user_id==$userId) {
             $otherUser = false;
         } else {
-            if (!isset($session->temp)) $session->temp = new stdClass();
-            if (!isset($session->temp->projectTreeJS)) $session->temp->projectTreeJS = new stdClass();
             $session->temp->projectTreeJS->user_id = $userId;
         }    
         

@@ -15,8 +15,6 @@
 	 * 
 	*/
 
-	//ini_set('display_errors', 'On');  // for debugging only
-
 	include_once('db_upgrade.php');
 
 	/**
@@ -57,18 +55,15 @@
     $config->setOption('liveModes',array('live','develop-live','live at home','anton.kejr@system-worx.de'));
 
     $config->availableLanguages = array(
-                                'en'=>  array('language'=>'english','flag'=>'uk'),
-                                'de'=>  array('language'=>'deutsch','flag'=>'germany'),
-                                //,'es'=>  array('language'=>'espa&ntilde;ol','flag'=>'spain'),
-                                //,'fr'=>  array('language'=>'french','flag'=>'france'),
+                                'en'=>  array('language'=>'english','flag'=>'uk')
+                                ,'de'=>  array('language'=>'deutsch','flag'=>'germany')
+                                //,'es'=>  array('language'=>'espa&ntilde;ol','flag'=>'spain')
+                                //,'fr'=>  array('language'=>'french','flag'=>'france')
                                 );
 
     $config->exportDir  =   $config->applRoot.'/tmp/_exportDir';
     $config->OOoTemplateDir=$config->applRoot.'/tmp/_OOoTemplateDir';
     $config->cacheDir = $config->tmpDir.'/_cache';
-    
-    
-    $config->check_installation();  // will die if failure !
     
 
     
@@ -76,15 +71,14 @@
     $config->setFeature('translate',true);
     //$config->setLanguages(array('en','de','es'));
     $config->setLanguages(array('en','de'));
-
-       
+    
 	// AK : This is something for the next version ! Actually inclomplete stuff !!!!!!!!!!!!!!!!!!
 	$config->setFeature('price',false);
 
     /**
     *  init the session object here, because we need the session data
     */
-    $sessionname = 'sid4'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->sessionName);
+    $sessionname = 'sid'.preg_replace('/<.*>|[^a-z0-9]/i','',$config->applName);
     session_name($sessionname);
     //if(!empty($_REQUEST[$sessionname])) session_id($_REQUEST[$sessionname]);
 
@@ -107,7 +101,7 @@
     // we soon change them to simple isset($_SESSION['session']) ...
     //if (!session_is_registered('session')) {
     if (!isset($_SESSION['session'])) {
-        $session = new stdClass();    // standard PHP-class constructor
+        $session = new stdClass;    // standard PHP-class constructor
         //session_register('session');
         $_SESSION['session'] = '';
 		if(!empty($_REQUEST['template']) && $_REQUEST['template']=='yes') {
@@ -135,11 +129,17 @@
 		//$logging->_logme('init (new)SID: ',print_r(session_id(),true));            
     }
 
-    $lang = $_SESSION['lang'];
-    $config->langHandler($lang);
+
     // save the current language in the session
-    $_SESSION['lang'] = $lang;
-    
+    if (!isset($_SESSION['lang'])) {
+        //session_register('lang');
+		$_SESSION['lang'] = $lang;
+    } else {   // since the class is read from the session it is not automatically made global
+        $lang = &$_SESSION['lang'];
+    }
+    $config->langHandler($lang);
+
+
     /**
     *  instanciate the applError and applMessage here, w/o DB
     *  later, when we have a db-connection we tell it to write to the DB
@@ -501,7 +501,6 @@
     */
 
     // this is the default style, overwrite what u want
-    $styleSheet = new stdClass();
     $styleSheet->mainColor =        '#B70F18';
     $styleSheet->fontColor =        'black';
     $styleSheet->invertedFontColor ='white';

@@ -43,11 +43,7 @@
     */
 
 
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-	require_once($config->classPath.'/modules/export/export.php');
+    require_once($config->classPath.'/modules/export/export.php');
     require_once($config->classPath.'/modules/OOoTemplate/OOoTemplate.php');
     require_once($config->classPath.'/modules/project/treeDyn.php');
 
@@ -177,6 +173,7 @@
                     unlink($file);                          // remove the OO file so it wont be zipped into the new OO file
 
                     // put the data in the content.xml file
+                    
                     // include language or you'll run in troubles as config.php thinks you changed the language
                     // as we have to implement an own small session handling (see below) this would lead to
                     // a redirect to login-page until we reach the redirection limit  
@@ -199,7 +196,6 @@
                    */
                    $sessenc = session_encode();
                    $tmpsessfile = $config->applRoot.'/tmp/OOExport/'.session_id();
-                   //echo $tmpsessfile; 
                    if( $fp = fopen( $tmpsessfile , 'wb' ) ){
                    		fwrite($fp,$sessenc);
                         fclose($fp);
@@ -208,27 +204,30 @@
 
                    //var_dump($_SESSION);
     			   
-		//print "<a href='$url'>go</a><br>$url";//die();
+//print "<a href='$url'>go</a><br>$url";die();
 
     				$options = array( 'http' => array(
-    							'methode' 		=> 'GET',
         						'user_agent'    => 'ott',    // who am i
-        						'max_redirects' => 10,          // stop after 10 redirects
+        						'max_redirects' => 20,          // stop after 10 redirects
         						'timeout'       => 120,         // timeout on response
-    							//'follow_location' => false  // no redirects at all
     					) );
     				$context = stream_context_create( $options );
 
+					//stream_context_get_default(array("http" => $options));
+					//var_dump(stream_context_get_options(stream_context_get_default()));
+					//var_dump(file_get_contents( $url, false, $context ));
+
+					//var_dump($url);die();
 
 					// AK : We open the processOOofile.php.result as file !!!
 					$table = '';	
-                    //if( $fp = fopen( $url , 'rb', false, $context ) )
-                    //if( $fp = fopen( $url , 'rb' ) )  
-                    if(($table = file_get_contents($url,false,$context)) !== false)                  
+                    //if( $fp = fopen( $url , 'rb',false, $context ) )
+                    if( $fp = fopen( $url , 'rb' ) )                    
                     {
-                        //while( $string = fread($fp,4096) ) $table .= $string;
-                        //fclose($fp);
-      
+                        while( $string = fread($fp,4096) )
+                            $table .= $string;
+                        fclose($fp);
+
                         if( $fp = fopen( $dir.'/content.xml' , 'wb' ) )
                         {
                             fwrite($fp,$table);

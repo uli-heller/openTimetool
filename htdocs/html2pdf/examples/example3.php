@@ -85,7 +85,7 @@ fclose($fp);
 ob_end_flush();
 
 // Let the class generate a unique PDF filename
-$pdf = new HTML_ToPDF($htmlFile, $defaultDomain);
+$pdf =& new HTML_ToPDF($htmlFile, $defaultDomain);
 // Example setup if running under windows:
 // $pdf->setHtml2Ps('perl c:\html2ps\bin\html2ps');
 // $pdf->setPs2Pdf('c:\ghostscript\bin\ps2pdf');

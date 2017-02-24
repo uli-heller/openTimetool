@@ -5,13 +5,9 @@
     // AK: added a lot of isset to avoid notices. Clicking project->modify the first time,
     // $_REQUEST is simple empty
 
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-	require_once('vp/Application/HTML/Tree.php');
+    require_once('vp/Application/HTML/Tree.php');
     require_once($config->classPath.'/modules/project/tree.php');
-    $projectTree = modules_project_tree::getInstance();
+    $projectTree =& modules_project_tree::getInstance();
 
 
     if (isset($_REQUEST['tree']['add']) && is_array($_REQUEST['tree']['add'])) {
@@ -60,7 +56,7 @@
     	$vp_Application_HTML_Tree = new vp_Application_HTML_Tree;
     	
     // AK : we can now delete projects projects with all booked times
-    if (isset($_REQUEST['removeId']) && $projectTree->getRootId() != $_REQUEST['removeId']) {
+    if (isset($_REQUEST['removeId'])) {
     	// with this new call I delete all times and project memberships for the given project (and subprojects).
         $projectTree->RemoveProject($_REQUEST['removeId']);
         // now we use that html tree to trigger the remove action for the project tree and datarecords.

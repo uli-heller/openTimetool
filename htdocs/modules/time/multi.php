@@ -24,14 +24,11 @@
     //
 
 
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
     require_once($config->classPath.'/pageHandler.php');
     require_once($config->classPath.'/modules/time/time.php');
     require_once($config->classPath.'/modules/task/task.php');
     require_once($config->classPath.'/modules/project/tree.php');
-    $projectTree = modules_project_tree::getInstance(true);
+    $projectTree =& modules_project_tree::getInstance(true);
 
 	//AK : use isset instead of size ; php5 ?
 	$data = array();

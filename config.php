@@ -3,7 +3,8 @@
 	*	
 	*  $Id
 	*
-	*  Configure your openTimetool here
+	* Anton Kejr (AK) :	This beast is called anytime by openTimetool/htdocs/.htaccess
+	*						via auto_prepend. Always keep that in mind !!
 	*
 	*/
 
@@ -19,14 +20,14 @@
     #$_SERVER["SERVER_PORT"] = 443;
 
     // AK : Just for documentation. That is builtin php stuff 
-   if (class_exists("stdClass")) $config = new stdClass();
+   if (class_exists("stdClass")) $config = new stdClass;
 
     /**
 	  * Don't change ! It's the current version !
 	  */
-    $config->applVersion = '2.3.4';
+    $config->applVersion = '2.3.3';
     $config->applName = 'openTimetool'.$config->applVersion;
-    $config->schema_version = '2.3.4';
+    $config->schema_version = '2.3.2';
     
     /**
     * AK the link behind the logo on the upper right ...
@@ -41,10 +42,6 @@
     * @var integer number of allowed users 
     */
     $config->numUsers = 999;
-
-    $config->demoMode = false;
-
-    $config->sessionName = 'ottapp';
     
     /**
     * AK : session timeout = auto logout
@@ -80,7 +77,7 @@
     if (strnatcmp(phpversion(),'5.3.0') >= 0)
     {
         $php = "5.3"; // or higher
-		error_reporting (E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT);
+		error_reporting (E_ALL & ~E_DEPRECATED & ~E_NOTICE);
     }
     else
     {
@@ -98,8 +95,7 @@
     * @var string the DB connection parameters
     */
     $config->dbDSN = 'mysql://<USERNAME>:<PASSWORD>@localhost/opentimetool';
-    
-    
+
     /**
     * This is the path to html2pdf, this application is needed
     * when you want to export your timesheets to pdf.
@@ -126,13 +122,13 @@
     $config->html2pdf = '/usr/bin/htmldoc --webpage $1 -f $2';
 
   	/**
-	* Seperator 4 csv-Export 
-	*/
-	$config->seperator = ';';
+	  * Seperator 4 csv-Export 
+	  */
+	  $config->seperator = ';';
 
     /**
     * Compressed presentation of team members to overcome
-	* possible performance problems if there are many projects
+	  * possible performance problems if there are many projects
   	* and users
   	* We have 4 compression levels:
   	* 0 = uncompressed (like before)
@@ -140,7 +136,7 @@
   	* 2 = 1 icon and one list with name suffix [PM] for projectmanagers (icon depends on permissions)
   	* 3 = same as 2 with no icon at all; the spartanic mode; even the folder icon is gone ...
   	*/	
-	$config->teamcompressed = 2;
+	  $config->teamcompressed = 2;
 	
     /**
     * Email header adjustment
@@ -176,7 +172,6 @@
     *    
     * Authentication against openTimetool DB - standard 
     */
-    if (!isset($config->auth)) $config->auth = new stdClass();
     $config->auth->method       =   'DB';
     $config->auth->url          =   $config->dbDSN;
     $config->auth->digest       =   'md5';

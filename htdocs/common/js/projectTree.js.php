@@ -29,14 +29,10 @@
     //  - initial revision
     //
     
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-
     require_once $config->classPath.'/modules/project/cache.php';
     require_once 'HTTP/Header/Cache.php';
     require_once 'HTML/TreeMenu.php';
-        
+    
     $cacheKey = $userAuth->getData('id').str_replace("/$lang/",'',$_SERVER['PHP_SELF']);
     $httpCache = new HTTP_Header_Cache();
     $httpCache->setHeader( 'Content-Type' , 'text/javascript' );
@@ -46,7 +42,7 @@
     
     if (modules_project_cache::needsRebuild($tplFile,$httpCache)) {        
         require_once $config->classPath.'/modules/project/tree.php';
-        $projectTree = modules_project_tree::getInstance();
+        $projectTree =& modules_project_tree::getInstance();
         //
         //  rebuild the tree
         //
@@ -115,11 +111,9 @@
     */
         $tpl->forceRecache($tplFile);
     }
-    
     // we need to send the cache-control  headers!
     $httpCache->sendHeaders();
 
-    $tpl->compile($tplFile);   
-         
+    $tpl->compile($tplFile);        
     include($tpl->getCompiledTemplate());
 ?>

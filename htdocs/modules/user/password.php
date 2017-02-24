@@ -7,10 +7,6 @@
     //
     // This one is for user to change password
     //
-    
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
 
     require_once $config->classPath.'/pageHandler.php';
     require_once 'vp/Application/HTML/NextPrev.php';
@@ -36,11 +32,7 @@
     }	
 	
     $pageHandler->setObject($user);
-    if (!empty($_REQUEST['newData']) && $config->demoMode) {
-        $applMessage->set('Please note! This function is disabled in the demo version.');
-    } else {
-        $pageHandler->save( @$_REQUEST['newData'] );
-    }
+    $pageHandler->save( @$_REQUEST['newData'] );
     $data = $pageHandler->getData();
            
     $user->preset();

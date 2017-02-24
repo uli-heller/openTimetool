@@ -34,11 +34,7 @@
     *
     */
 
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-	require_once($config->classPath.'/modules/project/treeDyn.php');
+    require_once($config->classPath.'/modules/project/treeDyn.php');
     require_once($config->classPath.'/modules/project/member.php');
     require_once($config->classPath.'/modules/time/time.php');
     require_once($config->classPath.'/modules/export/export.php');
@@ -110,14 +106,6 @@
     if( isset($_REQUEST['showAllColumns']) )
         $showCols = array('task'=>true,'start'=>true,'duration'=>true,'comment'=>true,'project'=>true);
 
-    // determine which field is the last one; order is relvant !
-    $lastCol = '';
-    if($showCols['start']) $lastCol='start';
-    if($showCols['project']) $lastCol='project';
-    if($showCols['comment']) $lastCol='comment';
-    if($showCols['task']) $lastCol='task';
-    if($showCols['duration']) $lastCol='duration';
-    
 
     $numCols = 0;
     foreach( $showCols as $aCol )
@@ -207,8 +195,7 @@
  	        	if( !@is_file($tmpc[0]) ) {
  	        		ob_end_flush();
 	                echo ('HTML2PDF-Converter not found : \''.$config->html2pdf.'\'! Check your config.php !');
-	                echo ('Please also check your open_basedir setting (php.ini): \''.$config->html2pdf.'\' need to be within the allowed paths !');
-	                die();
+		            die();
 	    	    }
 			}
 			
@@ -217,7 +204,7 @@
             
             if(empty($tmpcmd)) {
             	// AK : use the php class for conversion
-				$pdf = new HTML_ToPDF($filename, $config->vApplRoot, $pdfFilename);
+				$pdf =& new HTML_ToPDF($filename, $config->vApplRoot, $pdfFilename);
             	if(isset($config->$html2psPath)) $pdf->setHtml2Ps($config->$html2psPath);
             	if(isset($config->$ps2pdfPath)) $pdf->setPs2Pdf($config->$ps2pdfPath);            					   
 				// Set headers/footers

@@ -12,13 +12,13 @@
 function is_mobile($browser)
 {
 
-	$ispda = false;
+$ispda = false;
 
-	if(@strpos($browser['browser_name_regex'],'ce')!=false){$ispda=true;} 
-	if(@strpos($browser['browser_name_pattern'],'CE')!=false){$ispda=true;} 
-    if(@strpos($browser['parent'],'Pocket')!=false){$ispda=true;} 
-    if(@strpos($browser['platform'],'WinCE')!=false){$ispda=true;} 
-    if(@strpos($browser['browser'],'Pocket')!=false){$ispda=true;} 
+if(strpos($browser['browser_name_regex'],'ce')!=false){$ispda=true;} 
+    if(strpos($browser['browser_name_pattern'],'CE')!=false){$ispda=true;} 
+    if(strpos($browser['parent'],'Pocket')!=false){$ispda=true;} 
+    if(strpos($browser['platform'],'WinCE')!=false){$ispda=true;} 
+    if(strpos($browser['browser'],'Pocket')!=false){$ispda=true;} 
     if(strpos($_SERVER['HTTP_USER_AGENT'],'PPC')!=false){$ispda=true;} 
     if(strpos($_SERVER['HTTP_USER_AGENT'],'XDA')!=false){$ispda=true;} 
     if(strpos($_SERVER['HTTP_USER_AGENT'],'CE;')!=false){$ispda=true;} 
@@ -40,7 +40,8 @@ function is_mobile($browser)
     if(strpos($_SERVER['HTTP_USER_AGENT'],'SAMSUNG')!=false){$ispda=true;} 
     if(strpos($_SERVER['HTTP_USER_AGENT'],'Novarra')!=false){$ispda=true;}	
 	
-	return $ispda;	
+return $ispda;	
+	
 	
 } 
  

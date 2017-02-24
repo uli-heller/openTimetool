@@ -228,10 +228,6 @@
         <img class="button" src="remove.gif" width="16px" height="17px" alt="remove">
     </a>
 
-{%macro common_removeAndConfirmButtonAll( $url='' , $text='')%}
-    <a title="remove" href="javascript:removeConfirmAll('{$url}' , '{$text?$text:''}')">
-        <img class="button" src="remove.gif" width="16px" height="17px" alt="remove">
-    </a>
 
 
 

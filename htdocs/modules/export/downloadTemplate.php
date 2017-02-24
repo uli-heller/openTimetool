@@ -6,11 +6,7 @@
     //
     //
 
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-	require_once($config->classPath.'/modules/OOoTemplate/OOoTemplate.php');
+    require_once($config->classPath.'/modules/OOoTemplate/OOoTemplate.php');
 
     if( !$_REQUEST['id'] )
     {

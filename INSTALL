@@ -8,12 +8,17 @@ INSTALL
 1. DB
    - create DB openTimetool, i.e. using phpMyAdmin (http://phpmyadmin.sf.net)
    - import the mysql.sql in the DB openTimetool that you have created in the step before
-2. Apache setup
+2. Apache setup - .htaccess
+   - adjust the htdocs/.htaccess accordingly to your settings
+     actually you will only need to adjust the "auto_prepend" option.
+     you need to adjust the path to the openTimetool,.
    - NOTE: 
        * in your apache configure the option "AllowOverride All" (i.e. /etc/httpd/httpd.conf) 
        * if your apache uses php with the suhosin security extension (aka hardened php) 
          installed, export to openoffice-templates wont't work unless you deactivate the session-encryption: in your php-initfile
          (i.e. /etc/php/apache2-php5/ext-active/suhosin.ini) find and set "suhosin.session.encrypt = Off"
+         But as there are principle problems with suhosin, please read the according README as
+         well!!
        * if you run on a server with safemode=on, there are even more problems. Check the  
          according readme.
 3. config-local.php
@@ -35,6 +40,7 @@ INSTALL
      Normally like this:
         cd /in/your/openTimetool/htdocs
         ln -s . en
+        ln -s . es
         ln -s . de
      This is needed to provide a unique path to every language. Of course you need
      to have the followSymLink option turned on in your apache!

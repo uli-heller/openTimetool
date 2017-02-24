@@ -197,7 +197,7 @@ function docheckBookings($objResponse,$projectTreeId,$taskId,$oldId,$bookDate,$b
 
 	if(XAJAXDBG) $objResponse->append("msgxajax","innerHTML","<br>docheckBookings<br>");
 
-	$projectTree = modules_project_tree::getInstance(true);  // base of that all
+	$projectTree =& modules_project_tree::getInstance(true);  // base of that all
 
 
 	// get the projectId even if we don't have one yet ;-) (non project task)

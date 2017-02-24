@@ -26,11 +26,7 @@
     //
     //
     //
-
-	// as we dont have auto_prepend anymore, we have to include our config here
-	require_once("../../../config.php");
-
-	
+    
 	require_once $config->classPath.'/mobile_browser.php';
                        
     if (isset($_REQUEST['logout']) && $_REQUEST['logout']== 1) {

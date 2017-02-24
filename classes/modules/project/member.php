@@ -80,11 +80,11 @@ class modules_project_member extends modules_common
         // do it now like this :  	
         if(isset($projectMember)) {	
             if (strtolower(get_class( $projectMember )) <> 'modules_project_member') {
-            	$projectMember = new modules_project_member();
+            	$projectMember =& new modules_project_member();
             }
         }
         else 
-        	$projectMember = new modules_project_member();
+        	$projectMember =& new modules_project_member();
 
         return $projectMember;
     }
@@ -413,7 +413,7 @@ print_r($managers);
     
 }   // end of class
 
-$projectMember = modules_project_member::getInstance();
+$projectMember =& modules_project_member::getInstance();
 if (!$config->isLiveMode()) {    
 //	include_once $config->applRoot.'/logging.php';
 //	$logging->_logme('classes member','projectMember : '.print_r($projectMember,true)); 
