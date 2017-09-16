@@ -1,51 +1,6 @@
 <!--
-    $Log: EditData.mcr,v $
-    Revision 1.3  2003/03/11 12:57:55  wk
-    *** empty log message ***
 
-    Revision 1.14  2003/02/11 12:31:17  wk
-    - text is always english!!!
-
-    Revision 1.13  2002/12/19 16:00:13  cb
-    - added new form elements
-
-    Revision 1.12  2002/12/10 12:30:51  wk
-    - make possible that a password field is required
-
-    Revision 1.11  2002/12/03 21:22:27  wk
-    - added nowraps and automatic required class
-
-    Revision 1.10  2002/11/11 17:51:12  wk
-    - added inputFile
-
-    Revision 1.9  2002/10/24 14:17:43  wk
-    - made text translatable
-
-    Revision 1.8  2002/10/17 14:36:05  wk
-    - made input work with arrays too
-
-    Revision 1.7  2002/09/20 21:15:29  wk
-    - added password
-
-    Revision 1.6  2002/09/11 15:56:35  wk
-    - added 'inputUrl' and 'all' macros
-
-    Revision 1.5  2002/08/29 13:39:05  wk
-    - show save as new optionally
-
-    Revision 1.4  2002/08/26 12:00:05  wk
-    - bugfix for making translate possible
-
-    Revision 1.3  2002/08/21 15:48:39  wk
-    - added textarea macro
-
-    Revision 1.2  2002/08/19 19:59:45  wk
-    - added select
-    - removed space-row from save into a macro of its own
-
-    Revision 1.1  2002/07/26 20:46:33  wk
-    - initial commit
-
+$Id$
 
     This file contains generally used macros which are useful for editing data
     in a form. This includes some formatting, what it's assuming is that
@@ -134,7 +89,7 @@
         <td nowrap="nowrap">{$keyName?$keyName:$key}</td>
         <td nowrap="nowrap">
             <input name="newData[{$key}]" value="{$data[$key]}" {$params}>
-            <input type="button" onClick="window.open(this.form['newData[{$key}]'].value)" value="test" class="button">
+            <input type="button" onclick="window.open(this.form['newData[{$key}]'].value)" value="test" class="button">
         </td>
     </tr>
 
@@ -195,7 +150,7 @@
     <tr>
         <td nowrap="nowrap">{$description}</td>
         <td nowrap="nowrap">
-            <input type="checkbox" name="newData[{$key}]" value="1" {$data[$key]?'checked':''}  {$params}>
+            <input type="checkbox" name="newData[{$key}]" value="1" {$data[$key]?'checked="checked"':''}  {$params}>
         </td>
     </tr>
 
@@ -226,7 +181,6 @@
     </tr>
 
 
-
 <!--
     create a table-row with an textarea,
     dont use Form_textarea so the user doesnt need to include that one too
@@ -247,14 +201,6 @@
 
 
 
-
-
-
-
-
-
-
-
 {%macro EditData__standardOptions( $options , $selected=false , $params='' )%}
     {foreach( $options as $key=>$val )}
         <option value="{$key}" {$params}
@@ -262,11 +208,10 @@
 <!--  for selecting multiple out of an array
             {if($aUser['id']==$selected || ( is_array($selected) && in_array($aUser['id'],$selected) ))}
 -->
-                selected
+                selected="selected"
         >
         {$val}
         </option>
-
 
 
 
@@ -320,7 +265,6 @@
 
 
 
-
 <!--
     creates a complete table with a form around it for the given fields
     using all the EditData-macros
@@ -336,8 +280,15 @@
     <form method="post" action="{$_SERVER['PHP_SELF']}" name="editForm">
         <input type="hidden" name="newData[id]" value="{$data['id']}">
         <table>
-            {%EditData_headline($headline)%}
+            <thead>
+              {%EditData_headline($headline)%}
+            </thead>
 
+            <tfoot>
+              {%EditData_saveButton()%}
+            </tfoot>
+
+            <tbody>
             {foreach( $keys as $key=>$val )}
                 {if( is_numeric($key) )}
                     {%EditData_input($data,$val,'',$params)%}
@@ -345,9 +296,6 @@
                     { $macroName = 'EditData_'.$key}
                     <!-- FIXXXME add params here!!! -->
                     { $macroName($data,'url')}
-
-            {%EditData_saveButton()%}
+            </tbody>
         </table>
     </form>
-
-

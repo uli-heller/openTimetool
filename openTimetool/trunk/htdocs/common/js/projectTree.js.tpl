@@ -1,44 +1,6 @@
 //
-//  $Log: projectTree.js.tpl,v $
-//  Revision 1.8.2.4  2003/04/01 08:21:29  wk
-//  - somehow the updateDueToProjectSpan() doesnt work properly :-(
+// $Id$
 //
-//  Revision 1.8.2.3  2003/03/28 10:28:51  wk
-//  - truncate project name when it gets too long, I extended getPathAsString for that
-//
-//  Revision 1.8.2.2  2003/03/19 19:39:07  wk
-//  - make the multiSelect stuff work
-//
-//  Revision 1.8.2.1  2003/03/11 16:06:02  wk
-//  - load js-files only as needed
-//  - add locale to xml-config, even though it has no effect yet
-//  - declare private var in js-class
-//
-//  Revision 1.8  2003/03/06 13:22:08  wk
-//  - prevent JS error
-//
-//  Revision 1.7  2003/03/04 19:11:51  wk
-//  - starting to add multiSelect
-//
-//  Revision 1.6  2003/02/17 19:15:45  wk
-//  - some bugfixing
-//
-//  Revision 1.5  2003/02/13 16:15:20  wk
-//  - fix positioning in IE
-//  - and make it work in IE
-//
-//  Revision 1.4  2003/02/11 11:11:47  wk
-//  - make preselect work properly
-//  - add method select
-//
-//  Revision 1.3  2003/02/10 19:26:32  wk
-//  - add method getPathAsString
-//
-//  Revision 1.2  2003/02/10 16:17:24  wk
-//  - add a lot features
-//
-//  Revision 1.1  2003/02/05 19:01:21  wk
-//  - initial revision
 
 // locale-setting doesnt work due to a bug in 1.7.3
 // remove caching for 1 day, when updateDueToProjectSpan() is implemented properly!!!

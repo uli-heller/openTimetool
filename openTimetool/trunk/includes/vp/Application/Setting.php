@@ -1,166 +1,145 @@
 <?php
-//
-//  $Id
-//
-//  Revision 1.4  2006/08/26 12:57:55  AK
-//  Just eliminate some php notices
-//
-//  Revision 1.3  2003/03/11 12:57:55  wk
-//  *** empty log message ***
-//
-//  Revision 1.6  2002/10/17 14:35:32  wk
-//  - replace # by //
-//
-//  Revision 1.5  2002/09/23 09:38:16  wk
-//  - bugfix, the codemaster data where not read when no entries were in the db-table
-//
-//  Revision 1.4  2002/09/02 11:37:48  wk
-//  - use addWhere instead of addJoin
-//
-//  Revision 1.3  2002/07/13 09:22:24  wk
-//  - use join
-//
-//  Revision 1.2  2002/07/12 08:18:16  wk
-//  - made it work based on the new DB_Common structure
-//
-//  Revision 1.1  2002/07/05 12:00:52  wk
-//  - initial commit
-//
-//
+/**
+ * 
+ * $Id$
+ * 
+ */
 
-require_once('vp/DB/Common.php');
+require_once 'vp/DB/Common.php';
 
 /**
-*   This class handles global user specific settings.
-*   It requires a special setup of 2 tables in the DB.
-*   see the examples.
-*
-*   @package  proxy
-*   @access   public
-*   @author   Wolfram Kriesing <wolfram@kriesing.de>
-*   @version  sometime in 2000 :-)
-*/
+ *   This class handles global user specific settings.
+ *   It requires a special setup of 2 tables in the DB.
+ *   see the examples.
+ * 
+ *   @package  proxy
+ *   @access   public
+ *   @author   Wolfram Kriesing <wolfram@kriesing.de>
+ *   @version  sometime in 2000 :-)
+ */
 class vp_Application_Setting extends vp_DB_Common
 {
 
-    var $settingTable       =   TABLE_SETTING;
+    var $settingTable = TABLE_SETTING;
     // this is the table the vp_DB_Common works on
-    var $table              =   TABLE_CODEMASTER;
+    var $table = TABLE_CODEMASTER;
 
     var $mainType = '';
 
     // the vp_DB_Common object, which works on the setting table
     var $_setting = null;
 
+
     /**
-    *   array   contains all the settings temporarily, so we only need to get them once from the DB
-    *   @access private
-    *   @see    get()
-    */
+     *   Constructor
+     * 
+     *   array    contains all the settings temporarily, so we only need to get them once from the DB
+     *   @access private
+     *   @see    get()
+     */
     var $_data = NULL;
 
-    function vp_Application_Setting(&$db,&$error)
+    function __construct(&$db, &$error)
     {
-        parent::vp_DB_Common($db,$error);
-        $this->_setting = new vp_DB_Common($db,$error);
+        parent::vp_DB_Common($db, $error);
+        $this->_setting = new vp_DB_Common($db, $error);
         $this->_setting->setTable($this->settingTable);
     }
 
     /**
-    *   gets all the current settings from the db
-    *   and saves them in $this->_data
-    *
-    *   @version    2001/05/11, 2002/02 complete rework
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *   @param      string  $subtype this is the column subtype in the codeMaster-table
-    *   @return
-    */
-    function getAll( $addJoinWhere='' )
+     *   gets all the current settings from the db
+     *   and saves them in $this->_data
+     *
+     *   @version    2001/05/11, 2002/02 complete rework
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *   @param      string  $subtype this is the column subtype in the codeMaster-table
+     *   @return
+     */
+    function getAll($addJoinWhere = '')
     {
         //
         //  get only the codemaster data, to be sure to have all the available settings
         //
-        $_temp = new vp_DB_Common($this->_db,$this->_error);
+        $_temp = new vp_DB_Common($this->_db, $this->_error);
         $_temp->setTable($this->table);
-        $_temp->setWhere('maintype='.$this->_db->quote($this->mainType));
-        if( $codemasters = $_temp->getAll() )
-        {
-            foreach( $codemasters as $aSetting )
-            {
-                if( $aSetting['subtype1'] )
-                {
-                    $data[$aSetting['subtype']] [$aSetting['subtype1']] ['codemaster_id'] = $aSetting['id'];
-                    if( $aSetting['type'] )
-                        $data[$aSetting['subtype']] [$aSetting['subtype1']] ['type'] = $aSetting['type'];
-                    if( $aSetting['comment'] )
-                        $data[$aSetting['subtype']] [$aSetting['subtype1']] ['comment'] = $aSetting['comment'];
-                }
-                else
-                {
-                    $data[$aSetting['subtype']] ['codemaster_id'] = $aSetting['id'];
-                    if( $aSetting['type'] )
-                        $data[$aSetting['subtype']] ['type'] = $aSetting['type'];
-                    if( $aSetting['comment'] )
-                        $data[$aSetting['subtype']] ['comment'] = $aSetting['comment'];
+        $_temp->setWhere('maintype=' . $this->_db->quote($this->mainType));
+        if ($codemasters = $_temp->getAll()) {
+            foreach ($codemasters as $aSetting) {
+                if ($aSetting['subtype1']) {
+                    $data[$aSetting['subtype']][$aSetting['subtype1']]['codemaster_id'] = $aSetting['id'];
+                    if ($aSetting['type']) {
+                        $data[$aSetting['subtype']][$aSetting['subtype1']]['type'] = $aSetting['type'];
+                    }
+                    if ($aSetting['comment']) {
+                        $data[$aSetting['subtype']][$aSetting['subtype1']]['comment'] = $aSetting['comment'];
+                    }
+                } else {
+                    $data[$aSetting['subtype']]['codemaster_id'] = $aSetting['id'];
+                    if ($aSetting['type']) {
+                        $data[$aSetting['subtype']]['type'] = $aSetting['type'];
+                    }
+                    if ($aSetting['comment']) {
+                        $data[$aSetting['subtype']]['comment'] = $aSetting['comment'];
+                    }
                 }
             }
         }
 
-
         //
         // get the real data
         //
-        $this->setLeftJoin( $this->settingTable,
-                            $this->settingTable.'.codemaster_id='.$this->table.'.'.$this->primaryCol );
+        $this->setLeftJoin($this->settingTable,
+                $this->settingTable . '.codemaster_id=' . $this->table . '.' . $this->primaryCol);
         // do this after the 'setLeftJoin' !!!
-        if( $addJoinWhere )
+        if ($addJoinWhere) {
             $this->addWhere($addJoinWhere);
+        }
 
 //print $this->_buildSelectQuery().'<br><br>';
-        $this->addWhere('maintype='.$this->_db->quote($this->mainType));
+        $this->addWhere('maintype=' . $this->_db->quote($this->mainType));
         $results = parent::getAll();
 
-        if( $results )
-        {
-            $valueColName = '_'.$this->settingTable.'_value';
-            $idColName = '_'.$this->settingTable.'_id';
-            foreach( $results as $aSetting )
-            {
+        if ($results) {
+            $valueColName = '_' . $this->settingTable . '_value';
+            $idColName = '_' . $this->settingTable . '_id';
+            foreach ($results as $aSetting) {
                 // if there is already a value for this subtype, then we have to create an array
                 // of the values, if it isnt one yet
-                if( $aSetting['subtype1'] )
-                    $_tempVal = $data[$aSetting['subtype']] [$aSetting['subtype1']]['value'];
-                else
-                    $_tempVal = $data[$aSetting['subtype']] ['value'];
-
-                if( isset($_tempVal) )
-                    if( is_array($_tempVal) )
-                    {
-                        array_push($_tempVal,$aSetting[$valueColName]);
-                        $aSetting[$valueColName] = $_tempVal;
-                    }
-                    else
-                        $aSetting[$valueColName] = array($_tempVal,$aSetting[$valueColName]);
-
-                if( $aSetting['subtype1'] )
-                {
-                    $data[$aSetting['subtype']] [$aSetting['subtype1']] ['value'] = $aSetting[$valueColName];
-                    $data[$aSetting['subtype']] [$aSetting['subtype1']] ['codemaster_id'] = $aSetting['id'];
-                    $data[$aSetting['subtype']] [$aSetting['subtype1']] ['id'] = $aSetting[$idColName];
-                    if( $aSetting['type'] )
-                        $data[$aSetting['subtype']] [$aSetting['subtype1']] ['type'] = $aSetting['type'];
-                    if( $aSetting['comment'] )
-                        $data[$aSetting['subtype']] [$aSetting['subtype1']] ['comment'] = $aSetting['comment'];
+                if ($aSetting['subtype1']) {
+                    $_tempVal = $data[$aSetting['subtype']][$aSetting['subtype1']]['value'];
+                } else {
+                    $_tempVal = $data[$aSetting['subtype']]['value'];
                 }
-                else
-                {
-                    $data[$aSetting['subtype']] ['value'] = $aSetting[$valueColName];
-                    $data[$aSetting['subtype']] ['codemaster_id'] = $aSetting['id'];
-                    $data[$aSetting['subtype']] ['id'] = $aSetting[$idColName];
-                    if( $aSetting['type'] )
-                        $data[$aSetting['subtype']] ['type'] = $aSetting['type'];
-                    if( $aSetting['comment'] )
-                        $data[$aSetting['subtype']] ['comment'] = $aSetting['comment'];
+
+                if (isset($_tempVal)) {
+                    if (is_array($_tempVal)) {
+                        array_push($_tempVal, $aSetting[$valueColName]);
+                        $aSetting[$valueColName] = $_tempVal;
+                    } else {
+                        $aSetting[$valueColName] = array($_tempVal, $aSetting[$valueColName]);
+                    }
+                }
+
+                if ($aSetting['subtype1']) {
+                    $data[$aSetting['subtype']][$aSetting['subtype1']]['value'] = $aSetting[$valueColName];
+                    $data[$aSetting['subtype']][$aSetting['subtype1']]['codemaster_id'] = $aSetting['id'];
+                    $data[$aSetting['subtype']][$aSetting['subtype1']]['id'] = $aSetting[$idColName];
+                    if ($aSetting['type']) {
+                        $data[$aSetting['subtype']][$aSetting['subtype1']]['type'] = $aSetting['type'];
+                    }
+                    if ($aSetting['comment']) {
+                        $data[$aSetting['subtype']][$aSetting['subtype1']]['comment'] = $aSetting['comment'];
+                    }
+                } else {
+                    $data[$aSetting['subtype']]['value'] = $aSetting[$valueColName];
+                    $data[$aSetting['subtype']]['codemaster_id'] = $aSetting['id'];
+                    $data[$aSetting['subtype']]['id'] = $aSetting[$idColName];
+                    if ($aSetting['type']) {
+                        $data[$aSetting['subtype']]['type'] = $aSetting['type'];
+                    }
+                    if ($aSetting['comment']) {
+                        $data[$aSetting['subtype']]['comment'] = $aSetting['comment'];
+                    }
                 }
             }
         }
@@ -170,311 +149,304 @@ class vp_Application_Setting extends vp_DB_Common
     } // end of function
 
     /**
-    *   gets the setting(s) from the db and saves them in the private-property _data
-    *   if they are not already in there
-    *
-    *   @version    2002/02/27
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *   @param      string  every argument is a settings-subtype
-    *   @return     string  the value requested
-    */
+     *   gets the setting(s) from the db and saves them in the private-property _data
+     *   if they are not already in there
+     *
+     *   @version    2002/02/27
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *   @param      string  every argument is a settings-subtype
+     *   @return     string  the value requested
+     */
     function get()
     {	
-     	$value = "";	// AK : eliminate some warnings 
-    
-        if( !func_num_args() )
-            return NULL;
+     	$value = ''; // AK : eliminate some warnings
 
-        if( !is_array($this->_data) )
-        {
+        if (!func_num_args()) {
+            return NULL;
+        }
+
+        if (!is_array($this->_data)) {
             $this->_data = $this->getAll();
         }
 
         $args = func_get_args();
         // build the
-        $reference = "this->_data['".implode( "']['" , $args )."']['value']";
+        $reference = "this->_data['" . implode("']['", $args) . "']['value']";
         eval("\$value=\$$reference;");
 
         return $value;
     } // end of function
 
     /**
-    *   gets the id for the given types
-    *
-    *   @version    2002/07/11
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *   @param      string  every argument is a settings-subtype
-    *   @return     int     the codemaster id
-    */
+     *   gets the id for the given types
+     *
+     *   @version    2002/07/11
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *   @param      string  every argument is a settings-subtype
+     *   @return     int     the codemaster id
+     */
     function getId()
     {
-        if( !func_num_args() )
+        if (!func_num_args()) {
             return NULL;
+        }
         $args = func_get_args();
         return $this->_getId($args);
     }
 
     /**
-    *   gets the id that belongs to the given setting
-    *
-    *   @version    2002/03/24
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *   @param      array   the types
-    *   @param      int     this value tells where the types start
-    *                       0 means the first parameter is the first type
-    *   @return     string  the codemaster id
-    */
-    function _getId( $args , $startAt=0 )
+     *   gets the id that belongs to the given setting
+     *
+     *   @version    2002/03/24
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *   @param      array   the types
+     *   @param      int     this value tells where the types start
+     *                       0 means the first parameter is the first type
+     *   @return     string  the codemaster id
+     */
+    function _getId($args, $startAt = 0)
     {
-    	$id = "";	// AK : eliminate some warnings 
-    
-        if( !is_array($this->_data) )
-        {
+    	$id = ''; // AK : eliminate some warnings
+
+        if (!is_array($this->_data)) {
             $this->_data = $this->getAll();
         }
 
-        for( $i=0 ; $i<$startAt ; $i++ )
+        for ($i=0 ; $i < $startAt; $i++) {
             array_shift($args);
+        }
 
         // build the
-        $reference = "this->_data['".implode( "']['" , $args )."']['codemaster_id']";
+        $reference = "this->_data['" . implode("']['", $args) . "']['codemaster_id']";
         eval("\$id=\$$reference;");
 
         return $id;
     }
 
     /**
-    *
-    *
-    *   @version    2002/02/27
-    *
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *
-    *   @param      integer $uid    the user id
-    *   @param      string          every further argument is a settings-subtype
-    *   @return
-    *
-    */
-/*    function getForUser( $uid )
+     *
+     *
+     *   @version    2002/02/27
+     *
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *
+     *   @param      integer $uid    the user id
+     *   @param      string          every further argument is a settings-subtype
+     *   @return
+     *
+     */
+/*
+    function getForUser($uid)
     {
-        if( !$this->_dataByUser[$uid] ) // do only read the data again from db if we dont have them yet
-        {
-            $this->_dataByUser[$uid] = $this->getAll( $uid );
+        if (!$this->_dataByUser[$uid]) { // do only read the data again from db if we dont have them yet
+            $this->_dataByUser[$uid] = $this->getAll($uid);
         }
 
         $args = func_get_args();
-        array_shift($args);         // remove the first element, since it is the uid
+        array_shift($args); // remove the first element, since it is the uid
         // build the
-        $reference = "this->_dataByUser[$uid]['".implode( "']['" , $args )."']['value']";
+        $reference = "this->_dataByUser[$uid]['" . implode("']['", $args) . "']['value']";
         eval("\$value=\$$reference;");
 
         return $value;
     }
 */
     /**
-    *   saves the value in the DB and sets the value of this class's property
-    *
-    *   @version    2002/02/27
-    *
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *
-    *   @param      array   $newData    the new settings to be saved, the array is like this: codemaster_id=>value,codemaster_id=>value,...
-    *   @param      integer $uid
-    *   @return     boolean returns true for success
-    *
-    */
-/*    function save( $newData , $uid=0 )
+     *   saves the value in the DB and sets the value of this class's property
+     *
+     *   @version    2002/02/27
+     *
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *
+     *   @param      array   $newData    the new settings to be saved, the array is like this: codemaster_id=>value,codemaster_id=>value,...
+     *   @param      integer $uid
+     *   @return     boolean returns true for success
+     *
+     */
+/*
+    function save($newData, $uid = 0)
     {
-        global $db , $user, $error;
+        global $db, $user, $error;
 
-        if( $uid == 0 )
-        {
+        if ($uid == 0) {
             $uid = $this->getUid();
         }
 
         // remove the old settings values
         $query = sprintf('DELETE FROM %s WHERE uid=%s AND codemaster_id IN (%s)',
-                            TABLE_SETTINGS,$uid,
-                            implode(',',array_keys($newData))   // remove only those that will be written again
+                          TABLE_SETTINGS, $uid,
+                          implode(',', array_keys($newData)) // remove only those that will be written again
                         );
-        if( DB::isError( $res = $db->query( $query ) ) )
-        {
+        if (DB::isError($res = $db->query($query))) {
             // do this properly
             $error->set('An error occured while saving the settings, please try again!');
-            $error->log("settings::save $query ".$res->message);
+            $error->log("settings::save $query " . $res->message);
             return false;
         }
 
         // add the new values as passed to this method
         $values = array();
-        foreach( $newData as $codemasterId=>$value )
-        {
-            if( !$value )     // lets leave out settings which are not set to any value, so we save space in the DB
+        foreach ($newData as $codemasterId => $value) {
+            if (!$value) { // lets leave out settings which are not set to any value, so we save space in the DB
                 continue;
-
+            }
+ 
             $valuePair = '('.$db->nextId(TABLE_SETTINGS);
             $valuePair.= ",$codemasterId,$uid,".$db->quote($value).')';
             $values[] = $valuePair;
         }
         $query = sprintf('INSERT INTO %s (id,codemaster_id,uid,value) VALUES %s',
-                            TABLE_SETTINGS,
-                            implode(',',$values));
-        if( DB::isError( $res = $db->query( $query ) ) )
-        {
+                          TABLE_SETTINGS,
+                          implode(',', $values));
+        if (DB::isError($res = $db->query($query))) {
             // do this properly
             $error->set('An error occured while saving the settings, all your settings are lost, please set and save them again! Sorry.');
-            $error->log("settings::save $query ".$res->message);
+            $error->log("settings::save $query " . $res->message);
             return false;
         }
 
-        $this->getAll();    // regenerate the private property '_data'
+        // regenerate the private property '_data'
+        $this->getAll();
 
         return true;
     } // end of function
 */
     /**
-    *   updates one value
-    *
-    *   @version    2002/03/24
-    *
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *
-    *   @param      array   $newData    the new settings to be saved
-    *   @param      integer $uid
-    *   @return     boolean returns true for success
-    *
-    */
-/*    function saveOne( $value )
+     *   updates one value
+     *
+     *   @version    2002/03/24
+     *
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *
+     *   @param      array   $newData    the new settings to be saved
+     *   @param      integer $uid
+     *   @return     boolean returns true for success
+     *
+     */
+/*
+    function saveOne($value)
     {
-        global $user,$db,$error;
+        global $user, $db, $error;
 
-        if( !sizeof($this->_data) ) // if this->_data is not filled we do it here :-)
+        if (!sizeof($this->_data)) { // if this->_data is not filled we do it here :-)
             $this->getAll();
+        }
 
         $args = func_get_args();
-        array_shift($args);         // remove the first element, since it is the value
+        array_shift($args); // remove the first element, since it is the value
         $reference = "this->_data['".implode( "']['" , $args )."']['codemaster_id']";
         eval("\$key=\$$reference;");
 
         // the realUid is the uid of the currently logged in user !!!
         $uid = $this->getUid();
         $query = "DELETE FROM ".$this->settingTable." WHERE codemaster_id=$key AND uid=$uid";
-        if( DB::isError( $res = $db->query( $query ) ) )
-        {
+        if (DB::isError($res = $db->query($query))) {
             // do this properly
             $error->set('An error occured while saving the settings, please try again!');
-            $error->log("settings::saveOne $query ".$res->message);
+            $error->log("settings::saveOne $query " . $res->message);
             return false;
         }
 
         $id = $db->nextId($this->settingTable);
         $query = sprintf('INSERT INTO %s (id,value,codemaster_id,uid) VALUES (%s,%s,%s,%s)',
-                            $this->settingTable ,
-                            $id , $db->quote($value) , $key , $uid );
-        if( DB::isError( $res = $db->query( $query ) ) )
-        {
+                          $this->settingTable ,
+                          $id , $db->quote($value), $key, $uid);
+        if (DB::isError($res = $db->query($query))) {
             // do this properly
             $error->set('An error occured while saving the setting, please try again! Sorry.');
-            $error->log("settings::saveOne $query ".$res->message);
+            $error->log("settings::saveOne $query " . $res->message);
             return false;
         }
 
-        $this->getAll();    // regenerate the private property '_data'
+        // regenerate the private property '_data'
+        $this->getAll();
 
         return true;
-
     }
 */
-
     function save($data)
     {
-        if( $data['value'] )
-        {
+        if ($data['value']) {
             return $this->_setting->save($data);
-        }
-        else
-        {
+        } else {
             unset($data['value']);
             $this->remove($data);
         }
     }
 
     /**
-    *   add a setting in the setting table
-    *
-    *   @version    2002/07/05
-    *
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *   @param      mixed   the value
-    *   @param      string  all the following parameters give the type under which to save this value
-    *   @return     boolean returns true for success
-    *
-    */
-    function add( $data )
+     *   add a setting in the setting table
+     *
+     *   @version    2002/07/05
+     *
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *   @param      mixed   the value
+     *   @param      string  all the following parameters give the type under which to save this value
+     *   @return     boolean returns true for success
+     *
+     */
+    function add($data)
     {
-        if( !is_array($data) )
-        {
+        if (!is_array($data)) {
             $tmp = $data;
             $data = array();
             $data['value'] = $tmp;
         }
 
-        if( sizeof($args = func_get_args()) > 1)
-        {
-            $data['codemaster_id'] = $this->_getId( $args , $startAt=1 );
+        if (sizeof($args = func_get_args()) > 1) {
+            $data['codemaster_id'] = $this->_getId($args, $startAt = 1);
         }
 
-        $ret = $this->_setting->add( $data );
-        $this->getAll();    // update the internal array!!!
+        $ret = $this->_setting->add($data);
+        // update the internal array!!!
+        $this->getAll();
         return $ret;
     }
 
     /**
-    *   remove a setting in the setting table
-    *
-    *   @version    2002/07/05
-    *
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *   @param      mixed   the value
-    *   @param      string  all the following parameters give the type under which to save this value
-    *   @return     boolean returns true for success
-    *
-    */
-    function remove( $values )
+     *   remove a setting in the setting table
+     *
+     *   @version    2002/07/05
+     *
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *   @param      mixed   the value
+     *   @param      string  all the following parameters give the type under which to save this value
+     *   @return     boolean returns true for success
+     *
+     */
+    function remove($values)
     {
-        settype($values,'array');
+        settype($values, 'array');
 
-        if( sizeof($args = func_get_args()) > 1 )
-        {
-            $values['codemaster_id'] = $this->_getId( $args , $startAt=1 );
+        if (sizeof($args = func_get_args()) > 1) {
+            $values['codemaster_id'] = $this->_getId($args, $startAt = 1);
         }
 
-        $ret = $this->_setting->remove( $values );
-        $this->getAll();    // update the internal array!!!
+        $ret = $this->_setting->remove($values);
+        // update the internal array!!!
+        $this->getAll();
         return $ret;
     }
 
     /**
-    *   initalize standard settings for a (new) user
-    *   be sure to overwrite this method if you need it
-    *
-    *   @version    2001/12/07
-    *
-    *   @abstract
-    *   @author     Wolfram Kriesing <wolfram@kriesing.de>
-    *   @param      int     $uid    user id
-    *   @return     boolean returns true for success
-    *
-    */
-    function init( $uid )
+     *   initalize standard settings for a (new) user
+     *   be sure to overwrite this method if you need it
+     *
+     *   @version    2001/12/07
+     *
+     *   @abstract
+     *   @author     Wolfram Kriesing <wolfram@kriesing.de>
+     *   @param      int     $uid    user id
+     *   @return     boolean returns true for success
+     *
+     */
+    function init($uid)
     {
-        /*
-        $this->save(array(  $this->getId( 'browsing','toolbar' )=>true,
-                            $this->getId( 'browsing','bookmarking' )=>true  ),
-                    $uid );
-        */
+/*
+        $this->save(array($this->getId( 'browsing','toolbar') => true,
+                          $this->getId( 'browsing','bookmarking') => true),
+                    $uid);
+*/
     } // end of method
 
-
 } // end of class
-?>

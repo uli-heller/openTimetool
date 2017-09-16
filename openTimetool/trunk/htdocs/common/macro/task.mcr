@@ -1,16 +1,8 @@
 <!--
-   $Log: task.mcr,v $
-   Revision 1.3  2002/10/22 14:24:13  wk
-   - moved macros here, since common is included in a file where the macro-files used are not included
 
-   Revision 1.2  2002/07/30 20:22:54  wk
-   - allow multi selects
-
-   Revision 1.1.1.1  2002/07/22 09:37:37  wk
-
+$Id$
 
 -->
-
 
 <!--
     @param   array   all the tasks to show

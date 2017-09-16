@@ -4,15 +4,20 @@
 # needs to be set in the Apache config!!!
 #
 # If running other than as apache2 module: set this in your php.ini
-php_flag register_globals on
+###php_flag register_globals on
 
 Options -Indexes +FollowSymLinks
 
 DirectoryIndex index.php index.html index.htm
 
 <FilesMatch "\.(tpl|log|ini)$">
-    Order allow,deny
-    Deny from all
+    <IfModule !mod_access_compat.c>
+        Require all denied
+    </IfModule>
+    <IfModule mod_access_compat.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
 ErrorDocument 400 /index.php

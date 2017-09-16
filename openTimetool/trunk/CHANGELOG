@@ -1,3 +1,10 @@
+2.4.0
+- bug fixes (PHP, HTML, CSS, JS)
+- code extensions (PHP, HTML, CSS, JS)
+- performance improvements
+- code cleanup and beautification
+- introduced TSM (openTimetool System Menu)
+
 2.3.4
 - Eliminated the auto_prepend line in htdocs/.htaccess. Now openTimetool is running  
   as fastCGI as well and the path need not to be configured anymore

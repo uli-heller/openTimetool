@@ -40,7 +40,7 @@ class vp_Util_HTML
     {
         global $config;
 
-        $string = sprintf(  '<img src="%s" width="%s" height="%s" alt="" border="0">',
+        $string = sprintf(  '<img src="%s" width="%s" height="%s" alt="">',
                             $config->vImgRoot.'/pixel.gif',
                             $width,$height);
         return $string;
@@ -48,4 +48,3 @@ class vp_Util_HTML
 
 }   // end of class
 
-?>
