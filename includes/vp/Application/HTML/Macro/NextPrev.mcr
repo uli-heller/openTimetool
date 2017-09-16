@@ -1,17 +1,6 @@
 <!--
-    $Log: NextPrev.mcr,v $
-    Revision 1.3  2003/03/11 12:57:55  wk
-    *** empty log message ***
 
-    Revision 1.4  2002/10/17 14:42:17  wk
-    - save nextPrev data in session object of its own
-
-    Revision 1.3  2002/10/04 11:41:40  wk
-    - put some code in the class
-
-    Revision 1.2  2002/09/02 11:37:07  wk
-    - adhere to naming scheme, deprecate old name
-    - made cols without > >> buttons as wide as if they were there
+$Id$
 
 -->
 
@@ -20,8 +9,6 @@
 -->
 {%macro nextPrevButtons(&$page)%}
     {%NextPrev_Buttons($page)%}
-
-
 
 <!--
     this macro prints the next previous logic on the page
@@ -33,7 +20,7 @@
     {global $session}   <!-- FIXXME to be changed -->
     <table>
         <tr>
-            <td nowrap align="left">
+            <td nowrap="nowrap" align="left">
                 {if(isset($page->showPrev))}
                     <a href="{$page->beginLink}">&lt;&lt;</a> &nbsp;
                     <a href="{$page->prevLink}">&lt;</a>
@@ -41,7 +28,7 @@
                     <!-- to get about the same space as when there are the buttons shown -->
                     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </td>
-            <td align="center" nowrap>
+            <td align="center" nowrap="nowrap">
                 {if($page->count/$session->temp->nextPrev->listCount>1)}
                     <!-- Gehe zu Seite -->
                     <!-- are there more then 10 pages with results to show? -->
@@ -76,7 +63,7 @@
                             {else}
                                 <a href="{$page->urlPrefix}setListStart={$_counter*$session->temp->nextPrev->listCount}">-{$_counter+1}-</a>&nbsp;
             </td>
-            <td nowrap align="right">
+            <td nowrap="nowrap" align="right">
                 {if(isset($page->showNext))}
                     <a href="{$page->nextLink}">&gt;</a>
                     &nbsp; <a href="{$page->endLink}">&gt;&gt;</a>
@@ -88,12 +75,12 @@
         <tr>
             <td colspan="3" align="center">
                 {$page->getText(0)}
-                <select name="setListCount" onChange="this.form.submit()">
+                <select name="setListCount" onchange="this.form.submit()" style="text-align:right;">
                     {foreach($page->_availCounts as $_aCount)}
                         <option value="{$_aCount}"
                             {if( $session->temp->nextPrev->listCount == $_aCount )}
-                                selected
-                        >{$_aCount}</option>
+                                selected="selected"
+                        >{$_aCount}&nbsp;</option>
                 </select>{$page->getText(1)}
             </td>
         </tr>

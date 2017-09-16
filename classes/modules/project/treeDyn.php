@@ -1,123 +1,106 @@
 <?php
-//
-//  $Id
-//
-//  Revision 1.2.2.5  2006/08/26 		   AK
-//  - fixed getInstance() : $projectTree is global and needs check to avoid notices
-//
-//  Revision 1.2.2.4  2003/04/10 19:00:34  wk
-//  - fixed getInstance()
-//
-//  Revision 1.2.2.3  2003/04/10 18:04:32  wk
-//  - use references for getInstance!
-//
-//  Revision 1.2.2.2  2003/03/28 10:06:43  wk
-//  - add param maxLength to getPathAsString()
-//
-//  Revision 1.2.2.1  2003/03/17 09:23:34  wk
-//  - getPathAsString pays respect to the wasModifed() now
-//
-//  Revision 1.2  2003/03/10 19:27:15  wk
-//  - added getInstance
-//
-//  Revision 1.1  2003/02/10 18:46:05  wk
-//  - initial commit, still needs a lot of work
-//
-//
+/**
+ * 
+ * $Id$
+ * 
+ */
 
 require_once 'Tree/Dynamic/DBnested.php';
-require_once $config->classPath.'/modules/project/member.php';
-require_once $config->classPath.'/modules/project/cache.php';
-require_once $config->classPath.'/modules/time/time.php';
+require_once $config->classPath . '/modules/project/member.php';
+require_once $config->classPath . '/modules/project/cache.php';
+require_once $config->classPath . '/modules/time/time.php';
 
 class modules_project_treeDyn extends Tree_Dynamic_DBnested
 {
 
+    var $_checkedIfModified = false;
 
     function &getInstance()
     {
-        global $projectTreeDyn,$config,$projectTree;  //AK : I think $projectTree is global as well ..
+        //AK : I think $projectTree is global as well ..
+        global $projectTreeDyn, $config, $projectTree;
 
         // is projectTree an instance of this class?
-        // A.K. : check if projectTree is defined 
+        // A.K. : check if projectTree is defined
 //        if (isset($projectTreeDyn)) {
-	
-			// AK : Difference between php4 & php5 : in php4 the classname was always in lower case
-	        // Toni, SX : get_class changed its behaviour slightly in php 5.3
-    	    // we now have additionaly to check if projectTree is existing 
-        	// otherwise no tree is every created. This is better anway and should work on any php version			
-        	if (empty($projectTreeDyn) || strtolower(get_class($projectTree))!=strtolower(__CLASS__)) {
-            	$treeOptions = array(
-                                'table'         =>  TABLE_PROJECTTREE,
-                                'order'         =>  'name'
-                	            );
-            	$projectTreeDyn = new modules_project_treeDyn( $config->dbDSN , $treeOptions );
-        	}
+
+            // AK : Difference between php4 & php5 : in php4 the classname was always in lower case
+            // Toni, SX : get_class changed its behaviour slightly in php 5.3
+            // we now have additionaly to check if projectTree is existing
+            // otherwise no tree is every created. This is better anway and should work on any php version
+            if (empty($projectTreeDyn) ||
+                    strtolower(get_class($projectTree)) != strtolower(__CLASS__)) {
+                $treeOptions = array(
+                    'table' => TABLE_PROJECTTREE,
+                    'order' => 'name',
+                );
+                $projectTreeDyn = new modules_project_treeDyn($config->dbDSN, $treeOptions);
+            }
 //        }
         return $projectTreeDyn;
     }
 
-    var $_checkedIfModified = false;
-    
     /**
-    *   this method retreives the path as a string, it caches the results too
-    *
-    *   @param  int     the tree-node to ge the path for
-    *   @param  int     the maxLength of the project name, this will cut the name
-    *                   short and add '...' in the beginning
-    *   @return string  the path, each node seperated by |
-    */
-    function getPathAsString($id,$maxLength=0)
+     *   this method retreives the path as a string, it caches the results too
+     * 
+     *   @param  int     the tree-node to ge the path for
+     *   @param  int     the maxLength of the project name, this will cut the name
+     *                   short and add '...' in the beginning
+     *   @return string  the path, each node seperated by |
+     */
+    function getPathAsString($id, $maxLength = 0)
     {
-        global $session,$userAuth;
+        global $session, $userAuth;
+
+        if (!isset($session->projectTreeDyn)) {
+            $session->projectTreeDyn = new stdClass();
+        }
 
         // did we already check if the 
         if (!$this->_checkedIfModified) {
-            if (modules_project_cache::wasModified($userAuth->getData('id'),'Overview_byProject')) {
+            if (modules_project_cache::wasModified($userAuth->getData('id'), 'Overview_byProject')) {
                 $session->projectTreeDyn->pathsAsString = array();
             }
             $this->_checkedIfModified = true;
         }
 
-        if (!isset($session->projectTreeDyn) || !isset($session->projectTreeDyn->pathsAsString[$id])) {
-            $session->projectTreeDyn->pathsAsString[$id] = parent::getPathAsString($id,' | ',1);
-        } 
+        if (!isset($session->projectTreeDyn) ||
+                !isset($session->projectTreeDyn->pathsAsString[$id])) {
+            $session->projectTreeDyn->pathsAsString[$id] = parent::getPathAsString($id, ' | ', 1);
+        }
         $ret = $session->projectTreeDyn->pathsAsString[$id];
-        if (is_numeric($maxLength) && $maxLength>0 && strlen($ret)>$maxLength) {
-            $ret = '...'.substr($ret,-$maxLength);
+        if (is_numeric($maxLength) && $maxLength > 0 && strlen($ret) > $maxLength) {
+            $ret = '...' . substr($ret, -$maxLength);
         }
         return $ret;
     }
 
     /**
-    *   just a wrapper to be compatible to DB_QueryTool
-    *
-    */
-/*    function &getAll()
+     *   just a wrapper to be compatible to DB_QueryTool
+     * 
+     */
+/*
+    function &getAll()
     {
         return $this->getNode();
     }
 */
     /**
-    *   get only the projects which's startdate-enddate period
-    *   is valid, all the active projects only
-    *
-    */
+     *   get only the projects which's startdate-enddate period
+     *   is valid, all the active projects only
+     * 
+     */
 /*
     function getAllAvailable()
     {
         $now = time();
         $tree = $this->getNode();
-        if( sizeof($tree) )
-        {
+        if (sizeof($tree)) {
             //$removedNodes = array();
-            foreach( $tree as $key=>$aNode )
-            {
+            foreach ($tree as $key => $aNode) {
                 $curId = $aNode['id'];
-                if( //($removedNodes[$this->getParentId($curId)]) ||  // if the parent was already removed
-                    !$this->isAvailable( $aNode , $now )
-                  )
-                {
+                if (//($removedNodes[$this->getParentId($curId)]) || // if the parent was already removed
+                    !$this->isAvailable($aNode, $now)) {
                     //$removedNodes[$curId] = true;
                     unset($tree[$key]);
                 }
@@ -127,34 +110,36 @@ class modules_project_treeDyn extends Tree_Dynamic_DBnested
     }
 */
     /**
-    *   checks if the node passed to this method is an available project
-    *   returns true if so
-    *   for an admin we ONLY need to check if the $timeToCompareTo is within
-    *   the valid period of time, for which the project is valid, we dont need to check
-    *   - if the project is closed for last month (the 'X days' thing)
-    *   - if he is a team member
-    *
-    *   @param  mixed   (1) array - one row of projectTree
-    *                   (2) int - the id of a row, needs to be retreived from the DB
-    *   @param  int     if given this is the time used to compare the availability to
-    *                   if not given the current time is used
-    *   @return boolean true if project is still available, false otherwise
-    */
-/*    function isAvailable( $node , $timeToCompareTo )
+     *   checks if the node passed to this method is an available project
+     *   returns true if so
+     *   for an admin we ONLY need to check if the $timeToCompareTo is within
+     *   the valid period of time, for which the project is valid, we dont need to check
+     *   - if the project is closed for last month (the 'X days' thing)
+     *   - if he is a team member
+     *
+     *   @param  mixed   (1) array - one row of projectTree
+     *                   (2) int - the id of a row, needs to be retreived from the DB
+     *   @param  int     if given this is the time used to compare the availability to
+     *                   if not given the current time is used
+     *   @return boolean true if project is still available, false otherwise
+     */
+/*    function isAvailable($node, $timeToCompareTo)
     {
         global $user;
 
-        if( !is_array($node) )
-        {
+        if (!is_array($node)) {
             $node = $this->getElement($node);
         }
 
-        if( $timeToCompareTo==null )
+        if ($timeToCompareTo == null) {
             $timeToCompareTo = time();
+        }
 
-        $nodes = $this->getParents( $node['id'] );  // returns the node including $node['id']
-        $nodes = array_reverse($nodes);             // we foreach through it starting from the element itself, so we return hopefully as soon as possible
-
+        // returns the node including $node['id']
+        $nodes = $this->getParents($node['id']);
+        // we foreach through it starting from the element itself, so we return hopefully as soon as possible
+        $nodes = array_reverse($nodes);
+ 
         // check the valid-period of a project, only bookings within this time are allowed!!!
         foreach( $nodes as $aNode )
         {
@@ -217,7 +202,6 @@ class modules_project_treeDyn extends Tree_Dynamic_DBnested
         if (!$found) {
             return false;
         }
-
 
         return true;
     }
@@ -400,5 +384,3 @@ class modules_project_treeDyn extends Tree_Dynamic_DBnested
 }
 
 $projectTreeDyn = modules_project_treeDyn::getInstance();
-
-?>

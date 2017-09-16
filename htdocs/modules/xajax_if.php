@@ -372,7 +372,7 @@ function updateDuration($dbg, $btimes, $data, & $objResponse)
 	while ($d = current($btimes) )
 	{
 		if($dbg) $objResponse->append("msgxajax","innerHTML","prevloop ".print_r($d,true)."<br>");
-		if($d['user_id'] != $data['user_id']) {
+		if(!isset($d['user_id']) || !isset($data['user_id']) || $d['user_id'] != $data['user_id']) {
 			$d = next($btimes);
 			continue;
 		}

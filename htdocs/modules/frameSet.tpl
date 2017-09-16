@@ -1,7 +1,6 @@
 <!--
-    $Log: frameSet.tpl,v $
-    Revision 1.1.1.1  2002/07/22 09:37:37  wk
 
+$Id$
 
 -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -10,7 +9,7 @@
 <head>
     <title>Ignaz</title>
 
-<script type="text/javascript" language="JavaScript">
+<script type="text/javascript">
     function winWidth()
     \{
         if (window.innerWidth) return window.innerWidth;
@@ -57,12 +56,12 @@
 
 </head>
 
-<script type="text/javascript" language="JavaScript">
+<script type="text/javascript">
     window.document.title="Ignaz";
 </script>
 
 <body>
-<script type="text/javascript" language="JavaScript">
+<script type="text/javascript">
     // observe ie
     if (!window.Weite && document.body && document.body.offsetWidth)
     \{

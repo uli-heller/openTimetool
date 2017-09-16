@@ -91,7 +91,7 @@ class I18N_Messages_Translate extends Tree_OptionsDB
 // all the reg-exps here are limited, the ones below would work perfect on:
 //    <a title="translate this" ...>  or <img alt="translate this" ....>
 // but with the following they would have problems:
-//    <a href="< ?php echo �foor ? >" title="translate this">
+//    <a href="< ?php echo ?foor ? >" title="translate this">
 // since there is a < before the title-attribute, and if we build the regexp
 // with .* instead of [^>]* before the attribute it might return ambigious results
 
@@ -111,6 +111,8 @@ class I18N_Messages_Translate extends Tree_OptionsDB
     *                   that the source strings is the index, so a lookup if a translation exists is much faster
     */
     var $_sourceStringIndexed = array();
+
+    var $_requestCache = array();
 
     /**
     *
@@ -286,7 +288,7 @@ class I18N_Messages_Translate extends Tree_OptionsDB
     *   @return     string  iso-string for the language
     *
     */
-    function translateMarkUpString( $input , $lang )
+    function translateMarkUpString($input, $lang, $cache = true)
     {
         if( $lang == $this->getOption('sourceLanguage') )   // we dont need to translate a string from the source language to the source language
         {
@@ -298,6 +300,11 @@ class I18N_Messages_Translate extends Tree_OptionsDB
                 return $this->addTranslatorLinks( $input , $url );
             }
             return $input;
+        }
+
+        $requestCacheKey = md5($input . '@' . $lang);
+        if ($cache && isset($this->_requestCache[$requestCacheKey])) {
+            return $this->_requestCache[$requestCacheKey];
         }
 
         $this->getAll( $lang );          // get all the possible strings from the DB
@@ -417,6 +424,8 @@ class I18N_Messages_Translate extends Tree_OptionsDB
 
             }
         }
+
+        $this->_requestCache[$requestCacheKey] = $input;
         return $input;
     }
 
@@ -431,7 +440,7 @@ class I18N_Messages_Translate extends Tree_OptionsDB
     */
 /*    function addTranslatorLinks( $input , $url )
     {
-        $linkBegin = '<a href="#" onClick="javascript:window.open(\''.$url.'?string=';
+        $linkBegin = '<a href="#" onclick="javascript:window.open(\''.$url.'?string=';
         $linkEnd =  '\',\'translate\',\'left=100,top=100,width=400,height=200\')" '.
                     'style="background-color:red; color:white; font-style:Courier; font-size:12px;">&nbsp;T&nbsp;</a>';
 
@@ -459,4 +468,4 @@ class I18N_Messages_Translate extends Tree_OptionsDB
 */
 
 } // end of class
-?>
+

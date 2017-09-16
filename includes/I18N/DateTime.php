@@ -90,6 +90,8 @@ class I18N_DateTime extends I18N_Format
 
     var $_customFormats = array();
 
+    var $_requestCache = array();
+
     /**
     *   returns the timestamp formatted according to the locale and the format-mode
     *   use this method to format a date and time timestamp
@@ -224,8 +226,13 @@ class I18N_DateTime extends I18N_Format
     *   @return     string  the formatted timestamp
     *   @access     private
     */
-    function _translate( $string )
+    function _translate($string, $cache = true)
     {
+        $requestCacheKey = md5($string);
+        if ($cache && isset($this->_requestCache[$requestCacheKey])) {
+            return $this->_requestCache[$requestCacheKey];
+        }
+
 //FIXXME optimize this array, use only those that are in the format string, i.e. if no abbreviated formats are used
 // dont put the abbreviated's in this array ....
         $translateArrays = array( 'days' , 'months' , 'daysAbbreviated' , 'monthsAbbreviated' );
@@ -264,6 +271,7 @@ class I18N_DateTime extends I18N_Format
         // here we actually replace the strings (translate:-)) that we found, when checking for their position
         $string = str_replace( $translateSrc , $translateDest , $string );
 
+        $this->_requestCache[$requestCacheKey] = $string;
         return $string;
     }
 
@@ -651,4 +659,3 @@ class I18N_DateTime extends I18N_Format
 
 }
 
-?>

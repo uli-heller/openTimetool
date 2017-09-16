@@ -1,10 +1,8 @@
 <!--
-   $Log: customer.mcr,v $
-   Revision 1.1.1.1  2002/07/22 09:37:37  wk
 
+$Id$
 
 -->
-
 
 <!--
    @param   array   all the customers to show
@@ -14,7 +12,7 @@
     {foreach( $customers as $aCustomer )}
         <option value="{$aCustomer['id']}"
             {if( $aCustomer['id'] == $selected )}
-                selected
+                selected="selected"
         >
         {$aCustomer['name']}
         </option>

@@ -1,19 +1,12 @@
 <!--
-	$Id
 
-	The template for the asp-account request. Not used in usual net-Mode.
-	
-	These macros are expanded by the template engine.
+$Id$
 
-	**** switch to SVN ****
-    $Log: index.tpl,v $
-    Revision 1.2  2002/11/29 16:59:21  wk
-    - do asp-account request
+The template for the asp-account request. Not used in usual net-Mode.
 
-    Revision 1.1.1.1  2002/07/22 09:37:37  wk
+These macros are expanded by the template engine.
 
-
-//-->
+-->
 
 {%include vp/Application/HTML/Macro/EditData.mcr%}
 {%include common/macro/common.mcr%}
