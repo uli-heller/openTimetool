@@ -1,15 +1,5 @@
 //
-//  $Log: common.js.tpl,v $
-//  Revision 1.14  2003/02/10 16:16:52  wk
-//  - CS
-//  - size up the quickLog window
-//
-//  Revision 1.13  2003/01/13 18:10:25  wk
-//  - use HTML_Template_Xipe tags in XML
-//
-//  Revision 1.12  2002/11/29 15:09:00  wk
-//  - translate message
-//
+// $Id$
 //
 
 <HTML_Template_Xipe>
@@ -46,6 +36,7 @@ function removeConfirm( url , message )
     }
 }
 
+
 /**
 *   show a confirm box before redirecting to the remove URL
 *
@@ -72,6 +63,7 @@ function removeConfirmAll( url , message )
     }
 }
 
+
 /**
 *   highlight all the td's inside the given tr
 *   @param  string  the name of the tr
@@ -89,7 +81,6 @@ function markRow( name , color )
     }
 
 }
-
 
 
 function autoCorrectTime( formName , inputField )
@@ -153,6 +144,7 @@ function autoCorrectTime( formName , inputField )
 
     ref.value = newTime;
 }
+
 
 function autoCorrectDate( formName , inputField , setTodayIfEmpty )
 {
@@ -241,7 +233,6 @@ function autoCorrectDate( formName , inputField , setTodayIfEmpty )
 }
 
 
-
 function updateTime( formName , inputNameDate , inputNameTime )
 {
     if( !formName )         formName = "editForm";
@@ -290,7 +281,6 @@ function _updateTime( formName , inputNameDate , inputNameTime )
 }
 
                            
-
 /**
 *
 *
@@ -301,7 +291,6 @@ function openHelpWindow( url )
     // jump right to the link, if the window is already opened we simply want the anchor to work :-)
     helpWin.location.href = url;
 }
-
 
 
 function openQuickLog( url )
@@ -325,7 +314,6 @@ function openWindowOnce( url , name , paras , openedWinIndex )
 }
 
 
-
 function openWindow( url , name , paras )
 {
     if (!paras) {
@@ -334,4 +322,3 @@ function openWindow( url , name , paras )
 
     return window.open( url , name , paras );
 }
-

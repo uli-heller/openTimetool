@@ -19,7 +19,7 @@
 //  $Id
 //	AK : some php5 stuff 
 //
-//  $Id$
+//  $Id: Array.php 2 2006-09-29 07:50:41Z moosach $
 
 require_once('Tree/Error.php');
 
@@ -31,7 +31,7 @@ require_once('Tree/Error.php');
 *   @version    2002/08/30
 *   @package    Tree
 */
-class Tree_Memory_Array
+class Tree_Memory_ArrayFlat
 {
 
     var $data = array();
@@ -51,7 +51,7 @@ class Tree_Memory_Array
     *   @param      string  $dsn    the path on the filesystem
     *   @param      array   $options  additional options you can set
     */
-    function Tree_Memory_Array( &$array , $options=array() )
+    function Tree_Memory_ArrayFlat( &$array , $options=array() )
     {
         $this->_array = &$array;
         $this->_options = $options; // not in use currently
@@ -73,12 +73,7 @@ class Tree_Memory_Array
             $theData = array(&$this->_array);
             $this->_setup($theData);
         }
-
-/*foreach($this->data as $val){print "\r\n";
-foreach ($val as $k=>$v)
-    print "$k=>$v\r\n";
-}*/
-            return $this->data;
+        return $this->data;
     }
 
     /**
@@ -86,47 +81,34 @@ foreach ($val as $k=>$v)
     *   so methods like 'add' etc can find the elements they are searching for,
     *   if you dont like your data to be modified dont pass them as reference!
     */
-    function _setup( &$array , $parentId=0 )
+    function _setup(&$array, $parentId=0)
     {
-         foreach ($array as $nodeKey=>$aNode) {        	
-            // AK : Very strange : in some context (creating team projecttree) we'll get
-            // here a scalar as first array element ... The real array starts at index 1  
-            if(is_array($aNode)) {
-	            $newData = $aNode;
-    	      	if (!isset($newData['id']) || !$newData['id']) {    // if the current element has no id, we generate one
-	    	       $newData['id'] = (string) $this->_id++;      // build a unique numeric id
-    	    	   $array[$nodeKey]['id'] = $newData['id'];    // set the id
-	            } else {
-    	            $idAsInt = (int)$newData['id'];
-        	        if ($idAsInt > $this->_id) {
+        foreach ($array as $nodeKey => $aNode) {
+            if (is_array($aNode)) {
+                $newData = $aNode;
+                if (!isset($newData['id']) || !$newData['id']) {    // if the current element has no id, we generate one
+                    $newData['id'] = (string) $this->_id++;      // build a unique numeric id
+                    $array[$nodeKey]['id'] = $newData['id'];    // set the id
+                } else {
+                    $idAsInt = (int) $newData['id'];
+                    if ($idAsInt > $this->_id) {
             	        $this->_id = $idAsInt;
-                	}
-	            }
-//print "a node name=".$aNode['name'].'<br>';
-    	        $newData['parentId'] = $parentId;       // set the parent-id, since we only have a 'children' array
-        	    $children = null;
-            	foreach ( $newData as $key=>$val ) {    // remove the 'children' array, since this is only info for this class
-                	if ($key=='children') {
-                    	unset($newData[$key]);
-	                }
+                    }
+                }
+                $newData['parentId'] = $parentId;       // set the parent-id, since we only have a 'children' array
+                $children = null;
+                foreach ($newData as $key => $val) {    // remove the 'children' array, since this is only info for this class
+                    if ($key == 'children') {
+                        unset($newData[$key]);
+                    }
     	        }
-
-        	    $this->data[$newData['id']] = $newData;
-            	if (isset($aNode['children']) && $aNode['children']) {
-                	if (!isset($array[$nodeKey]['children'])) {
-                    	$array[$nodeKey]['children'] = array();
-	                }
-    	            $this->_setup( $array[$nodeKey]['children'] , $newData['id'] );
-        	    }
-            }
-            else {
-            /*
-                Was just for debugging           
-            	echo "<b>Something unknown 4 aNode : ";var_dump($aNode);
-            	echo "<b>Something unknown 4 array: ";var_dump($array);
-            	echo"</b><br>";
-            	throw new exception("in array");
-            */
+                $this->data[$newData['id']] = $newData;
+                if (isset($aNode['children']) && $aNode['children']) {
+                    if (!isset($array[$nodeKey]['children'])) {
+                        $array[$nodeKey]['children'] = array();
+                    }
+                    $this->_setup($array[$nodeKey]['children'], $newData['id']);
+                }
             }
         }
     }
@@ -139,28 +121,17 @@ foreach ($val as $k=>$v)
     */
     function setData($data)
     {
-/*
-        $root = array_shift($data);
-        unset($root['children']);
-        $this->_array = array('children'=> array($root));
-foreach ($this->_array['children'][0] as $key=>$val)
-    print "$key=>$val<br>";
-print "<br>";
-*/
-        $unsetKeys = array('childId','left','right');
+        $unsetKeys = array('childId', 'left', 'right');
 
-        foreach ( $data as $aNode ) {
-//print $aNode['id'].' : '.$aNode['name'].'  parentId='.$aNode['parentId'].' size='.sizeof($this->_array['children'][0]['children']).'<br>';
-            foreach ($aNode as $key=>$val) {
-                if (is_array($val) || in_array($key,$unsetKeys)) {
+        foreach ($data as $aNode) {
+            foreach ($aNode as $key => $val) {
+                if (is_array($val) || in_array($key, $unsetKeys)) {
                     unset($aNode[$key]);
                 }
             }
-            $this->add($aNode,$aNode['parentId']);
+            $this->add($aNode, $aNode['parentId']);
         }
-//foreach ($this->_array['children'][0]['children'] as $x){print "<br>";
-//foreach ($x as $key=>$val)
-//    print "$key=>$val<br>";}
+
         $this->_array = $this->_array['children'][0];
     }
 
@@ -173,9 +144,9 @@ print "<br>";
     *   @param
     *   @return
     */
-    function _throwError( $msg , $line , $mode=null )
+    function _throwError($msg, $line, $mode=null)
     {
-        return new Tree_Error( $msg , $line , __FILE__ , $mode , $this->db->last_query );
+        return new Tree_Error($msg, $line, __FILE__, $mode, $this->db->last_query);
     }
 
     /**
@@ -188,11 +159,12 @@ print "<br>";
     *   @param
     *   @return
     */
-    function _prepareResults( $results )
+    function _prepareResults($results)
     {
         $newResults = array();
-        foreach( $results as $aResult )
+        foreach ($results as $aResult) {
             $newResults[] = $this->_prepareResult($aResult);
+        }
         return $newResults;
     }
 
@@ -205,15 +177,15 @@ print "<br>";
     *   @param
     *   @return
     */
-    function _prepareResult( $result )
+    function _prepareResult($result)
     {
         $map = $this->getOption('columnNameMaps');
 
-        if( $map )
-        foreach( $map as $key=>$columnName )
-        {
-            $result[$key] = $result[$columnName];
-            unset($result[$columnName]);
+        if ($map) {
+            foreach ($map as $key => $columnName) {
+                $result[$key] = $result[$columnName];
+                unset($result[$columnName]);
+            }
         }
         return $result;
     }
@@ -226,27 +198,23 @@ print "<br>";
     *   @param  int     the ID of the parent node
     *   @param  int     the ID of the previous node
     */
-    function add( $data , $parentId , $previousId=null )
+    function add($data, $parentId, $previousId=null)
     {
         if (!isset($data['id'])) {
             $data['id'] = ++$this->_id;
-        } elseif((int)$data['id'] > $this->_id) {
-            // update the $this->_id if the data['id'] has a higher number, since
-            // we dont want to overwrite anything. just in case
-            $this->_id = (int)$data['id'];
+        } else if ((int) $data['id'] > $this->_id) {
+            $this->_id = (int) $data['id'];
         }
         $data['parentId'] = $parentId;
         $this->data[$data['id']] = $data;
 
-        //$path = $this->getPathById($parentId);
         if (!isset($this->_array['children'])) {    // there might not be a root element yet
             $data['parentId'] = 0;
             $this->_array['children'][] = $data;
         } else {
-            array_walk($this->_array['children'],array(&$this,'_add'),array($data,$parentId,$previousId));
+            array_walk($this->_array['children'], array(&$this, '_add'), array($data, $parentId, $previousId));
         }
 
-        //$this->_array
         return $data['id'];
     }
 
@@ -262,22 +230,21 @@ print "<br>";
     *                       parent ID under which to add the node, 
     *                       the prvious ID
     */
-    function _add( &$val , $key , $data )
+    function _add(&$val, $key, $data)
     {
-        if ($val['id']==$data[1]) { // is the id of the current elment ($val) == to the parentId ($data[1])
-            if (isset($data[2]) && $data[2]===0 ) {  
-                // if the previousId is 0 means, add it as the first member
-                // AK : added isset if to handle an intial state
-                if(isset($val['children']))
-                	$val['children'] = array_merge(array($data[0]),$val['children']);
-                else
-                	$val['children'] = array($data[0]);  // AK : This array() hat to be added
+        if ($val['id'] == $data[1]) { // is the id of the current elment ($val) == to the parentId ($data[1])
+            if (isset($data[2]) && $data[2] === 0) {
+                if (isset($val['children'])) {
+                    $val['children'] = array_merge(array($data[0]), $val['children']);
+                } else {
+                    $val['children'] = array($data[0]);
+                }
             } else {
                 $val['children'][] = $data[0];
             }
         } else {        // if we havent found the new element go on searching
             if (isset($val['children'])) {
-                array_walk($val['children'],array(&$this,'_add'),$data);
+                array_walk($val['children'], array(&$this, '_add'), $data);
             }
         }
     }
@@ -289,16 +256,16 @@ print "<br>";
     *   @param  array   the data, [key]=>[value]
     *   @return void
     */
-    function update($id,$data)
+    function update($id, $data)
     {
-        if ($this->_array['id']==$id) {
-            foreach ($data as $key=>$newVal) {
+        if ($this->_array['id'] == $id) {
+            foreach ($data as $key => $newVal) {
                 $this->_array[$key] = $newVal;
             }
         } else {
             #array_walk($this->_array['children'],array(&$this,'_update'),array($id,$data));
             foreach ($this->_array['children'] as $key => &$val) {
-                if ($this->_update($val, $key, array($id,$data))) break;
+                if ($this->_update($val, $key, array($id, $data))) break;
             }
         }
     }
@@ -313,10 +280,10 @@ print "<br>";
     *                   [1] are the new data we shall set
     *   @return void
     */
-    function _update( &$val , $key , $data )
+    function _update(&$val, $key, $data)
     {
-        if ($val['id']==$data[0]) { // is the id of the current elment ($val) == to the parentId ($data[1])
-            foreach ($data[1] as $key=>$newVal) {
+        if ($val['id'] == $data[0]) { // is the id of the current elment ($val) == to the parentId ($data[1])
+            foreach ($data[1] as $key => $newVal) {
                 $val[$key] = $newVal;
             }
             return true;
@@ -339,8 +306,8 @@ print "<br>";
     */
     function remove($id)
     {
-        if ($this->data[$id]) {                     // we only need to search for element that do exist :-) otherwise we save some processing time
-            $this->_remove($this->_array,$id);
+        if ($this->data[$id]) {
+            $this->_remove($this->_array, $id);
         }
     }
 
@@ -353,24 +320,21 @@ print "<br>";
     *   @param  int     the id of the element to be removed
     *   @return void
     */
-    function _remove( &$val , $id )
+    function _remove(&$val, $id)
     {
         if (isset($val['children'])) {
-            foreach ($val['children'] as $key=>$aVal) {
-//print $aVal['id'].'=='.$id."\r\n";
-                if ($aVal['id']==$id) {
-//print "remove ".$aVal['name']."\r\n";
+            foreach ($val['children'] as $key => $aVal) {
+                if ($aVal['id'] == $id) {
                     if (sizeof($val['children'])<2) {
                         unset($val['children']);
                     } else {
                         unset($val['children'][$key]);
                     }
                 } else {
-                    $this->_remove($val['children'][$key],$id);
+                    $this->_remove($val['children'][$key], $id);
                 }
             }
         }
     }
 
 } // end of class
-
