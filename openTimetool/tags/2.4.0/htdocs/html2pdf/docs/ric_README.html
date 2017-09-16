@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>README</title>
+	<link rel="stylesheet" type="text/css" id="layout" href="media/layout.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="media/style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="media/print.css" media="print">
+</head>
+
+<body>
+<div id="header">
+	<div id="navLinks">
+		[ <a href="classtrees_HTML_ToPDF.html">Class Tree: HTML_ToPDF</a> ]
+		[ <a href="elementindex_HTML_ToPDF.html">Index: HTML_ToPDF</a> ]
+		[ <a href="elementindex.html">All elements</a> ]
+	</div>
+	<div id="packagePosition">
+		<div id="packageTitle2">HTML_ToPDF</div>
+		<div id="packageTitle">HTML_ToPDF</div>
+		<div id="elementPath"> &middot; </div>
+	</div>
+</div>
+
+<div id="nav" class="small">
+	<div id="ric">
+					<p><a href="ric_README.html">README</a></p>
+			</div>
+	<div id="packages">
+		Packages:
+					<p><a href="li_HTML_ToPDF.html">HTML_ToPDF</a></p>
+			</div>
+
+				<div id="index">
+			<div id="files">
+							</div>
+			<div id="classes">
+							</div>
+		</div>
+	</div>
+
+<div id="body">
+	    	<h1 align="center">README</h1>
+<pre>
+HTML_ToPDF 
+Version 3.3
+http://www.rustyparts.com/pdf.php
+
+What is HTML_ToPDF?
+-------------------
+
+HTML_ToPDF is a PHP class that makes it easy to convert HTML documents to PDF
+files on the fly.  HTML_ToPDF grew out of the need to convert HTML files (which
+are easy to create) to PDF files (which are not so easy to create) fast and
+easily.  It has the following features: 
+
+* The ability to convert images in the webpage to images embedded in the PDF.
+  The script tries to convert relative image paths in to absolute ones as well.
+
+* The ability to use the CSS in the HTML file in the creation of the PDF.  This
+  includes remote CSS files as well.
+
+* The ability to convert remote files
+
+* The ability to convert links into embedded clickable links in the PDF file.
+
+* The ability to scale the HTML page.
+
+* Easy setting of any of these options through the methods of the class.
+
+* Tries to fix quirks in html pages which break html2ps.
+
+* PEAR error handling.
+
+* Works on both Unix/Linux and Windows.
+
+What is PDFEncryptor?
+---------------------
+
+PDFEncryptor is a helper class that comes with this package.  It is also a
+wrapper for a couple of free java libraries that allow you to digitally sign
+and protect the PDFs you create by adding a password, permissions (such as
+printing and copying rights), and meta-data such as the Keywords and Author.
+
+Obtaining HTML_ToPDF 
+--------------------
+
+Further information on HTML_ToPDF and the latest version can be obtained at
+
+  http://www.rustyparts.com/pdf.php
+
+Installation
+------------
+
+There is no real installation other than requiring the file.  See the
+examples directory for help in how to use the class.  However, you do need to
+make sure that whatever directory the PDF files are going to be created in is
+writable by the user the webserver runs as.
+
+Included Files
+--------------
+
+The following files are available in the HTML_ToPDF distribution:
+
+README                - This file
+CHANGES               - The list of changes
+examples/             - Several example files to aid you on your way 
+docs/                 - Class documentation (in HTML)
+lib/                  - Where some of the encryption libraries live
+
+Common Problems
+---------------
+
+* No files are created.
+    - Likely the problem is due to a lack of permissions.  Either the tmp
+      directory that HTML_ToPDF uses for intermediary files is not writable by
+      the webserver or the output directory for the PDF file is not writable by
+      the webserver.  Possible fixes are:
+      // Change the tmp directory
+      $pdf-&gt;setTmpDir('/somewhere/writable');
+      // Change the directory permissions
+      bash# chmod 777 www/pdfs; chown apache www/pdfs
+
+* It complains of not being able to include PEAR.php.
+    - This is because HTML_ToPDF uses PEAR for error handling.  You can
+      download PEAR from http://pear.php.net/  If you cannot get your hands on
+      PEAR you can comment out all the places where an error is raised.
+
+* The images don't show up.
+    - Often the program getting the images (i.e. curl) is having a problem.
+      These errors can usually be seen if the program is run from the command
+      line.
+
+* ps2pdf fails with error code 127
+    - See http://www.rustyparts.com/phpBB/viewtopic.php?p=601#601
+
+Requirements
+------------
+
+* PHP: Version 4.0.4 or greater (http://www.php.net). 
+
+* html2ps: Does the initial conversion of html to a postscript file, and
+  thus is the most crucial part of the conversion.  More information
+  about it is here: http://www.tdb.uu.se/~jan/html2ps.html You will
+  especially want to read the user's guide here:
+  http://www.tdb.uu.se/~jan/html2psug.html if this script is not making
+  the pdf look like you want.  If running windows you will need to install 
+  activeperl as well.
+
+* ps2pdf: This comes with the Ghostscript package, and can be found
+  here: http://www.cs.wisc.edu/~ghost/ This package is normally
+  installed as an RPM on RedHat systems, so if you're using that OS you
+  shouldn't have to worry.  There is a windows install for this as well.
+
+* curl: Or some program that grabs documents off the web (lynx, w3m,
+  etc.).  HOWEVER, for whatever reason only curl has worked in my tests
+  when the script page is running as a web script and not just a script
+  from the command line.  Curl can be found here: http://curl.haxx.se/
+
+* PEAR: The default installation of PEAR is needed for the error
+  handling and OS checking.  PEAR comes with the default installation of 
+  PHP 4 so you should normally not have to worry.  Installation instructions 
+  can be found here: http://pear.php.net/manual/en/installation.php
+
+* Valid HTML: Good HTML (XHTML is best) definitely helps.
+
+* PDFEncryptor needs java (http://java.sun.com) and the iText jar file 
+  (http://itext.sourceforge.net/downloads/)
+
+License
+-------
+Both HTML_ToPDF.php and PDFEncryptor are under version 3 of the PHP license.
+
+Credits
+-------
+Thanks to Jack Utano (http://tnloghomes.com) for funding development of ver. 3.0
+
+</pre>
+	<div id="credit">
+		<hr>
+		Documentation generated on Wed, 24 Nov 2004 13:09:39 -0800 by <a href="http://www.phpdoc.org">phpDocumentor 1.3.0RC3</a>
+	</div>
+</div>
+</body>
+</html>

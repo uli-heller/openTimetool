@@ -1,0 +1,48 @@
+
+REQUIREMENTS
+- Installierter mysql Server (>4,1),  Apache und php (>5.0)
+- Sie sollten z.B. http://localhost in Ihrem Webbrowser öffnen können
+
+INSTALLATION
+- Einspielen der mysql.sql in Ihre MySQL-Datenbank
+- Passen Sie die config.php entsprechend an, alle zu ändernden Werte
+  sind in dieser Datei (config.php) beschrieben.
+  * Bitte beachten Sie bei Ihrer PHP-Konfiguration:
+    Wenn Sie die Suhosin Erweiterung (Hardened PHP) benutzen, funktioniert der
+    Export nach OpenOffice nur, wenn Sie die Session-Encryption deaktivieren:
+    setzen Sie in Ihrer php-Initdatei (z.B. 
+    /etc/php/apache2-php5/ext-active/suhosin.ini) die Zeile
+    "suhosin.session.encrypt = Off"
+    Desweiteren gibt es Einschränkungen bei Safemode=On. Siehe README dafür.
+- Erstellen Sie für jede Sprache die Sie in openTimetool verwenden wollen einen 
+  "symbolic link" auf das htdocs-Verzeichnis, auch für englisch!
+  Sie müssen im Verzeichnis "htdocs" einen "symbolic link" auf das htdocs-Verzeichnis 
+  mit der jeweils benötigten Sprache anlegen (am besten machen Sie das gleich für alle 
+  Sprachen).
+  Vorgehensweise:
+    cd </in/ihr/openTimetool>/htdocs
+    ln -s . de (symbolic link für deutsch)
+    ln -s . en (symbolic link für englisch)
+  Damit wird sichergestellt, dass jede Sprache Ihren eindeutigen Pfad erhält.
+  Achtung: Sie müssen die Option "FollowSymLinks" in Ihrer Apache Konfiguration
+  aktiviert haben!
+- Der Webserver Prozess benötigt jetzt noch Lese- und Schreibrechte für das 
+  htdocs/tmp Verzeichnis,
+    chmod a+w tmp
+
+Damit sollte die Installation abgeschlossen und openTimetool zum Einsatz bereit 
+sein.
+
+
+ERSTE ANMELDUNG (DEFAULT LOGIN)
+Nach erfolgreicher Installation von openTimetool können Sie folgende 
+Zugangsdaten für die erste Anmeldung verwenden
+     Username: root
+     Passwort: root
+Dieser Benutzer ist ein "admin" (Administrator). Zum Anlegen neuer Benutzer, 
+Projekte, Tätigkeiten, usw. benötigen Sie Administrator-Rechte.
+
+
+
+Viel Spass
+
